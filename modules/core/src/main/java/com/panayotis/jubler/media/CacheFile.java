@@ -28,8 +28,12 @@ import java.io.File;
 /** @author teras */
 public class CacheFile extends File {
 
-  /** Creates a new instance of CacheFile */
-  public CacheFile(String cfile) {
-    super(cfile);
+  /**
+   * Creates a new instance of CacheFile
+   *
+   * @param cacheFilePath
+   */
+  public CacheFile(String cacheFilePath) {
+    super(cacheFilePath);
   }
 }
