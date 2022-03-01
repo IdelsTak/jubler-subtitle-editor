@@ -40,10 +40,14 @@ public class AudioFile extends File {
     super(audioFile.getPath());
     sameAsVideo = getPath().equals(videoFile.getPath());
   }
-
-  public AudioFile(String parent, String audiofname, VideoFile vfile) {
-    super(parent, audiofname);
-    sameAsVideo = getPath().equals(vfile.getPath());
+  /**
+   * @param parent
+   * @param audioFileName
+   * @param videoFile
+   */
+  public AudioFile(String parent, String audioFileName, VideoFile videoFile) {
+    super(parent, audioFileName);
+    sameAsVideo = getPath().equals(videoFile.getPath());
   }
 
   public boolean isSameAsVideo() {
