@@ -51,9 +51,14 @@ public class VideoFile extends File {
   private float length = INVALID;
   private float fps = INVALID;
 
-  /** Creates a new instance of VideoFile */
-  public VideoFile(String vfile, DecoderInterface decoder) {
-    super(vfile);
+  /**
+   * Creates a new instance of VideoFile
+   *
+   * @param videoFilePath
+   * @param decoder
+   */
+  public VideoFile(String videoFilePath, DecoderInterface decoder) {
+    super(videoFilePath);
     getVideoProperties(decoder);
   }
 
@@ -139,16 +144,27 @@ public class VideoFile extends File {
     return 0;
   }
 
-  /* The following function is used in order to guess the filename of the avi/audio/jacache based
-   *  on the name of the original file */
+  /**
+   * The following function is used in order to guess the filename of the avi/audio/jacache based on
+   * the name of the original file.
+   *
+   * @param subs
+   * @param filter
+   * @param decoder
+   * @return
+   */
   public static VideoFile guessFile(
       Subtitles subs, MediaFileFilter filter, DecoderInterface decoder) {
-    File dir; /* the parent directory of the subtitle */
-    File files[]; /* List of video files in the same directory as the subtitle */
-    int matchcount; /* best match so far */
-    File match; /* best file match so far */
-    String subfilename,
-        curfilename; /* Subtitles filename (in lowercase) & file in the same directory */
+    // the parent directory of the subtitle
+    File dir;
+    // List of video files in the same directory as the subtitle
+    File files[];
+    // best match so far
+    int matchcount;
+    // best file match so far
+    File match;
+    // Subtitles filename (in lowercase) & file in the same director
+    String subFilename, curFilename;
     int size;
     int i, j;
 
@@ -161,10 +177,10 @@ public class VideoFile extends File {
     if (dir == null)
       return new VideoFile(subfile.getPath() + "." + filter.getExtensions()[0], decoder);
 
-    subfilename = subfile.getPath().toLowerCase();
+    subFilename = subfile.getPath().toLowerCase();
 
-    /* From a list of possible filenames, get the one with the
-     * best match */
+    // From a list of possible filenames,
+    // get the one with the best match
     matchcount = 0;
     match = null;
     files = dir.listFiles(filter);
@@ -172,12 +188,12 @@ public class VideoFile extends File {
       for (i = 0; i < files.length; i++)
         if (!files[i].isDirectory()) {
           j = 0;
-          curfilename = files[i].getPath().toLowerCase();
+          curFilename = files[i].getPath().toLowerCase();
           size =
-              (subfilename.length() > curfilename.length())
-                  ? curfilename.length()
-                  : subfilename.length();
-          while (j < size && subfilename.charAt(j) == curfilename.charAt(j)) j++;
+              (subFilename.length() > curFilename.length())
+                  ? curFilename.length()
+                  : subFilename.length();
+          while (j < size && subFilename.charAt(j) == curFilename.charAt(j)) j++;
           if (matchcount < j) {
             matchcount = j;
             match = files[i];
