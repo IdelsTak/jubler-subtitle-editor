@@ -18,8 +18,6 @@ import static com.panayotis.jubler.options.Options.getMinDuration;
 import static com.panayotis.jubler.options.Options.isCompactSubs;
 import static com.panayotis.jubler.options.Options.isSpaceChars;
 import com.panayotis.jubler.subs.SubEntry;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import static com.panayotis.jubler.i18n.I18N.__;
 import static com.panayotis.jubler.options.Options.isNewlineChars;
 
@@ -46,41 +44,13 @@ public class JQuality extends javax.swing.JDialog {
         newlineCharsC.setSelected(isNewlineChars());
         compactC.setSelected(isCompactSubs());
 
-        MaxLineS.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                Options.setMaxLines(MaxLineS.getValue());
-            }
-        });
-        FillPercentS.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                Options.setFillPercent(FillPercentS.getValue());
-            }
-        });
-        MaxLengthS.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                Options.setMaxSubLength(MaxLengthS.getValue());
-            }
-        });
-        MaxLengthLineS.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                Options.setMaxLineLength(MaxLengthLineS.getValue());
-            }
-        });
-        MaxCPSS.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                Options.setMaxCPS(MaxCPSS.getValue());
-            }
-        });
-        MaxDurS.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                Options.setMaxDuration(MaxDurS.getValue());
-            }
-        });
-        MinDurS.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                Options.setMinDuration(MinDurS.getValue());
-            }
-        });
+        MaxLineS.addChangeListener(changeEvt -> Options.setMaxLines(MaxLineS.getValue()));
+        FillPercentS.addChangeListener(changeEvt -> Options.setFillPercent(FillPercentS.getValue()));
+        MaxLengthS.addChangeListener(changeEvt -> Options.setMaxSubLength(MaxLengthS.getValue()));
+        MaxLengthLineS.addChangeListener(changeEvt -> Options.setMaxLineLength(MaxLengthLineS.getValue()));
+        MaxCPSS.addChangeListener(changeEvt -> Options.setMaxCPS(MaxCPSS.getValue()));
+        MaxDurS.addChangeListener(changeEvt -> Options.setMaxDuration(MaxDurS.getValue()));
+        MinDurS.addChangeListener(changeEvt -> Options.setMinDuration(MinDurS.getValue()));
 
         pack();
         setLocationRelativeTo(parent);
