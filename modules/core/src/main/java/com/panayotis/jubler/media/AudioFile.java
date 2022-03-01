@@ -30,10 +30,15 @@ public class AudioFile extends File {
 
   private boolean sameAsVideo = false;
 
-  /** Creates a new instance of AudioFile */
-  public AudioFile(File af, File vfile) {
-    super(af.getPath());
-    sameAsVideo = getPath().equals(vfile.getPath());
+  /**
+   * Creates a new instance of AudioFile
+   *
+   * @param audioFile
+   * @param videoFile
+   */
+  public AudioFile(File audioFile, File videoFile) {
+    super(audioFile.getPath());
+    sameAsVideo = getPath().equals(videoFile.getPath());
   }
 
   public AudioFile(String parent, String audiofname, VideoFile vfile) {
