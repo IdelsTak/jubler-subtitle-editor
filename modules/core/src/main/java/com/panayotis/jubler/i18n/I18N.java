@@ -28,7 +28,6 @@ import com.panayotis.jubler.os.DEBUG;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
