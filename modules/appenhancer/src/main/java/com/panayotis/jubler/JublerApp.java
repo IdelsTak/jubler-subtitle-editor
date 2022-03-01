@@ -44,7 +44,6 @@ public class JublerApp implements Plugin, PluginItem {
 
   private boolean ignore_click = false;
 
-            public void run() {
   public JublerApp() {
     EnhancerManager.getDefault()
         .registerAbout(
