@@ -2,7 +2,7 @@
  * SpellMistake.java
  *
  * Created on 15 Ιούλιος 2005, 6:32 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -23,23 +23,18 @@
 
 package com.panayotis.jubler.tools.spell;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 @SuppressWarnings("UseOfObsoleteCollectionType")
 public class SpellError {
 
-    public int position;
-    public String original;
-    public java.util.Vector<String> alternatives;
+  public int position;
+  public String original;
+  public java.util.Vector<String> alternatives;
 
-    /**
-     * Creates a new instance of SpellMistake
-     */
-    public SpellError(int position, String original, java.util.Vector<String> alts) {
-        this.position = position;
-        this.original = original;
-        alternatives = alts;
-    }
+  /** Creates a new instance of SpellMistake */
+  public SpellError(int position, String original, java.util.Vector<String> alts) {
+    this.position = position;
+    this.original = original;
+    alternatives = alts;
+  }
 }

@@ -3,7 +3,6 @@
  *
  * Created on 7 Σεπτέμβριος 2005, 7:24 μμ
  */
-
 package com.panayotis.jubler.subs.style.gui;
 
 import com.panayotis.jubler.os.SystemDependent;

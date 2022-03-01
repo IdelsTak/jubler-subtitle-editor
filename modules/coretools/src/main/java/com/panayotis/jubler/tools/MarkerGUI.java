@@ -2,7 +2,7 @@
  * JMarker.java
  *
  * Created on 26 Ιούνιος 2005, 12:59 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.tools;
 
 import com.panayotis.jubler.subs.SubEntry;
@@ -36,8 +35,9 @@ public class MarkerGUI extends JPanel {
 
     public MarkerGUI() {
         initComponents();
-        for (int i = 0; i < SubEntry.MarkNames.length; i++)
+        for (int i = 0; i < SubEntry.MarkNames.length; i++) {
             ColSel.addItem(SubEntry.MarkNames[i]);
+        }
     }
 
     /**

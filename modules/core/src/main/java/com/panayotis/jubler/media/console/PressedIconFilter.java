@@ -22,15 +22,12 @@
 
 package com.panayotis.jubler.media.console;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PressedIconFilter extends ColorIconFilter {
 
-    private static float inc = 0.7f;
+  private static float inc = 0.7f;
 
-    public PressedIconFilter() {
-        super(inc, inc, inc);
-    }
+  public PressedIconFilter() {
+    super(inc, inc, inc);
+  }
 }

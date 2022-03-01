@@ -2,7 +2,7 @@
  * ImageTypeSubtitle.java
  *
  * Created on 25 November 2008, 00:42 am
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -33,23 +33,23 @@ import java.io.File;
  */
 public interface ImageTypeSubtitle {
 
-    public int getMaxImageHeight();
+  public int getMaxImageHeight();
 
-    public void setMaxImageHeight(int value);
+  public void setMaxImageHeight(int value);
 
-    public BufferedImage getImage();
+  public BufferedImage getImage();
 
-    public void setImage(BufferedImage img);
+  public void setImage(BufferedImage img);
 
-    public String getImageFileName();
+  public String getImageFileName();
 
-    public void setImageFileName(String name);
+  public void setImageFileName(String name);
 
-    public File getImageFile();
+  public File getImageFile();
 
-    public void setImageFile(File imageFile);
+  public void setImageFile(File imageFile);
 
-    public SubtitleImageAttribute getImageAttribute();
+  public SubtitleImageAttribute getImageAttribute();
 
-    public void setImageAttribute(SubtitleImageAttribute attrib);
+  public void setImageAttribute(SubtitleImageAttribute attrib);
 }

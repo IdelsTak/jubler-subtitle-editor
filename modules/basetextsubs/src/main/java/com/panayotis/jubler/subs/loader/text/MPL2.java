@@ -2,7 +2,7 @@
  * MPL2.java
  *
  * Created on 17 April 2007, 12:35 PM
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -29,55 +29,50 @@ import com.panayotis.jubler.time.Time;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class MPL2 extends AbstractTextSubFormat {
 
-    private static final Pattern pat;
+  private static final Pattern pat;
 
-    /**
-     * Creates a new instance of SubFormat
-     */
-    static {
-        pat = Pattern.compile("\\[(\\d+)\\]" + sp + "\\[(\\d+)\\]" + sp + "(.*?)" + nl);
-    }
+  /** Creates a new instance of SubFormat */
+  static {
+    pat = Pattern.compile("\\[(\\d+)\\]" + sp + "\\[(\\d+)\\]" + sp + "(.*?)" + nl);
+  }
 
-    protected Pattern getPattern() {
-        return pat;
-    }
+  protected Pattern getPattern() {
+    return pat;
+  }
 
-    protected SubEntry getSubEntry(Matcher m) {
-        Time start = new Time(Double.valueOf(m.group(1)) / 10d);
-        Time finish = new Time(Double.valueOf(m.group(2)) / 10d);
-        return new SubEntry(start, finish, m.group(3).replace("|", "\n"));
-    }
+  protected SubEntry getSubEntry(Matcher m) {
+    Time start = new Time(Double.valueOf(m.group(1)) / 10d);
+    Time finish = new Time(Double.valueOf(m.group(2)) / 10d);
+    return new SubEntry(start, finish, m.group(3).replace("|", "\n"));
+  }
 
-    public String getExtension() {
-        return "txt";
-    }
+  public String getExtension() {
+    return "txt";
+  }
 
-    public String getName() {
-        return "MPL2";
-    }
+  public String getName() {
+    return "MPL2";
+  }
 
-    @Override
-    public String getExtendedName() {
-        return "MPL2 Subtitle file";
-    }
+  @Override
+  public String getExtendedName() {
+    return "MPL2 Subtitle file";
+  }
 
-    protected void appendSubEntry(SubEntry sub, StringBuilder str) {
-        str.append("[");
-        str.append(Math.round(sub.getStartTime().toSeconds() * 10));
-        str.append("][");
-        str.append(Math.round(sub.getFinishTime().toSeconds() * 10));
-        str.append("] ");
-        str.append(sub.getText().replace('\n', '|'));
-        str.append("\n");
-    }
+  protected void appendSubEntry(SubEntry sub, StringBuilder str) {
+    str.append("[");
+    str.append(Math.round(sub.getStartTime().toSeconds() * 10));
+    str.append("][");
+    str.append(Math.round(sub.getFinishTime().toSeconds() * 10));
+    str.append("] ");
+    str.append(sub.getText().replace('\n', '|'));
+    str.append("\n");
+  }
 
-    public boolean supportsFPS() {
-        return false;
-    }
+  public boolean supportsFPS() {
+    return false;
+  }
 }

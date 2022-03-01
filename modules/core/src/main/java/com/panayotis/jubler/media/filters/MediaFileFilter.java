@@ -23,11 +23,9 @@
 
 package com.panayotis.jubler.media.filters;
 
-/**
- *
- * @author teras
- */
-public abstract class MediaFileFilter extends javax.swing.filechooser.FileFilter implements java.io.FileFilter {
+/** @author teras */
+public abstract class MediaFileFilter extends javax.swing.filechooser.FileFilter
+    implements java.io.FileFilter {
 
-    public abstract String[] getExtensions();
+  public abstract String[] getExtensions();
 }

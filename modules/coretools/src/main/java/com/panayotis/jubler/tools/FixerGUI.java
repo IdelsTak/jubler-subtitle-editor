@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.tools;
 
 import com.panayotis.jubler.os.SystemDependent;
@@ -151,10 +150,11 @@ public class FixerGUI extends JPanel {
         PushModelB.setEnabled(en);
         GapB.setEnabled(en);
 
-        if (en)
+        if (en) {
             GapNum.setEnabled(GapB.isSelected());
-        else
+        } else {
             GapNum.setEnabled(false);
+        }
     }//GEN-LAST:event_FixTActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JCheckBox FixT;

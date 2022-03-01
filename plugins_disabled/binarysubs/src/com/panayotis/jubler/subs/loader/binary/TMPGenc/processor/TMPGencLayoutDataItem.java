@@ -6,25 +6,25 @@
 
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- * 
+ *
  * This file is part of Jubler.
- * 
+ *
  * Jubler is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 2.
- * 
- * 
+ *
+ *
  * Jubler is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Jubler; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Contributor(s):
- * 
+ *
  */
 package com.panayotis.jubler.subs.loader.binary.TMPGenc.processor;
 
@@ -35,13 +35,15 @@ import com.panayotis.jubler.subs.loader.binary.TMPGenc.record.LayoutDataItemReco
 import java.util.logging.Level;
 
 /**
- * This class hold a pattern to identify item lines from the "[LayoutData]"
- * section of TMPGenc subtitle file. An example of such data line is shown here:
+ * This class hold a pattern to identify item lines from the "[LayoutData]" section of TMPGenc
+ * subtitle file. An example of such data line is shown here:
+ *
  * <pre>
  * "Picture bottom layout",4,Tahoma,0.07,17588159451135,0,0,0,0,1,2,0,1,0.0035,0
  * </pre>
  *
  * The definition of each component within the pattern is defined below:
+ *
  * <pre>
  * Layout name : "Picture top layout",
  * Display Area:
@@ -73,69 +75,85 @@ import java.util.logging.Level;
  */
 public class TMPGencLayoutDataItem extends SubtitlePatternProcessor implements TMPGencPatternDef {
 
-    private static final String pattern =
-            char_double_quote
-            + printable + //layout name
-            char_double_quote
-            + single_comma
-            + digits + //Display-area
-            single_comma
-            + //printable + //font name
-            anything + //font name: changed to 'anything' as sometimes when a new entry is created, the font-name is not assigned.
-            single_comma
-            + graph + //font-size: 0.07
-            single_comma
-            + graph + //font colour: 17588159451135
-            single_comma
-            + digits + //style bold
-            single_comma
-            + digits + //style italic
-            single_comma
-            + digits + //style underscore
-            single_comma
-            + digits + //style strike-through
-            single_comma + //1,2,0,1,0.0035,0
-            digits + //Alignment horizontal
-            single_comma
-            + digits + //Alignment vertical
-            single_comma
-            + digits + //Text rotation: vertical/horizontal
-            single_comma
-            + digits + //Text border using: Yea=1, No=0
-            single_comma + //0.0035,0
-            graph + //border-size
-            single_comma
-            + digits; //border-colour
-    int index[] = new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29};
+  private static final String pattern =
+      char_double_quote
+          + printable
+          + // layout name
+          char_double_quote
+          + single_comma
+          + digits
+          + // Display-area
+          single_comma
+          + // printable + //font name
+          anything
+          + // font name: changed to 'anything' as sometimes when a new entry is created, the
+          // font-name is not assigned.
+          single_comma
+          + graph
+          + // font-size: 0.07
+          single_comma
+          + graph
+          + // font colour: 17588159451135
+          single_comma
+          + digits
+          + // style bold
+          single_comma
+          + digits
+          + // style italic
+          single_comma
+          + digits
+          + // style underscore
+          single_comma
+          + digits
+          + // style strike-through
+          single_comma
+          + // 1,2,0,1,0.0035,0
+          digits
+          + // Alignment horizontal
+          single_comma
+          + digits
+          + // Alignment vertical
+          single_comma
+          + digits
+          + // Text rotation: vertical/horizontal
+          single_comma
+          + digits
+          + // Text border using: Yea=1, No=0
+          single_comma
+          + // 0.0035,0
+          graph
+          + // border-size
+          single_comma
+          + digits; // border-colour
+  int index[] = new int[] {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29};
 
-    public TMPGencLayoutDataItem() {
-        super(pattern);
-        this.setMatchIndexList(index);
-        setTargetObjectClassName(LayoutDataItemRecord.class.getName());
+  public TMPGencLayoutDataItem() {
+    super(pattern);
+    this.setMatchIndexList(index);
+    setTargetObjectClassName(LayoutDataItemRecord.class.getName());
+  }
+
+  public void parsePattern(String[] matched_data, Object record) {
+    try {
+      LayoutDataItemRecord r = (LayoutDataItemRecord) record;
+      r.setName(matched_data[0]);
+      r.setDisplayArea(Byte.parseByte(matched_data[1]));
+      r.setFontName(matched_data[2]);
+      r.setForntSize(Float.parseFloat(matched_data[3]));
+      r.setFontColour(Double.parseDouble(matched_data[4]));
+
+      r.setStyleBold(Byte.parseByte(matched_data[5]));
+      r.setStyleItalic(Byte.parseByte(matched_data[6]));
+      r.setStyleUnderScore(Byte.parseByte(matched_data[7]));
+      r.setStyleStrikeThrough(Byte.parseByte(matched_data[8]));
+      r.setAlignmentHorizontal(Byte.parseByte(matched_data[9]));
+      r.setAlignmentVertical(Byte.parseByte(matched_data[10]));
+      r.setTextRotation(Byte.parseByte(matched_data[11]));
+      r.setTextBorder(Byte.parseByte(matched_data[12]));
+      r.setBorderSize(Float.parseFloat(matched_data[13]));
+      r.setBorderColour(Long.parseLong(matched_data[14]));
+    } catch (Exception ex) {
+      DEBUG.logger.log(Level.WARNING, ex.toString());
     }
-
-    public void parsePattern(String[] matched_data, Object record) {
-        try {
-            LayoutDataItemRecord r = (LayoutDataItemRecord) record;
-            r.setName(matched_data[0]);
-            r.setDisplayArea(Byte.parseByte(matched_data[1]));
-            r.setFontName(matched_data[2]);
-            r.setForntSize(Float.parseFloat(matched_data[3]));
-            r.setFontColour(Double.parseDouble(matched_data[4]));
-
-            r.setStyleBold(Byte.parseByte(matched_data[5]));
-            r.setStyleItalic(Byte.parseByte(matched_data[6]));
-            r.setStyleUnderScore(Byte.parseByte(matched_data[7]));
-            r.setStyleStrikeThrough(Byte.parseByte(matched_data[8]));
-            r.setAlignmentHorizontal(Byte.parseByte(matched_data[9]));
-            r.setAlignmentVertical(Byte.parseByte(matched_data[10]));
-            r.setTextRotation(Byte.parseByte(matched_data[11]));
-            r.setTextBorder(Byte.parseByte(matched_data[12]));
-            r.setBorderSize(Float.parseFloat(matched_data[13]));
-            r.setBorderColour(Long.parseLong(matched_data[14]));
-        } catch (Exception ex) {
-            DEBUG.logger.log(Level.WARNING, ex.toString());
-        }
-
-    }//end if
+  } // end if
 }

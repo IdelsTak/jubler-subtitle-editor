@@ -27,24 +27,19 @@ import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator.Attribute;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewBold extends PreviewBoolean {
 
-    protected Object getEnabledValue() {
-        return TextAttribute.WEIGHT_BOLD;
-    }
+  protected Object getEnabledValue() {
+    return TextAttribute.WEIGHT_BOLD;
+  }
 
-    protected Attribute getStyle() {
-        return TextAttribute.WEIGHT;
-    }
+  protected Attribute getStyle() {
+    return TextAttribute.WEIGHT;
+  }
 
-    /**
-     * Creates a new instance of PreviewBoolean
-     */
-    public PreviewBold(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  /** Creates a new instance of PreviewBoolean */
+  public PreviewBold(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 }

@@ -22,30 +22,24 @@ package com.panayotis.jubler.tools.translate;
 
 import java.util.List;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public abstract class SimpleWebTranslator extends WebTranslator {
 
-    protected abstract List<Language> getLanguages();
+  protected abstract List<Language> getLanguages();
 
-    public String[] getSourceLanguages() {
-        List<Language> lang = getLanguages();
-        String[] langs = new String[lang.size()];
-        for (int i = 0; i < lang.size(); i++)
-            langs[i] = lang.get(i).getName();
-        return langs;
-    }
+  public String[] getSourceLanguages() {
+    List<Language> lang = getLanguages();
+    String[] langs = new String[lang.size()];
+    for (int i = 0; i < lang.size(); i++) langs[i] = lang.get(i).getName();
+    return langs;
+  }
 
-    public String[] getDestinationLanguagesFor(String from) {
-        return getSourceLanguages();
-    }
+  public String[] getDestinationLanguagesFor(String from) {
+    return getSourceLanguages();
+  }
 
-    public String findLanguage(String language) {
-        for (Language l : getLanguages())
-            if (l.getName().equals(language))
-                return l.getID();
-        return "";
-    }
+  public String findLanguage(String language) {
+    for (Language l : getLanguages()) if (l.getName().equals(language)) return l.getID();
+    return "";
+  }
 }

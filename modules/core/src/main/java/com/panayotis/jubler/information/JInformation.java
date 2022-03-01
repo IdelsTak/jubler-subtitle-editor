@@ -286,8 +286,9 @@ public class JInformation extends JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PTabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PTabsStateChanged
-        if (PTabs.getSelectedComponent().getName().equals("media"))
+        if (PTabs.getSelectedComponent().getName().equals("media")) {
             media.guessMediaFiles(subs);
+        }
     }//GEN-LAST:event_PTabsStateChanged
 
     private void OKBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKBActionPerformed

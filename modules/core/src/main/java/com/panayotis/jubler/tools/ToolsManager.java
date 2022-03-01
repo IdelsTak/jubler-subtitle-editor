@@ -39,134 +39,120 @@ import javax.swing.KeyStroke;
 
 import static com.panayotis.jubler.options.JExternalToolsOptions.tools;
 
-/**
- * @author teras
- */
+/** @author teras */
 public class ToolsManager {
 
-    private static final EnumMap<Location, ArrayList<Tool>> tools = new EnumMap<Location, ArrayList<Tool>>(Location.class);
-    private static RealTimeTool recoder, shifter;
+  private static final EnumMap<Location, ArrayList<Tool>> tools =
+      new EnumMap<Location, ArrayList<Tool>>(Location.class);
+  private static RealTimeTool recoder, shifter;
 
-    static {
-        PluginManager.manager.callPluginListeners(ToolsManager.class);
+  static {
+    PluginManager.manager.callPluginListeners(ToolsManager.class);
+  }
+
+  private ToolsManager() {}
+
+  public static void add(Tool tool) {
+    ArrayList<Tool> list = tools.get(tool.menu.location);
+    if (list == null) {
+      list = new ArrayList<Tool>();
+      tools.put(tool.menu.location, list);
     }
+    list.add(tool);
+  }
 
-    private ToolsManager() {
+  public static void register(JubFrame current) {
+    // Backup existing tools menu
+    Component[] oldtools = current.ToolsM.getMenuComponents();
+    current.ToolsM.removeAll();
+    try {
+      /* Populate tools menu */
+      for (Tool tool : tools.get(Location.FILETOOL)) addMenu(current, current.ToolsM, tool);
+      current.ToolsM.add(new JSeparator());
+      for (Tool tool : tools.get(Location.TIMETOOL)) addMenu(current, current.ToolsM, tool);
+      current.ToolsM.add(new JSeparator());
+      for (Tool tool : tools.get(Location.CONTENTTOOL)) addMenu(current, current.ToolsM, tool);
+      current.ToolsM.add(new JSeparator());
+      setFileToolsStatus(current, false);
+
+      /* Populate edit menu */
+      for (Tool tool : tools.get(Location.DELETE)) addMenu(current, current.DeleteEM, tool);
+      for (Tool tool : tools.get(Location.MARK)) addMenu(current, current.MarkEM, tool);
+      for (Tool tool : tools.get(Location.STYLE)) addMenu(current, current.StyleEM, tool);
+    } catch (NullPointerException ex) {
     }
+    // Restore tools menu old entries
+    for (Component comp : oldtools) current.ToolsM.add(comp);
+    updateExternals(current);
+  }
 
-    public static void add(Tool tool) {
-        ArrayList<Tool> list = tools.get(tool.menu.location);
-        if (list == null) {
-            list = new ArrayList<Tool>();
-            tools.put(tool.menu.location, list);
-        }
-        list.add(tool);
-    }
-
-    public static void register(JubFrame current) {
-        // Backup existing tools menu
-        Component[] oldtools = current.ToolsM.getMenuComponents();
-        current.ToolsM.removeAll();
-        try {
-            /* Populate tools menu */
-            for (Tool tool : tools.get(Location.FILETOOL))
-                addMenu(current, current.ToolsM, tool);
-            current.ToolsM.add(new JSeparator());
-            for (Tool tool : tools.get(Location.TIMETOOL))
-                addMenu(current, current.ToolsM, tool);
-            current.ToolsM.add(new JSeparator());
-            for (Tool tool : tools.get(Location.CONTENTTOOL))
-                addMenu(current, current.ToolsM, tool);
-            current.ToolsM.add(new JSeparator());
-            setFileToolsStatus(current, false);
-
-            /* Populate edit menu */
-            for (Tool tool : tools.get(Location.DELETE))
-                addMenu(current, current.DeleteEM, tool);
-            for (Tool tool : tools.get(Location.MARK))
-                addMenu(current, current.MarkEM, tool);
-            for (Tool tool : tools.get(Location.STYLE))
-                addMenu(current, current.StyleEM, tool);
-        } catch (NullPointerException ex) {
-        }
-        // Restore tools menu old entries
-        for (Component comp : oldtools)
-            current.ToolsM.add(comp);
-        updateExternals(current);
-    }
-
-    private static void updateExternals(final JubFrame jubler) {
-        JMenu externalsM = jubler.ExternalsM;
-        for (Component menuItem : externalsM.getMenuComponents())
-            externalsM.remove(menuItem);
-        int i = 0;
-        for (final ExternalTool tool : JExternalToolsOptions.getList()) {
-            JMenuItem menuItem = new JMenuItem(tool.getName());
-            menuItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    tool.exec(jubler);
-                }
-            });
-            menuItem.setName("EXT" + (i++));
-            externalsM.add(menuItem);
-        }
-    }
-
-    public static void updateExternals() {
-        for (final JubFrame jubler : JubFrame.windows)
-            updateExternals(jubler);
-    }
-
-    private static void addMenu(final JubFrame current, final JMenu ToolsM, final Tool tool) {
-        JMenuItem item = new JMenuItem(tool.menu.text, tool.menu.key);
-        if (tool.menu.key != 0)
-            item.setAccelerator(KeyStroke.getKeyStroke(tool.menu.key, tool.menu.mask));
-        item.setEnabled(false);
-        item.setName(tool.menu.name);
-        ToolsM.add(item);
-        item.addActionListener(new ActionListener() {
+  private static void updateExternals(final JubFrame jubler) {
+    JMenu externalsM = jubler.ExternalsM;
+    for (Component menuItem : externalsM.getMenuComponents()) externalsM.remove(menuItem);
+    int i = 0;
+    for (final ExternalTool tool : JExternalToolsOptions.getList()) {
+      JMenuItem menuItem = new JMenuItem(tool.getName());
+      menuItem.addActionListener(
+          new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                tool.updateData(current);
-                tool.execute(current);
+              tool.exec(jubler);
             }
+          });
+      menuItem.setName("EXT" + (i++));
+      externalsM.add(menuItem);
+    }
+  }
+
+  public static void updateExternals() {
+    for (final JubFrame jubler : JubFrame.windows) updateExternals(jubler);
+  }
+
+  private static void addMenu(final JubFrame current, final JMenu ToolsM, final Tool tool) {
+    JMenuItem item = new JMenuItem(tool.menu.text, tool.menu.key);
+    if (tool.menu.key != 0)
+      item.setAccelerator(KeyStroke.getKeyStroke(tool.menu.key, tool.menu.mask));
+    item.setEnabled(false);
+    item.setName(tool.menu.name);
+    ToolsM.add(item);
+    item.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            tool.updateData(current);
+            tool.execute(current);
+          }
         });
-    }
+  }
 
-    /*
-     * Join and Reparent are in the first block of menu, or else this code will break,
-     * since it searches for the first separator item
-     */
-    public static void setFileToolsStatus(JubFrame current, boolean status) {
-        JMenuItem Join = null;
-        JMenuItem Reparent = null;
-        for (Component item : current.ToolsM.getMenuComponents())
-            if (item instanceof JMenuItem) {
-                if ("TJO".equals(((JMenuItem) item).getName()))
-                    Join = (JMenuItem) item;
-                else if ("TPA".equals(((JMenuItem) item).getName()))
-                    Reparent = (JMenuItem) item;
-            } else
-                break;
-        if (Join != null)
-            Join.setEnabled(status);
-        if (Reparent != null)
-            Reparent.setEnabled(status);
-    }
+  /*
+   * Join and Reparent are in the first block of menu, or else this code will break,
+   * since it searches for the first separator item
+   */
+  public static void setFileToolsStatus(JubFrame current, boolean status) {
+    JMenuItem Join = null;
+    JMenuItem Reparent = null;
+    for (Component item : current.ToolsM.getMenuComponents())
+      if (item instanceof JMenuItem) {
+        if ("TJO".equals(((JMenuItem) item).getName())) Join = (JMenuItem) item;
+        else if ("TPA".equals(((JMenuItem) item).getName())) Reparent = (JMenuItem) item;
+      } else break;
+    if (Join != null) Join.setEnabled(status);
+    if (Reparent != null) Reparent.setEnabled(status);
+  }
 
-    public static RealTimeTool getRecoder() {
-        return recoder;
-    }
+  public static RealTimeTool getRecoder() {
+    return recoder;
+  }
 
-    public static void setRecoder(RealTimeTool recoder) {
-        ToolsManager.recoder = recoder;
-    }
+  public static void setRecoder(RealTimeTool recoder) {
+    ToolsManager.recoder = recoder;
+  }
 
-    public static RealTimeTool getShifter() {
-        return shifter;
-    }
+  public static RealTimeTool getShifter() {
+    return shifter;
+  }
 
-    public static void setShifter(RealTimeTool shifter) {
-        ToolsManager.shifter = shifter;
-    }
+  public static void setShifter(RealTimeTool shifter) {
+    ToolsManager.shifter = shifter;
+  }
 }

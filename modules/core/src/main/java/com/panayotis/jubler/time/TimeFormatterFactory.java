@@ -26,18 +26,15 @@ package com.panayotis.jubler.time;
 import java.text.ParseException;
 import javax.swing.JFormattedTextField;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class TimeFormatterFactory extends JFormattedTextField.AbstractFormatterFactory {
 
-    public JFormattedTextField.AbstractFormatter getFormatter(JFormattedTextField tf) {
-        try {
-            return new SecondsFormatter();
-            //      return new FramesFormatter();
-        } catch (ParseException e) {
-        }
-        return null;
+  public JFormattedTextField.AbstractFormatter getFormatter(JFormattedTextField tf) {
+    try {
+      return new SecondsFormatter();
+      //      return new FramesFormatter();
+    } catch (ParseException e) {
     }
+    return null;
+  }
 }

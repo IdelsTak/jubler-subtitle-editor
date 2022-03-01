@@ -26,20 +26,16 @@ package com.panayotis.jubler.subs.style.preview;
 import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import java.text.AttributedString;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public abstract class PreviewBoolean extends PreviewElement {
 
-    protected abstract Object getEnabledValue();
+  protected abstract Object getEnabledValue();
 
-    public PreviewBoolean(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  public PreviewBoolean(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 
-    public void addAttribute(AttributedString str, Object value, int from, int to) {
-        if ((Boolean) value)
-            super.addAttribute(str, getEnabledValue(), from, to);
-    }
+  public void addAttribute(AttributedString str, Object value, int from, int to) {
+    if ((Boolean) value) super.addAttribute(str, getEnabledValue(), from, to);
+  }
 }

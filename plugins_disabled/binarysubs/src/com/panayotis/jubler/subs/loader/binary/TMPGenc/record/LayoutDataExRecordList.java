@@ -31,79 +31,75 @@ import java.util.logging.Level;
  *
  * @author Hoang Duy Tran
  */
-public class LayoutDataExRecordList extends Vector<LayoutDataExRecord> implements TMPGencPatternDef {
+public class LayoutDataExRecordList extends Vector<LayoutDataExRecord>
+    implements TMPGencPatternDef {
 
-    /**
-     * Returns the collection of strings stored internally as a continuous
-     * string of text, separating each line with a new line character.
-     *
-     * @return the continuous string of text that contains every single data
-     * lines that was stored internally.
-     */
-    private String toString(String separator) {
-        StringBuilder bld = new StringBuilder();
-        for (int i = 0; i < this.size(); i++) {
-            LayoutDataExRecord r = this.elementAt(i);
-            bld.append(r.toString());
-            bld.append(separator);
-        }//
-        return bld.toString();
+  /**
+   * Returns the collection of strings stored internally as a continuous string of text, separating
+   * each line with a new line character.
+   *
+   * @return the continuous string of text that contains every single data lines that was stored
+   *     internally.
+   */
+  private String toString(String separator) {
+    StringBuilder bld = new StringBuilder();
+    for (int i = 0; i < this.size(); i++) {
+      LayoutDataExRecord r = this.elementAt(i);
+      bld.append(r.toString());
+      bld.append(separator);
+    } //
+    return bld.toString();
+  }
+
+  /**
+   * Returns the collection of strings stored internally as a continuous string of text, separating
+   * each line with a new line character. That is platform independent. This version is used
+   * internally for reporting and comparing purposes only.
+   *
+   * @return the continuous string of text that contains every single data lines that was stored
+   *     internally.
+   */
+  @Override
+  public String toString() {
+    return toString(UNIX_NL);
+  }
+
+  /**
+   * Returns the collection of strings stored internally as a continuous string of text, separating
+   * each line with a new line character that is platform dependent. This version is used
+   * externally, such as when writing the data to a file.
+   *
+   * @return the continuous string of text that contains every single data lines that was stored
+   *     internally.
+   */
+  public String toStringForWrite() {
+    return toString(DOS_NL);
+  }
+
+  /**
+   * provides an exact copy of the record
+   *
+   * @return the copy of the record
+   */
+  @Override
+  public Object clone() {
+    LayoutDataExRecordList n = null;
+    try {
+      n = (LayoutDataExRecordList) super.clone();
+    } catch (Exception ex) {
+      DEBUG.logger.log(Level.WARNING, ex.toString());
     }
+    return n;
+  } // end clone
 
-    /**
-     * Returns the collection of strings stored internally as a continuous
-     * string of text, separating each line with a new line character. That is
-     * platform independent. This version is used internally for reporting and
-     * comparing purposes only.
-     *
-     * @return the continuous string of text that contains every single data
-     * lines that was stored internally.
-     */
-    @Override
-    public String toString() {
-        return toString(UNIX_NL);
-    }
+  /** Generate this default [LayoutDataEx] 0,0 1,0 1,0 1,1 */
+  public void defaultRecord() {
+    LayoutDataExRecord list[] = new LayoutDataExRecord[4];
+    list[0] = new LayoutDataExRecord(0, 0);
+    list[1] = new LayoutDataExRecord(1, 0);
+    list[2] = new LayoutDataExRecord(1, 0);
+    list[3] = new LayoutDataExRecord(1, 1);
 
-    /**
-     * Returns the collection of strings stored internally as a continuous
-     * string of text, separating each line with a new line character that is
-     * platform dependent. This version is used externally, such as when writing
-     * the data to a file.
-     *
-     * @return the continuous string of text that contains every single data
-     * lines that was stored internally.
-     */
-    public String toStringForWrite() {
-        return toString(DOS_NL);
-    }
-
-    /**
-     * provides an exact copy of the record
-     *
-     * @return the copy of the record
-     */
-    @Override
-    public Object clone() {
-        LayoutDataExRecordList n = null;
-        try {
-            n = (LayoutDataExRecordList) super.clone();
-        } catch (Exception ex) {
-            DEBUG.logger.log(Level.WARNING, ex.toString());
-        }
-        return n;
-    }//end clone
-
-    /**
-     * Generate this default [LayoutDataEx] 0,0 1,0 1,0 1,1
-     */
-    public void defaultRecord() {
-        LayoutDataExRecord list[] = new LayoutDataExRecord[4];
-        list[0] = new LayoutDataExRecord(0, 0);
-        list[1] = new LayoutDataExRecord(1, 0);
-        list[2] = new LayoutDataExRecord(1, 0);
-        list[3] = new LayoutDataExRecord(1, 1);
-
-        for (int i = 0; i < list.length; i++)
-            this.add(list[i]);//end for(int i=0; i<list.length; i++)
-    }// public void defaultRecord()
+    for (int i = 0; i < list.length; i++) this.add(list[i]); // end for(int i=0; i<list.length; i++)
+  } // public void defaultRecord()
 }

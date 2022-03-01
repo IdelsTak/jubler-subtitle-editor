@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.information;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -64,8 +63,9 @@ public class HelpBrowser extends javax.swing.JDialog {
                 if (evt.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                     String currentURL = evt.getURL().toString();
                     setPage(currentURL);
-                    if (!currentURL.startsWith("http"))
+                    if (!currentURL.startsWith("http")) {
                         history.add(currentURL);
+                    }
                     BackB.setEnabled(true);
                 }
             }
@@ -138,8 +138,9 @@ public class HelpBrowser extends javax.swing.JDialog {
         int last = history.size() - 1;
         history.remove(last);
         setPage(history.get(last - 1));
-        if (last < 2)
+        if (last < 2) {
             BackB.setEnabled(false);
+        }
     }//GEN-LAST:event_BackBActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

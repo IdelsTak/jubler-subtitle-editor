@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options;
 
 import java.awt.BorderLayout;
@@ -29,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import static com.panayotis.jubler.i18n.I18N.__;
-
 
 /**
  *
@@ -96,24 +94,34 @@ public class ASpellOptions extends JExtBasicOptions {
         String old_lang = getLanguageName();
         dictionaries.removeAllElements();
 
-        /* load dictionaries list from aspell */
+        /*
+         * load dictionaries list from aspell
+         */
         getDictsFromPath(null);
 
         File cocoaspell = new File("/Library/Application Support/cocoAspell");
         if (cocoaspell.exists() && cocoaspell.isDirectory()) {
             getDictsFromPath(cocoaspell);
             File[] childs = cocoaspell.listFiles();
-            for (int i = 0; i < childs.length; i++)
-                if (childs[i].isDirectory())
+            for (int i = 0; i < childs.length; i++) {
+                if (childs[i].isDirectory()) {
                     getDictsFromPath(childs[i]);
+                }
+            }
         }
-        /* Now update list */
+        /*
+         * Now update list
+         */
         LangList.setListData(dictionaries);
-        /* ... and update selected language */
+        /*
+         * ... and update selected language
+         */
         setSelectedLanguage(old_lang);
     }
 
-    /* Find the selected language */
+    /*
+     * Find the selected language
+     */
     private void setSelectedLanguage(String lng) {
         ASpellDict current;
         for (int i = 0; i < dictionaries.size(); i++) {
@@ -124,24 +132,29 @@ public class ASpellOptions extends JExtBasicOptions {
                 return;
             }
         }
-        /* Select first dictionary, if nothing ws found */
-        if (LangList.getSelectedIndex() < 0 && LangList.getModel().getSize() > 0)
+        /*
+         * Select first dictionary, if nothing ws found
+         */
+        if (LangList.getSelectedIndex() < 0 && LangList.getModel().getSize() > 0) {
             LangList.setSelectedIndex(0);
+        }
     }
 
     private void getDictsFromPath(File path) {
         ArrayList<String> cmd = new ArrayList<String>();
         cmd.add(getExecFileName());
         cmd.add("dicts");
-        if (path != null && path.exists())
+        if (path != null && path.exists()) {
             cmd.add("--dict-dir=" + path);
+        }
         try {
             Process proc = Runtime.getRuntime().exec(cmd.toArray(new String[1]));
             BufferedReader get = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 
             String d;
-            while ((d = get.readLine()) != null)
+            while ((d = get.readLine()) != null) {
                 dictionaries.add(new ASpellDict(d, path));
+            }
         } catch (IOException e) {
         }
     }
@@ -161,15 +174,17 @@ public class ASpellOptions extends JExtBasicOptions {
 
     public ASpellDict getLanguage() {
         int which = LangList.getSelectedIndex();
-        if (which >= 0)
+        if (which >= 0) {
             return (ASpellDict) LangList.getModel().getElementAt(which);
+        }
         return null;
     }
 
     public String getLanguageName() {
         ASpellDict language = getLanguage();
-        if (language == null)
+        if (language == null) {
             return default_language;
+        }
         return language.lang;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -186,10 +201,11 @@ public class ASpellOptions extends JExtBasicOptions {
 
         public ASpellDict(String lang, File path) {
             this.lang = lang;
-            if (path != null)
+            if (path != null) {
                 this.path = path.getPath();
-            else
+            } else {
                 this.path = null;
+            }
         }
 
         @Override

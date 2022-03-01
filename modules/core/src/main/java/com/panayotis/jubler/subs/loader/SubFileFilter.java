@@ -2,7 +2,7 @@
  * SubFileFilter.java
  *
  * Created on 27 Ιούνιος 2005, 12:01 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -28,23 +28,19 @@ import java.io.File;
 
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
-public class SubFileFilter extends javax.swing.filechooser.FileFilter implements java.io.FileFilter {
+/** @author teras */
+public class SubFileFilter extends javax.swing.filechooser.FileFilter
+    implements java.io.FileFilter {
 
-    public boolean accept(File pathname) {
-        if (pathname.isDirectory())
-            return true;
-        String fname = pathname.getName().toLowerCase();
-        for (int i = 0; i < Availabilities.formats.size(); i++)
-            if (fname.endsWith(Availabilities.formats.get(i).getExtension()))
-                return true;
-        return false;
-    }
+  public boolean accept(File pathname) {
+    if (pathname.isDirectory()) return true;
+    String fname = pathname.getName().toLowerCase();
+    for (int i = 0; i < Availabilities.formats.size(); i++)
+      if (fname.endsWith(Availabilities.formats.get(i).getExtension())) return true;
+    return false;
+  }
 
-    public String getDescription() {
-        return __("Subtitle files");
-    }
+  public String getDescription() {
+    return __("Subtitle files");
+  }
 }

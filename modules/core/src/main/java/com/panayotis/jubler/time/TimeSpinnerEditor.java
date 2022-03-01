@@ -2,7 +2,7 @@
  * TimeSpinnerEditor.java
  *
  * Created on 23 Ιούνιος 2005, 1:10 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -27,22 +27,17 @@ import java.awt.Font;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class TimeSpinnerEditor extends JSpinner.DefaultEditor {
 
-    /**
-     * Creates a new instance of TimeSpinnerEditor
-     */
-    public TimeSpinnerEditor(JSpinner spinner) {
-        super(spinner);
-        JFormattedTextField ftf = getTextField();
-        ftf.setEditable(true);
-        ftf.setFont(new Font("Monospaced", Font.BOLD, 13));
-        ftf.setColumns(13);
-        ftf.setHorizontalAlignment(JFormattedTextField.RIGHT);
-        ftf.setFormatterFactory(new TimeFormatterFactory());
-    }
+  /** Creates a new instance of TimeSpinnerEditor */
+  public TimeSpinnerEditor(JSpinner spinner) {
+    super(spinner);
+    JFormattedTextField ftf = getTextField();
+    ftf.setEditable(true);
+    ftf.setFont(new Font("Monospaced", Font.BOLD, 13));
+    ftf.setColumns(13);
+    ftf.setHorizontalAlignment(JFormattedTextField.RIGHT);
+    ftf.setFormatterFactory(new TimeFormatterFactory());
+  }
 }

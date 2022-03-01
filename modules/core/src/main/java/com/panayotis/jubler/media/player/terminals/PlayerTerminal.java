@@ -27,23 +27,20 @@ import com.panayotis.jubler.tools.externals.ExtProgramException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface PlayerTerminal {
 
-    public void start(PlayerArguments args) throws ExtProgramException;
+  public void start(PlayerArguments args) throws ExtProgramException;
 
-    public BufferedWriter getCmdPipe();
+  public BufferedWriter getCmdPipe();
 
-    public BufferedReader getOutPipe();
+  public BufferedReader getOutPipe();
 
-    public BufferedReader getErrorPipe();
+  public BufferedReader getErrorPipe();
 
-    public void terminate();
+  public void terminate();
 
-    public String parseOutStream(String info, PlayerFeedback feedback, TerminalViewport viewport);
+  public String parseOutStream(String info, PlayerFeedback feedback, TerminalViewport viewport);
 
-    public String parseErrorStream(String info, PlayerFeedback feedback, TerminalViewport viewport);
+  public String parseErrorStream(String info, PlayerFeedback feedback, TerminalViewport viewport);
 }

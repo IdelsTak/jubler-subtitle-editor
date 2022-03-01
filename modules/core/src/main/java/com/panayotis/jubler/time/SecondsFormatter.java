@@ -2,7 +2,7 @@
  * TimeSpinnerFormatter.java
  *
  * Created on 23 Ιούνιος 2005, 3:23 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -28,33 +28,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.text.MaskFormatter;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class SecondsFormatter extends MaskFormatter {
 
-    private static Pattern pat;
+  private static Pattern pat;
 
-    static {
-        pat = Pattern.compile("(\\d+):(\\d+):(\\d+),(\\d\\d\\d)\\d*");
-    }
+  static {
+    pat = Pattern.compile("(\\d+):(\\d+):(\\d+),(\\d\\d\\d)\\d*");
+  }
 
-    public SecondsFormatter() throws ParseException {
-        super("##:##:##,###");
-        setPlaceholder(null);
-        setPlaceholderCharacter('0');
-    }
+  public SecondsFormatter() throws ParseException {
+    super("##:##:##,###");
+    setPlaceholder(null);
+    setPlaceholderCharacter('0');
+  }
 
-    public Object stringToValue(String text) throws ParseException {
-        Matcher m = pat.matcher(text);
-        if (!m.matches())
-            throw new ParseException("", 0);
-        Time res = new Time(m.group(1), m.group(2), m.group(3), m.group(4));
-        return res;
-    }
+  public Object stringToValue(String text) throws ParseException {
+    Matcher m = pat.matcher(text);
+    if (!m.matches()) throw new ParseException("", 0);
+    Time res = new Time(m.group(1), m.group(2), m.group(3), m.group(4));
+    return res;
+  }
 
-    public String valueToString(Object value) {
-        return ((Time) value).getSeconds();
-    }
+  public String valueToString(Object value) {
+    return ((Time) value).getSeconds();
+  }
 }

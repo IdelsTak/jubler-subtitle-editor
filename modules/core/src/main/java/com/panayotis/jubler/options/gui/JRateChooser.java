@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options.gui;
 
 import com.panayotis.jubler.JubFrame;
@@ -114,10 +113,12 @@ public class JRateChooser extends JPanel {
 
     private void FPSChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FPSChooserActionPerformed
         String action = evt.getActionCommand().trim();
-        if (action.equals(""))
+        if (action.equals("")) {
             return;
-        if (action.startsWith("combo"))
+        }
+        if (action.startsWith("combo")) {
             return;
+        }
         try {
             Float.parseFloat(action);
             FPSChooser.setSelectedItem(action);
@@ -127,14 +128,17 @@ public class JRateChooser extends JPanel {
     }//GEN-LAST:event_FPSChooserActionPerformed
 
     private void FromFPSBFPSBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FromFPSBFPSBActionPerformed
-        if (mfile == null)
+        if (mfile == null) {
             return;
-        if (!mfile.validateMediaFile(subs, false, JubFrame.windows.get(0)))
+        }
+        if (!mfile.validateMediaFile(subs, false, JubFrame.windows.get(0))) {
             return;
+        }
 
         float fps = mfile.getVideoFile().getFPS();
-        if (fps > 0)
+        if (fps > 0) {
             FPSChooser.setSelectedItem(fps);
+        }
     }//GEN-LAST:event_FromFPSBFPSBActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox FPSChooser;

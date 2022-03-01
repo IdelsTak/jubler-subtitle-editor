@@ -2,7 +2,7 @@
  * AudioFileFilter.java
  *
  * Created on 27 Ιούνιος 2005, 12:01 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -28,54 +28,47 @@ import java.io.File;
 import static com.panayotis.jubler.i18n.I18N.__;
 import com.panayotis.jubler.media.preview.decoders.AudioPreview;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class AudioFileFilter extends MediaFileFilter {
 
-    private static final String exts[];
-    private String cachesource = null;
+  private static final String exts[];
+  private String cachesource = null;
 
-    static {
-        exts = new String[5];
-        exts[0] = AudioPreview.getExtension();
-        exts[1] = ".wav";
-        exts[2] = ".mp3";
-        exts[3] = ".ogg";
-        exts[4] = ".ac3";
+  static {
+    exts = new String[5];
+    exts[0] = AudioPreview.getExtension();
+    exts[1] = ".wav";
+    exts[2] = ".mp3";
+    exts[3] = ".ogg";
+    exts[4] = ".ac3";
+  }
+
+  public String[] getExtensions() {
+    return exts;
+  }
+
+  public boolean accept(File pathname) {
+    if (pathname.isDirectory()) return true;
+    String fname = pathname.getName().toLowerCase();
+    if (cachesource != null) {
+      String name = AudioPreview.getNameFromCache(pathname);
+      if (name != null && name.equals(cachesource)) return true;
+      return false;
     }
 
-    public String[] getExtensions() {
-        return exts;
-    }
+    for (int i = 0; i < exts.length; i++) if (fname.endsWith(exts[i])) return true;
+    return false;
+  }
 
-    public boolean accept(File pathname) {
-        if (pathname.isDirectory())
-            return true;
-        String fname = pathname.getName().toLowerCase();
-        if (cachesource != null) {
-            String name = AudioPreview.getNameFromCache(pathname);
-            if (name != null && name.equals(cachesource))
-                return true;
-            return false;
-        }
+  public String getDescription() {
+    return __("All Audio files");
+  }
 
-        for (int i = 0; i < exts.length; i++)
-            if (fname.endsWith(exts[i]))
-                return true;
-        return false;
+  public void setCheckForValidCache(File cachesource) {
+    if (cachesource == null) {
+      this.cachesource = null;
+      return;
     }
-
-    public String getDescription() {
-        return __("All Audio files");
-    }
-
-    public void setCheckForValidCache(File cachesource) {
-        if (cachesource == null) {
-            this.cachesource = null;
-            return;
-        }
-        this.cachesource = cachesource.getName(); // trick to get the filename from the full path
-    }
+    this.cachesource = cachesource.getName(); // trick to get the filename from the full path
+  }
 }

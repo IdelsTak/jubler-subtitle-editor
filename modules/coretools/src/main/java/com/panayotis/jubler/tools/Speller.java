@@ -29,27 +29,27 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class Speller extends TimeBaseTool {
 
-    public Speller() {
-        super(true, new ToolMenu(__("Spell check"), "TLL", Location.CONTENTTOOL, KeyEvent.VK_T, InputEvent.CTRL_MASK));
-    }
+  public Speller() {
+    super(
+        true,
+        new ToolMenu(
+            __("Spell check"), "TLL", Location.CONTENTTOOL, KeyEvent.VK_T, InputEvent.CTRL_MASK));
+  }
 
-    @Override
-    protected String getToolTitle() {
-        return __("Spell check");
-    }
+  @Override
+  protected String getToolTitle() {
+    return __("Spell check");
+  }
 
-    /* All work has been done in JSpellChecker */
-    /* We ignore default JTool for-loop */
-    @Override
-    protected boolean affect(List<SubEntry> list) {
-        JSpellChecker checkvisual = new JSpellChecker(jparent, JubFrame.prefs.getSpellChecker(), list);
-        checkvisual.findNextWord();
-        return true;
-    }
+  /* All work has been done in JSpellChecker */
+  /* We ignore default JTool for-loop */
+  @Override
+  protected boolean affect(List<SubEntry> list) {
+    JSpellChecker checkvisual = new JSpellChecker(jparent, JubFrame.prefs.getSpellChecker(), list);
+    checkvisual.findNextWord();
+    return true;
+  }
 }

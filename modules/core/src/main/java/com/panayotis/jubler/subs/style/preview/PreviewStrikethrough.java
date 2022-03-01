@@ -27,24 +27,19 @@ import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator.Attribute;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewStrikethrough extends PreviewBoolean {
 
-    protected Object getEnabledValue() {
-        return TextAttribute.STRIKETHROUGH_ON;
-    }
+  protected Object getEnabledValue() {
+    return TextAttribute.STRIKETHROUGH_ON;
+  }
 
-    protected Attribute getStyle() {
-        return TextAttribute.STRIKETHROUGH;
-    }
+  protected Attribute getStyle() {
+    return TextAttribute.STRIKETHROUGH;
+  }
 
-    /**
-     * Creates a new instance of PreviewBoolean
-     */
-    public PreviewStrikethrough(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  /** Creates a new instance of PreviewBoolean */
+  public PreviewStrikethrough(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 }

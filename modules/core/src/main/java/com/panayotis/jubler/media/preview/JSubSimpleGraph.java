@@ -2,7 +2,7 @@
  * JSubDiagram.java
  *
  * Created on 8 Ιούλιος 2005, 4:31 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -30,59 +30,53 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class JSubSimpleGraph extends JComponent {
 
-    private Subtitles subs;
-    private int length;
+  private Subtitles subs;
+  private int length;
 
-    /**
-     * Creates a new instance of JSubDiagram
-     */
-    public JSubSimpleGraph(Subtitles subs) {
-        super();
-        this.subs = subs;
-        length = -1;
-    }
+  /** Creates a new instance of JSubDiagram */
+  public JSubSimpleGraph(Subtitles subs) {
+    super();
+    this.subs = subs;
+    length = -1;
+  }
 
-    public Dimension getPreferredSize() {
-        return new Dimension(100, 10);
-    }
+  public Dimension getPreferredSize() {
+    return new Dimension(100, 10);
+  }
 
-    public void setLength(int secs) {
-        length = secs;
-        repaint();
-    }
+  public void setLength(int secs) {
+    length = secs;
+    repaint();
+  }
 
-    public void setSubtitles(Subtitles subs) {
-        this.subs = subs;
-        repaint();
-    }
+  public void setSubtitles(Subtitles subs) {
+    this.subs = subs;
+    repaint();
+  }
 
-    protected void paintComponent(Graphics g) {
-        int sliderleft = SystemDependent.getSliderLOffset();
+  protected void paintComponent(Graphics g) {
+    int sliderleft = SystemDependent.getSliderLOffset();
 
-        int height = getHeight();
-        int fullwidth = getWidth();
-        int width = fullwidth - sliderleft - SystemDependent.getSliderROffset();
+    int height = getHeight();
+    int fullwidth = getWidth();
+    int width = fullwidth - sliderleft - SystemDependent.getSliderROffset();
 
-        if (length < 0 || subs == null)
-            return;
+    if (length < 0 || subs == null) return;
 
-        float factor = (float) width / length;
+    float factor = (float) width / length;
 
+    g.setColor(UIManager.getColor("Label.background"));
+    g.fillRect(0, 0, fullwidth, height);
 
-        g.setColor(UIManager.getColor("Label.background"));
-        g.fillRect(0, 0, fullwidth, height);
+    g.setColor(JSubTimeline.BackColor);
+    g.fillRect(sliderleft, 0, width, height);
 
-        g.setColor(JSubTimeline.BackColor);
-        g.fillRect(sliderleft, 0, width, height);
-
-        g.setColor(JSubTimeline.SubColor);
-        for (int i = 0; i < subs.size(); i++)
-            g.fillRect((int) (subs.elementAt(i).getStartTime().toSeconds() * factor) + sliderleft, 0, 1, height);
-    }
+    g.setColor(JSubTimeline.SubColor);
+    for (int i = 0; i < subs.size(); i++)
+      g.fillRect(
+          (int) (subs.elementAt(i).getStartTime().toSeconds() * factor) + sliderleft, 0, 1, height);
+  }
 }

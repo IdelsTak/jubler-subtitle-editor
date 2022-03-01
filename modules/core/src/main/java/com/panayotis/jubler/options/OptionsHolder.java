@@ -2,7 +2,7 @@
  * OptionsHolder.java
  *
  * Created on 24 Ιούνιος 2005, 2:43 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -25,13 +25,10 @@ package com.panayotis.jubler.options;
 
 import com.panayotis.jubler.options.gui.TabPage;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface OptionsHolder extends TabPage {
 
-    public abstract void loadPreferences();
+  public abstract void loadPreferences();
 
-    public abstract void savePreferences();
+  public abstract void savePreferences();
 }

@@ -24,10 +24,9 @@ package com.panayotis.jubler.subs;
 
 public class SubMetrics {
 
-    public int length = 0;
-    public int linelength = 0;
-    public int lines = 1;
-    public float cps = 0;
-    public int fillpercent = 50;
-
+  public int length = 0;
+  public int linelength = 0;
+  public int lines = 1;
+  public float cps = 0;
+  public int fillpercent = 50;
 }

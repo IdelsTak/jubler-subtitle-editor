@@ -89,7 +89,6 @@ public class JExternalConsole extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelB;
     private javax.swing.JTextArea consoleT;

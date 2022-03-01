@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.subs.loader.gui;
 
 import com.panayotis.jubler.options.gui.JRateChooser;
@@ -47,8 +46,9 @@ public class JLoadOptions extends JFileOptions {
     public JLoadOptions() {
         super();
         CEnc = new JComboBox[3];
-        for (int i = 0; i < CEnc.length; i++)
+        for (int i = 0; i < CEnc.length; i++) {
             CEnc[i] = new JComboBox(AvailEncodings);
+        }
         CFPS = new JRateChooser();
         initComponents();
         for (int i = 0; i < CEnc.length; i++) {
@@ -62,15 +62,17 @@ public class JLoadOptions extends JFileOptions {
         CFPS.setDataFiles(mfile, subs);
         setUnicodeVisible(false);
         OptsP.add(getPresetsButton(), BorderLayout.EAST);
-        for (int i = 0; i < CEnc.length; i++)
+        for (int i = 0; i < CEnc.length; i++) {
             setListItem(CEnc[i], SubFile.getDefaultEncoding(i));
+        }
         CFPS.setFPS(SubFile.getDefaultFPS());
     }
 
     @Override
     protected void applyOptions(SubFile sfile) {
-        for (int i = 0; i < CEnc.length; i++)
+        for (int i = 0; i < CEnc.length; i++) {
             SubFile.setDefaultEncoding(i, CEnc[i].getSelectedItem().toString());
+        }
         SubFile.setDefaultFPS(CFPS.getFPS());
         super.applyOptions(sfile);
         sfile.setFPS(CFPS.getFPSValue());

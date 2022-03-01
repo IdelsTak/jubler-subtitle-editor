@@ -3,7 +3,6 @@
  *
  * Created on 28 Ιούλιος 2005, 12:29 μμ
  */
-
 package com.panayotis.jubler.tools.replace;
 
 import com.panayotis.jubler.os.JIDialog;
@@ -38,8 +37,9 @@ public class JReplace extends javax.swing.JDialog {
 
         this.parent = parent;
         this.row = row;
-        if (this.row < 0)
+        if (this.row < 0) {
             this.row = 0;
+        }
         nextpos = 0;
         foundpos = -1;
         this.undo = parent.getUndoList();// we need to invalidate undo list later on, so we keep a copy here
@@ -53,16 +53,19 @@ public class JReplace extends javax.swing.JDialog {
         String what, inwhich;
 
         what = FindT.getText();
-        if (IgnoreC.isSelected())
+        if (IgnoreC.isSelected()) {
             what = what.toLowerCase();
+        }
         length = what.length();
-        if (subs.size() < 1)
+        if (subs.size() < 1) {
             return;
+        }
 
         while (true) {
             inwhich = subs.elementAt(row).getText();
-            if (IgnoreC.isSelected())
+            if (IgnoreC.isSelected()) {
                 inwhich = inwhich.toLowerCase();
+            }
             foundpos = inwhich.indexOf(what, nextpos);
             if (foundpos >= 0) {
                 ReplaceB.setEnabled(true);
@@ -76,8 +79,9 @@ public class JReplace extends javax.swing.JDialog {
             if (row == subs.size()) {
                 row = 0;
                 ContextT.setText("");
-                if (!JIDialog.action(this, __("End of subtitles reached.\nStart from the beginnning."), __("End of subtitles")))
+                if (!JIDialog.action(this, __("End of subtitles reached.\nStart from the beginnning."), __("End of subtitles"))) {
                     break;
+                }
             }
         }
     }
@@ -90,7 +94,9 @@ public class JReplace extends javax.swing.JDialog {
     private void setSentence(String txt, int pos, int len) {
         ContextT.setText(txt.replace('\n', '|'));
 
-        /* Change color of error to red */
+        /*
+         * Change color of error to red
+         */
         SimpleAttributeSet set = new SimpleAttributeSet();
         set.addAttribute(StyleConstants.ColorConstants.Foreground, Color.RED);
         ContextT.getStyledDocument().setCharacterAttributes(pos, len, set, true);
@@ -218,9 +224,12 @@ public class JReplace extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReplaceBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReplaceBActionPerformed
-        /* We keep track of the undo list ONLY the first time a change has been done.
+        /*
+         * We keep track of the undo list ONLY the first time a change has been
+         * done.
          * Then we "forget" this pointer in order to prevent a double
-         * insertion of a undo action */
+         * insertion of a undo action
+         */
         if (undo != null) {
             undo.addUndo(new UndoEntry(subs, __("Replace")));
             undo = null;

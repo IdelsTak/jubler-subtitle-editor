@@ -32,40 +32,33 @@ import com.panayotis.jubler.rmi.JublerClient;
 import com.panayotis.jubler.rmi.JublerServer;
 import java.io.File;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class Jubler {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Before the slightest code execution, we HAVE to grab uncaught exceptions */
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+  /** @param args the command line arguments */
+  public static void main(String args[]) {
+    /* Before the slightest code execution, we HAVE to grab uncaught exceptions */
+    Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 
-        System.setProperty("apple.laf.useScreenMenuBar", "true");
-        SystemDependent.setLookAndFeel();
+    System.setProperty("apple.laf.useScreenMenuBar", "true");
+    SystemDependent.setLookAndFeel();
 
-        /* Load all startup files in a separate process */
-        LoaderThread loader = new LoaderThread();
+    /* Load all startup files in a separate process */
+    LoaderThread loader = new LoaderThread();
 
-        /* Parse arguments */
-        loader.addSubList(args);
-        if (JublerClient.isRunning())
-            loader.goToMaster();
+    /* Parse arguments */
+    loader.addSubList(args);
+    if (JublerClient.isRunning()) loader.goToMaster();
 
-        /* Add autosave subtitles */
-        for (File file : AutoSaver.getAutoSaveListOnLoad())
-            loader.addSubtitle(file.getPath());
+    /* Add autosave subtitles */
+    for (File file : AutoSaver.getAutoSaveListOnLoad()) loader.addSubtitle(file.getPath());
 
-        /* Start RMI server, so only one instance of JubFrame will be opened at all times */
-        JublerServer.startServer();
+    /* Start RMI server, so only one instance of JubFrame will be opened at all times */
+    JublerServer.startServer();
 
-        new JubFrame().setVisible(true);   // Display initial JubFrame window
-        loader.start();     // initialize loader. AFTER first frame has been loaded
+    new JubFrame().setVisible(true); // Display initial JubFrame window
+    loader.start(); // initialize loader. AFTER first frame has been loaded
 
-        PluginManager.manager.callPluginListeners(StaticJubler.class);
-    }
+    PluginManager.manager.callPluginListeners(StaticJubler.class);
+  }
 }

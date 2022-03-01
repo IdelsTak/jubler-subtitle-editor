@@ -18,24 +18,21 @@
 
 package com.panayotis.jubler.subs.loader.text;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class DFXP extends W3CTimedText {
 
-    @Override
-    public String getExtension() {
-        return "dfxp";
-    }
+  @Override
+  public String getExtension() {
+    return "dfxp";
+  }
 
-    @Override
-    public String getName() {
-        return "DFXP";
-    }
+  @Override
+  public String getName() {
+    return "DFXP";
+  }
 
-    @Override
-    public String getExtendedName() {
-        return "DFXP";
-    }
+  @Override
+  public String getExtendedName() {
+    return "DFXP";
+  }
 }

@@ -30,20 +30,18 @@ import java.util.zip.ZipFile;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-/**
- * @author teras
- */
+/** @author teras */
 public class Theme {
 
-    public static BufferedImage loadImage(String name) {
-        try {
-            return ImageIO.read(Theme.class.getResourceAsStream("/" + name));
-        } catch (IOException ex) {
-            return null;
-        }
+  public static BufferedImage loadImage(String name) {
+    try {
+      return ImageIO.read(Theme.class.getResourceAsStream("/" + name));
+    } catch (IOException ex) {
+      return null;
     }
+  }
 
-    public static ImageIcon loadIcon(String name) {
-        return new ImageIcon(loadImage(name));
-    }
+  public static ImageIcon loadIcon(String name) {
+    return new ImageIcon(loadImage(name));
+  }
 }

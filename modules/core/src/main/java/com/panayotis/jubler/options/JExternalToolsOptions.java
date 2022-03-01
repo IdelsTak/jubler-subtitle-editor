@@ -22,6 +22,7 @@ import static com.panayotis.jubler.i18n.I18N.__;
  * @author teras
  */
 public class JExternalToolsOptions extends JPanel implements OptionsHolder {
+
     private static final JFileChooser chooser = new JFileChooser();
     public static final ExternalToolList tools = new ExternalToolList();
     private ExternalTool current;
@@ -33,8 +34,9 @@ public class JExternalToolsOptions extends JPanel implements OptionsHolder {
             String path = Options.getOption(prefix + "path", null);
             String command = Options.getOption(prefix + "command", null);
             boolean inplace = Boolean.parseBoolean(Options.getOption(prefix + "inplace", "false"));
-            if (name == null || path == null || command == null)
+            if (name == null || path == null || command == null) {
                 break;
+            }
             tools.add(new ExternalTool(name, path, command, inplace));
         }
     }
@@ -292,15 +294,16 @@ public class JExternalToolsOptions extends JPanel implements OptionsHolder {
 
     private void toolsLValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_toolsLValueChanged
         ExternalTool tool = tools.getElementAt(toolsL.getSelectedIndex());
-        if (tool != current)
+        if (tool != current) {
             setCurrent(tool);
+        }
     }//GEN-LAST:event_toolsLValueChanged
 
     private void inplaceCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inplaceCActionPerformed
-        if (current != null)
+        if (current != null) {
             current.setInplace(inplaceC.isSelected());
+        }
     }//GEN-LAST:event_inplaceCActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addB;
@@ -326,6 +329,7 @@ public class JExternalToolsOptions extends JPanel implements OptionsHolder {
 }
 
 class ExternalToolList extends AbstractListModel<ExternalTool> {
+
     private final List<ExternalTool> tools = new ArrayList<>();
 
     @Override
@@ -353,8 +357,9 @@ class ExternalToolList extends AbstractListModel<ExternalTool> {
 
     public void update(ExternalTool tool) {
         int index = tools.indexOf(tool);
-        if (index >= 0)
+        if (index >= 0) {
             fireContentsChanged(this, index, index);
+        }
     }
 
     public Iterable<ExternalTool> getList() {
@@ -363,5 +368,6 @@ class ExternalToolList extends AbstractListModel<ExternalTool> {
 }
 
 interface CallBack {
+
     void exec(String value);
 }

@@ -1,4 +1,3 @@
-
 package com.panayotis.jubler.autoupdate;
 
 /*
@@ -34,58 +33,59 @@ import com.panayotis.jupidator.UpdatedApplication;
 import com.panayotis.jupidator.Updater;
 import com.panayotis.jupidator.UpdaterException;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class AutoUpdater implements UpdatedApplication, Plugin, PluginItem {
 
-    private static final String URL = "http://www.jubler.org/files/updates/update.xml";
+  private static final String URL = "http://www.jubler.org/files/updates/update.xml";
 
-    @Override
-    public boolean requestRestart() {
-        return StaticJubler.requestQuit(null);
-    }
+  @Override
+  public boolean requestRestart() {
+    return StaticJubler.requestQuit(null);
+  }
 
-    @Override
-    public void receiveMessage(String message) {
-        DEBUG.debug(message);
-    }
+  @Override
+  public void receiveMessage(String message) {
+    DEBUG.debug(message);
+  }
 
-    @Override
-    public Class[] getPluginAffections() {
-        return new Class[]{StaticJubler.class};
-    }
+  @Override
+  public Class[] getPluginAffections() {
+    return new Class[] {StaticJubler.class};
+  }
 
-    @Override
-    public void execPlugin(Object caller, Object param) {
-        try {
-            ApplicationInfo info = new ApplicationInfo(SystemFileFinder.AppPath.getAbsolutePath(), SystemDependent.getAppSupportDirPath(), JAbout.getCurrentRelease(), JAbout.getCurrentVersion());
-            info.setDistributionBased(JAbout.isDistributionBased());
-            Updater upd = new Updater(URL, info, this);
-            upd.actionDisplay();
-        } catch (UpdaterException ex) {
-            DEBUG.debug(ex.getMessage());
-        }
+  @Override
+  public void execPlugin(Object caller, Object param) {
+    try {
+      ApplicationInfo info =
+          new ApplicationInfo(
+              SystemFileFinder.AppPath.getAbsolutePath(),
+              SystemDependent.getAppSupportDirPath(),
+              JAbout.getCurrentRelease(),
+              JAbout.getCurrentVersion());
+      info.setDistributionBased(JAbout.isDistributionBased());
+      Updater upd = new Updater(URL, info, this);
+      upd.actionDisplay();
+    } catch (UpdaterException ex) {
+      DEBUG.debug(ex.getMessage());
     }
+  }
 
-    @Override
-    public PluginItem[] getPluginItems() {
-        return new PluginItem[]{this};
-    }
+  @Override
+  public PluginItem[] getPluginItems() {
+    return new PluginItem[] {this};
+  }
 
-    public String getPluginName() {
-        return "Auto update";
-    }
+  public String getPluginName() {
+    return "Auto update";
+  }
 
-    public boolean canDisablePlugin() {
-        return false;
-    }
+  public boolean canDisablePlugin() {
+    return false;
+  }
 
-    public ClassLoader getClassLoader() {
-        return null;
-    }
+  public ClassLoader getClassLoader() {
+    return null;
+  }
 
-    public void setClassLoader(ClassLoader loader) {
-    }
+  public void setClassLoader(ClassLoader loader) {}
 }

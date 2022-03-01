@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.media;
 
 import com.panayotis.jubler.media.filters.AudioFileFilter;
@@ -79,10 +78,11 @@ public class JVideofileSelector extends javax.swing.JPanel {
     public void setEnabled(boolean status) {
         VideoBrowse.setEnabled(status);
         ExternalAudioB.setEnabled(status);
-        if (status && mfile != null && mfile.getAudioFile() != null && (!mfile.getAudioFile().isSameAsVideo()))
+        if (status && mfile != null && mfile.getAudioFile() != null && (!mfile.getAudioFile().isSameAsVideo())) {
             AudioBrowse.setEnabled(true);
-        else
+        } else {
             AudioBrowse.setEnabled(false);
+        }
         CacheBrowse.setEnabled(status);
     }
 
@@ -92,8 +92,9 @@ public class JVideofileSelector extends javax.swing.JPanel {
     }
 
     public File getAudioFileee() {
-        if (ExternalAudioB.isSelected())
+        if (ExternalAudioB.isSelected()) {
             return null; // afile
+        }
         return null;
     }
 
@@ -211,8 +212,9 @@ public class JVideofileSelector extends javax.swing.JPanel {
         fdialog.setSelectedFile(mfile.getCacheFile());
         afilter.setCheckForValidCache(mfile.getVideoFile());
         fdialog.setFileFilter(afilter);
-        if (fdialog.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)
+        if (fdialog.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
             return;
+        }
         FileCommunicator.setDefaultDir(fdialog.getCurrentDirectory());
         mfile.setCacheFile(fdialog.getSelectedFile());
         updateFiles();
@@ -230,9 +232,9 @@ public class JVideofileSelector extends javax.swing.JPanel {
     }//GEN-LAST:event_AudioBrowseActionPerformed
 
     private void ExternalAudioBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExternalAudioBActionPerformed
-        if (ExternalAudioB.isSelected())
+        if (ExternalAudioB.isSelected()) {
             AudioBrowseActionPerformed(evt);
-        else {
+        } else {
             mfile.setAudioFileUnused();
             updateFiles();
         }
@@ -241,8 +243,9 @@ public class JVideofileSelector extends javax.swing.JPanel {
     private void VideoBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VideoBrowseActionPerformed
         fdialog.setSelectedFile(mfile.getVideoFile());
         fdialog.setFileFilter(vfilter);
-        if (fdialog.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)
+        if (fdialog.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
             return;
+        }
         FileCommunicator.setDefaultDir(fdialog.getCurrentDirectory());
         mfile.setVideoFile(fdialog.getSelectedFile());
         updateFiles();

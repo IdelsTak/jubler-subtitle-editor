@@ -2,7 +2,7 @@
  * VideoPlayer.java
  *
  * Created on 26 Ιούνιος 2005, 1:36 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -29,35 +29,33 @@ import com.panayotis.jubler.subs.Subtitles;
 import com.panayotis.jubler.time.Time;
 import com.panayotis.jubler.tools.externals.ExtProgramException;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface Viewport {
 
-    public abstract void setParameters(MediaFile avi, Subtitles subs, PlayerFeedback feedback, Time when);
+  public abstract void setParameters(
+      MediaFile avi, Subtitles subs, PlayerFeedback feedback, Time when);
 
-    public abstract void start() throws ExtProgramException;
+  public abstract void start() throws ExtProgramException;
 
-    public abstract boolean pause(boolean pause);
+  public abstract boolean pause(boolean pause);
 
-    public abstract boolean quit();
+  public abstract boolean quit();
 
-    public abstract boolean seek(int secs);
+  public abstract boolean seek(int secs);
 
-    public abstract boolean skip(VideoPlayer.SkipLevel level);
+  public abstract boolean skip(VideoPlayer.SkipLevel level);
 
-    public abstract boolean delaySubs(float secs);  // Relative value
+  public abstract boolean delaySubs(float secs); // Relative value
 
-    public abstract boolean changeSubs(Subtitles subs);
+  public abstract boolean changeSubs(Subtitles subs);
 
-    public abstract boolean setActive(boolean status, Subtitles newsubs);
+  public abstract boolean setActive(boolean status, Subtitles newsubs);
 
-    public abstract boolean setSpeed(VideoPlayer.SpeedLevel level);
+  public abstract boolean setSpeed(VideoPlayer.SpeedLevel level);
 
-    public abstract boolean setVolume(VideoPlayer.SoundLevel level);
+  public abstract boolean setVolume(VideoPlayer.SoundLevel level);
 
-    public abstract double getTime();
+  public abstract double getTime();
 
-    public abstract boolean isPaused();
+  public abstract boolean isPaused();
 }

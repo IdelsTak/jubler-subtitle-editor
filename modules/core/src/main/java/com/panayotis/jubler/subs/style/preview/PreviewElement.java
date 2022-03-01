@@ -28,42 +28,37 @@ import com.panayotis.jubler.subs.style.event.StyleoverEvent;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public abstract class PreviewElement {
 
-    private AbstractStyleover over;
-    private Object deflt;
+  private AbstractStyleover over;
+  private Object deflt;
 
-    protected abstract Attribute getStyle();
+  protected abstract Attribute getStyle();
 
-    public PreviewElement() {
-        this(null, null);
-    }
+  public PreviewElement() {
+    this(null, null);
+  }
 
-    public PreviewElement(Object deflt, AbstractStyleover over) {
-        this.deflt = deflt;
-        this.over = over;
-    }
+  public PreviewElement(Object deflt, AbstractStyleover over) {
+    this.deflt = deflt;
+    this.over = over;
+  }
 
-    public Object getDefault() {
-        return deflt;
-    }
+  public Object getDefault() {
+    return deflt;
+  }
 
-    public int countStyleover() {
-        if (over == null)
-            return -1;
-        return over.size();
-    }
+  public int countStyleover() {
+    if (over == null) return -1;
+    return over.size();
+  }
 
-    public StyleoverEvent getEvent(int which) {
-        return over.getEvent(which);
-    }
+  public StyleoverEvent getEvent(int which) {
+    return over.getEvent(which);
+  }
 
-    public void addAttribute(AttributedString str, Object value, int from, int to) {
-        if (from != to)
-            str.addAttribute(getStyle(), value, from, to);
-    }
+  public void addAttribute(AttributedString str, Object value, int from, int to) {
+    if (from != to) str.addAttribute(getStyle(), value, from, to);
+  }
 }

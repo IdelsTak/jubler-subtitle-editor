@@ -31,52 +31,51 @@ import java.awt.event.KeyEvent;
 import javax.swing.JComponent;
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class Translate extends TimeBaseTool {
 
-    private static AvailTranslators translators;
-    private Translator trans;
+  private static AvailTranslators translators;
+  private Translator trans;
 
-    public Translate() {
-        super(true, new ToolMenu(__("Translate"), "TTM", Location.CONTENTTOOL, KeyEvent.VK_E, InputEvent.CTRL_MASK));
-    }
+  public Translate() {
+    super(
+        true,
+        new ToolMenu(
+            __("Translate"), "TTM", Location.CONTENTTOOL, KeyEvent.VK_E, InputEvent.CTRL_MASK));
+  }
 
-    @Override
-    protected String getToolTitle() {
-        return __("Translate text");
-    }
+  @Override
+  protected String getToolTitle() {
+    return __("Translate text");
+  }
 
-    @Override
-    protected boolean affect(List<SubEntry> list) {
-        if (trans == null) {
-            DEBUG.debug("No active translators found!");
-            return true;
-        }
-        TranslateGUI vis = (TranslateGUI) getToolVisuals();
-        return trans.translate(list, vis.FromLang.getSelectedItem().toString(), vis.ToLang.getSelectedItem().toString());
+  @Override
+  protected boolean affect(List<SubEntry> list) {
+    if (trans == null) {
+      DEBUG.debug("No active translators found!");
+      return true;
     }
+    TranslateGUI vis = (TranslateGUI) getToolVisuals();
+    return trans.translate(
+        list, vis.FromLang.getSelectedItem().toString(), vis.ToLang.getSelectedItem().toString());
+  }
 
-    void setTranslator(int selectedIndex) {
-        trans = translators.get(selectedIndex);
-    }
+  void setTranslator(int selectedIndex) {
+    trans = translators.get(selectedIndex);
+  }
 
-    AvailTranslators getTranslators() {
-        if (translators == null)
-            translators = new AvailTranslators();
-        return translators;
-    }
+  AvailTranslators getTranslators() {
+    if (translators == null) translators = new AvailTranslators();
+    return translators;
+  }
 
-    Translator getCurrentTranslator() {
-        if (trans == null)
-            trans = getTranslators().get(0);
-        return trans;
-    }
+  Translator getCurrentTranslator() {
+    if (trans == null) trans = getTranslators().get(0);
+    return trans;
+  }
 
-    @Override
-    protected JComponent constructToolVisuals() {
-        return new TranslateGUI(this);
-    }
+  @Override
+  protected JComponent constructToolVisuals() {
+    return new TranslateGUI(this);
+  }
 }

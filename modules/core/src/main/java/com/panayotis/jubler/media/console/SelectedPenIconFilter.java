@@ -24,20 +24,16 @@ import com.panayotis.jubler.plugins.Theme;
 import java.awt.image.BufferedImage;
 import java.awt.image.RGBImageFilter;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class SelectedPenIconFilter extends RGBImageFilter {
 
-    private final static BufferedImage dot = Theme.loadImage("pendot.png");
+  private static final BufferedImage dot = Theme.loadImage("pendot.png");
 
-    public int filterRGB(int x, int y, int rgb) {
-        if (x < 8 && y < 8 && dot != null) {
-            int newc = dot.getRGB(x, y);
-            if ((newc & 0xff000000) != 0)
-                return dot.getRGB(x, y);
-        }
-        return rgb;
+  public int filterRGB(int x, int y, int rgb) {
+    if (x < 8 && y < 8 && dot != null) {
+      int newc = dot.getRGB(x, y);
+      if ((newc & 0xff000000) != 0) return dot.getRGB(x, y);
     }
+    return rgb;
+  }
 }

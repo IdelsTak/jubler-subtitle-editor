@@ -25,47 +25,43 @@ import static com.panayotis.jubler.i18n.I18N.__;
 import com.panayotis.jubler.plugins.Plugin;
 import com.panayotis.jubler.plugins.PluginItem;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class CoreTools implements Plugin {
 
-    @Override
-    public PluginItem[] getPluginItems() {
-        return new PluginItem[]{
-            new SubSplit(),
-                new SubJoin(),
-            new Reparent(),
-            new Synchronize(),
-            new ShiftTime(),
-            new RecodeTime(),
-            new Fixer(),
-            new Rounder(),
-            new Speller(),
-            new Translate(),
-            new JoinEntries(),
-            new SplitEntries(),
-            new DelSelection(),
-            new Marker(),
-            new Styler()
-        };
-    }
+  @Override
+  public PluginItem[] getPluginItems() {
+    return new PluginItem[] {
+      new SubSplit(),
+      new SubJoin(),
+      new Reparent(),
+      new Synchronize(),
+      new ShiftTime(),
+      new RecodeTime(),
+      new Fixer(),
+      new Rounder(),
+      new Speller(),
+      new Translate(),
+      new JoinEntries(),
+      new SplitEntries(),
+      new DelSelection(),
+      new Marker(),
+      new Styler()
+    };
+  }
 
-    @Override
-    public String getPluginName() {
-        return "Basic tools";
-    }
+  @Override
+  public String getPluginName() {
+    return "Basic tools";
+  }
 
-    @Override
-    public boolean canDisablePlugin() {
-        return false;
-    }
+  @Override
+  public boolean canDisablePlugin() {
+    return false;
+  }
 
-    public ClassLoader getClassLoader() {
-        return null;
-    }
+  public ClassLoader getClassLoader() {
+    return null;
+  }
 
-    public void setClassLoader(ClassLoader loader) {
-    }
+  public void setClassLoader(ClassLoader loader) {}
 }

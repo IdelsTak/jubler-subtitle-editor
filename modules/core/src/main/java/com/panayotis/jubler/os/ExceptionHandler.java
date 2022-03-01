@@ -26,15 +26,12 @@ package com.panayotis.jubler.os;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
-    public void uncaughtException(Thread t, Throwable e) {
-        StringWriter trace = new StringWriter();
-        PrintWriter wr = new PrintWriter(trace);
-        DEBUG.debug(e);
-    }
+  public void uncaughtException(Thread t, Throwable e) {
+    StringWriter trace = new StringWriter();
+    PrintWriter wr = new PrintWriter(trace);
+    DEBUG.debug(e);
+  }
 }

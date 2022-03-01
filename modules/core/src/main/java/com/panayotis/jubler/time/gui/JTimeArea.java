@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.time.gui;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -39,7 +38,10 @@ public abstract class JTimeArea extends JPanel {
 
     protected Subtitles subs;
     protected int[] selected;
-    /* Use these variables to make new time dialogs to open with meaningful defaults */
+    /*
+     * Use these variables to make new time dialogs to open with meaningful
+     * defaults
+     */
     protected final static int DEFAULTS_BYSELECTION = 0;
     protected final static int DEFAULTS_BYCOLOR = 1;
     protected final static int DEFAULTS_BYTHEME = 2;
@@ -98,11 +100,13 @@ public abstract class JTimeArea extends JPanel {
     }
 
     public void updateSubsMark(List<SubEntry> affected) {
-        if (!ChSubColorB.isEnabled())
+        if (!ChSubColorB.isEnabled()) {
             return;
+        }
         int new_mark = ChSubColorC.getSelectedIndex();
-        for (SubEntry sub : affected)
+        for (SubEntry sub : affected) {
             sub.setMark(new_mark);
+        }
     }
 
     /**

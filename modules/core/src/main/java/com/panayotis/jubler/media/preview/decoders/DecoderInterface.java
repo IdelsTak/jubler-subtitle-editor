@@ -28,27 +28,24 @@ import com.panayotis.jubler.media.CacheFile;
 import com.panayotis.jubler.media.VideoFile;
 import java.awt.Image;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface DecoderInterface {
 
-    public abstract boolean isDecoderValid();
+  public abstract boolean isDecoderValid();
 
-    public abstract boolean initAudioCache(AudioFile afile, CacheFile cfile, DecoderListener fback);
+  public abstract boolean initAudioCache(AudioFile afile, CacheFile cfile, DecoderListener fback);
 
-    public abstract void setInterruptStatus(boolean interrupt);
+  public abstract void setInterruptStatus(boolean interrupt);
 
-    public abstract boolean getInterruptStatus();
+  public abstract boolean getInterruptStatus();
 
-    public abstract void closeAudioCache(CacheFile cache);
+  public abstract void closeAudioCache(CacheFile cache);
 
-    public abstract AudioPreview getAudioPreview(CacheFile cache, double from, double to);
+  public abstract AudioPreview getAudioPreview(CacheFile cache, double from, double to);
 
-    public abstract Image getFrame(VideoFile video, double time, float resize);
+  public abstract Image getFrame(VideoFile video, double time, float resize);
 
-    public abstract void retrieveInformation(VideoFile vfile);
+  public abstract void retrieveInformation(VideoFile vfile);
 
-    public abstract void playAudioClip(AudioFile audio, double from, double to);
+  public abstract void playAudioClip(AudioFile audio, double from, double to);
 }

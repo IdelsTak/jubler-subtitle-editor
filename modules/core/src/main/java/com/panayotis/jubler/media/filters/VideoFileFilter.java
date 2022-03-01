@@ -2,7 +2,7 @@
  * VideoFileFilter.java
  *
  * Created on 27 Ιούνιος 2005, 12:01 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -27,29 +27,26 @@ import java.io.File;
 
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class VideoFileFilter extends MediaFileFilter {
 
-    private static final String exts[] = {".avi", ".mpg", ".mpeg", ".m1v", ".m2v", ".mov", ".mkv", ".ogm", ".divx", ".bin", ".wmv", ".flv", ".mp4", "m4v"};
+  private static final String exts[] = {
+    ".avi", ".mpg", ".mpeg", ".m1v", ".m2v", ".mov", ".mkv", ".ogm", ".divx", ".bin", ".wmv",
+    ".flv", ".mp4", "m4v"
+  };
 
-    public String[] getExtensions() {
-        return exts;
-    }
+  public String[] getExtensions() {
+    return exts;
+  }
 
-    public boolean accept(File pathname) {
-        if (pathname.isDirectory())
-            return true;
-        String fname = pathname.getName().toLowerCase();
-        for (int i = 0; i < exts.length; i++)
-            if (fname.endsWith(exts[i]))
-                return true;
-        return false;
-    }
+  public boolean accept(File pathname) {
+    if (pathname.isDirectory()) return true;
+    String fname = pathname.getName().toLowerCase();
+    for (int i = 0; i < exts.length; i++) if (fname.endsWith(exts[i])) return true;
+    return false;
+  }
 
-    public String getDescription() {
-        return __("All Video files");
-    }
+  public String getDescription() {
+    return __("All Video files");
+  }
 }

@@ -23,15 +23,12 @@
 
 package com.panayotis.jubler.media.console;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface PlayerFeedback {
 
-    /* Volume has been changed (values between 0..1)*/
-    public void volumeUpdate(float vol);
+  /* Volume has been changed (values between 0..1)*/
+  public void volumeUpdate(float vol);
 
-    /* The Video Player requested a quit action - i.e. no more streaming */
-    public void requestQuit();
+  /* The Video Player requested a quit action - i.e. no more streaming */
+  public void requestQuit();
 }

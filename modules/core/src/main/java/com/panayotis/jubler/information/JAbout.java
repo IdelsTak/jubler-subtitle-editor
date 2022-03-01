@@ -39,28 +39,28 @@ public class JAbout extends javax.swing.JPanel {
 
     private final static String icon_theme = "Nuvola (David Vignoni - http://www.icon-king.com)";
     private final static String[] transl = {
-            "Tom\u00e1\u0161 Bambas " + parseMail("seznam.cz", "conyx"),
-            "Rene " + parseMail("hotmail.com", "bmom43"),
-            "Julien Escoffier " + parseMail("jcpdt7j.com", "jubler"),
-            "Christian Weiske " + parseMail("cweiske.de", "cweiske"),
-            "Panayotis Katsaloulis " + parseMail("panayotis.com", "panayotis"),
-            "Michele Gianella " + parseMail("gmail.com", "gianella.michele"),
-            "Doutor.Zero " + parseMail("gmail.com", "doutor.zero"),
-            "Nikola Karanovic " + parseMail("yahoo.com", "dzonithebatee"),
-            "Alfredo Quesada S\u00E1nchez " + parseMail("yahoo.com", "freddy2_es"),
-            "As\u0131m Sinan Y\u00FCksel " + parseMail("gmail.com", "yuksel.asim.sinan")
+        "Tom\u00e1\u0161 Bambas " + parseMail("seznam.cz", "conyx"),
+        "Rene " + parseMail("hotmail.com", "bmom43"),
+        "Julien Escoffier " + parseMail("jcpdt7j.com", "jubler"),
+        "Christian Weiske " + parseMail("cweiske.de", "cweiske"),
+        "Panayotis Katsaloulis " + parseMail("panayotis.com", "panayotis"),
+        "Michele Gianella " + parseMail("gmail.com", "gianella.michele"),
+        "Doutor.Zero " + parseMail("gmail.com", "doutor.zero"),
+        "Nikola Karanovic " + parseMail("yahoo.com", "dzonithebatee"),
+        "Alfredo Quesada S\u00E1nchez " + parseMail("yahoo.com", "freddy2_es"),
+        "As\u0131m Sinan Y\u00FCksel " + parseMail("gmail.com", "yuksel.asim.sinan")
     };
     private final static String[] langs = {
-            __("Czech"),
-            __("Dutch"),
-            __("French"),
-            __("German"),
-            __("Greek"),
-            __("Italian"),
-            __("Portuguese (Brazilian)"),
-            __("Serbian"),
-            __("Spanish"),
-            __("Turkish")
+        __("Czech"),
+        __("Dutch"),
+        __("French"),
+        __("German"),
+        __("Greek"),
+        __("Italian"),
+        __("Portuguese (Brazilian)"),
+        __("Serbian"),
+        __("Spanish"),
+        __("Turkish")
     };
     private final static String version;
     private final static String longversion;
@@ -123,8 +123,9 @@ public class JAbout extends javax.swing.JPanel {
         thanks.append("\n");
         thanks.append(__("Translators"));
         thanks.append(":\n");
-        for (int i = 0; i < transl.length; i++)
+        for (int i = 0; i < transl.length; i++) {
             thanks.append(langs[i]).append(" : ").append(transl[i]).append('\n');
+        }
 
         thanks.append("\n");
         thanks.append(__("Packagers")).append("\n");

@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.tools.spell;
 
 import com.panayotis.jubler.os.JIDialog;
@@ -62,17 +61,17 @@ public class JSpellChecker extends JDialog {
 
         while (true)
             try {
-                checker.start();
-                break;
-            } catch (Exception ex) {
-                if (!(ex.getCause() instanceof IOException)) {
-                    stop();
-                    return;
-                } else if (!checker.getOptionsPanel().requestExecutable()) {
-                    stop();
-                    return;
-                }
+            checker.start();
+            break;
+        } catch (Exception ex) {
+            if (!(ex.getCause() instanceof IOException)) {
+                stop();
+                return;
+            } else if (!checker.getOptionsPanel().requestExecutable()) {
+                stop();
+                return;
             }
+        }
 
         initComponents();
         jparent = parent;
@@ -85,18 +84,28 @@ public class JSpellChecker extends JDialog {
         ignored = new ArrayList<String>();
         replaced = new HashMap<String, String>();
 
-        if (!checker.supportsInsert())
+        if (!checker.supportsInsert()) {
             InsertB.setEnabled(false);
+        }
     }
 
-    /* Use this method to remove from error list possible known errors */
+    /*
+     * Use this method to remove from error list possible known errors
+     */
     private void updateKnownErrors() {
         for (int i = errors.size() - 1; i >= 0; i--) {
-            String original = errors.get(i).original; /* Get the misspelled word */
-            if (ignored.indexOf(original) >= 0) /* The user said to ignore it */
-
+            String original = errors.get(i).original;
+            /*
+             * Get the misspelled word
+             */
+            if (ignored.indexOf(original) >= 0) /*
+             * The user said to ignore it
+             */ {
                 errors.remove(i);
-            else if (replaced.containsKey(original)) { /* The user said to replace it */
+            } else if (replaced.containsKey(original)) {
+                /*
+                 * The user said to replace it
+                 */
                 count_changes++;
                 replaceText(replaced.get(original), i);
                 errors.remove(i);
@@ -105,53 +114,82 @@ public class JSpellChecker extends JDialog {
     }
 
     public void findNextWord() {
-        /* If the system is not properly initialized, means we should NOT spell check */
-        if (errors == null)
+        /*
+         * If the system is not properly initialized, means we should NOT spell
+         * check
+         */
+        if (errors == null) {
             return;
+        }
 
-        /* Remove last error - if any.
+        /*
+         * Remove last error - if any.
          * We need to do it here, since some methods require the last error
          * to be the first in the list of possible errors.
          */
-        if (!errors.isEmpty())
+        if (!errors.isEmpty()) {
             errors.remove(0);
+        }
 
-        /* Make sure that the remaining errors are not known ones */
+        /*
+         * Make sure that the remaining errors are not known ones
+         */
         updateKnownErrors();
 
-        /* If the current error list is empty, refill it with next error bunch */
+        /*
+         * If the current error list is empty, refill it with next error bunch
+         */
         while (errors.isEmpty() && ((++pos_in_list) < textlist.size())) {
-            /* Get next (multi)line of text */
+            /*
+             * Get next (multi)line of text
+             */
             errors = checker.checkSpelling(textlist.get(pos_in_list).getText());
             updateKnownErrors();
         }
         if (errors.isEmpty()) {
-            /* No more entries found, exiting spell checker */
+            /*
+             * No more entries found, exiting spell checker
+             */
             stop();
             return;
         }
 
-        /* For convenience, get a pointer for this error */
+        /*
+         * For convenience, get a pointer for this error
+         */
         SpellError mistake = errors.get(0);
 
-        Unknown.setText(mistake.original);  /* set the text of the mistaken word */
-        SugList.setListData(mistake.alternatives);  /* set the list of spell suggestions */
+        Unknown.setText(mistake.original);
+        /*
+         * set the text of the mistaken word
+         */
+        SugList.setListData(mistake.alternatives);
+        /*
+         * set the list of spell suggestions
+         */
         setSentence(textlist.get(pos_in_list).getText().replace('\n', '|'), mistake.position, mistake.original.length());
 
-        /* use a default suggestion */
-        if (SugList.getModel().getSize() > 0)
+        /*
+         * use a default suggestion
+         */
+        if (SugList.getModel().getSize() > 0) {
             SugList.setSelectedIndex(0);
-        else
+        } else {
             Replace.setText(mistake.original);
+        }
 
-        /* Make this dialog visible, if it is not already */
+        /*
+         * Make this dialog visible, if it is not already
+         */
         setVisible(true);
     }
 
     private void setSentence(String txt, int pos, int len) {
         Sentence.setText(txt);
 
-        /* Change color of error to red */
+        /*
+         * Change color of error to red
+         */
         SimpleAttributeSet set = new SimpleAttributeSet();
         set.addAttribute(StyleConstants.ColorConstants.Foreground, Color.RED);
         Sentence.getStyledDocument().setCharacterAttributes(pos, len, set, true);
@@ -160,8 +198,9 @@ public class JSpellChecker extends JDialog {
     private void useSuggestedWord() {
         int which = SugList.getSelectedIndex();
         if (which < 0) {
-            if (SugList.getModel().getSize() == 0)
+            if (SugList.getModel().getSize() == 0) {
                 return;
+            }
             SugList.setSelectedIndex(0);
             return;
         }
@@ -443,10 +482,15 @@ public class JSpellChecker extends JDialog {
         String news = olds.substring(0, pos) + txt + olds.substring(pos + len);
         textlist.get(pos_in_list).setText(news);
 
-        int dlength = txt.length() - errors.get(index).original.length(); /* size differences */
-        for (int i = index + 1; i < errors.size(); i++) /* Propagate size differences to following errors (if any) */
-
+        int dlength = txt.length() - errors.get(index).original.length();
+        /*
+         * size differences
+         */
+        for (int i = index + 1; i < errors.size(); i++) /*
+         * Propagate size differences to following errors (if any)
+         */ {
             errors.get(i).position += dlength;
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIgnoreB;
@@ -482,15 +526,21 @@ public class JSpellChecker extends JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void stop() {
-        if (checker != null)
+        if (checker != null) {
             checker.stop();
-        if (!isVisible())
-            return; /* we have already hidden this dialog */
+        }
+        if (!isVisible()) {
+            return;
+            /*
+             * we have already hidden this dialog
+             */
+        }
         setVisible(false);
         dispose();
         String msg = __("Number of affected words: {0}", count_changes);
-        if (count_changes == 0)
+        if (count_changes == 0) {
             msg = __("No changes have been done");
+        }
         JIDialog.info(jparent, msg, __("Speller changes"));
     }
 }

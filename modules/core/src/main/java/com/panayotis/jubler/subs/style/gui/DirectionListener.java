@@ -23,13 +23,10 @@
 
 package com.panayotis.jubler.subs.style.gui;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface DirectionListener {
 
-    public void directionUpdated();
+  public void directionUpdated();
 
-    public void focusLost();
+  public void focusLost();
 }

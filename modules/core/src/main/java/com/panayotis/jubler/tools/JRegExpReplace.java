@@ -28,56 +28,52 @@ import javax.swing.JComponent;
 
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class JRegExpReplace extends RealTimeTool {
 
-    private final ArrayList<Pattern> patterns;
-    private final ArrayList<String> texts;
-    private final JReplaceList rlist;
+  private final ArrayList<Pattern> patterns;
+  private final ArrayList<String> texts;
+  private final JReplaceList rlist;
 
-    public JRegExpReplace() {
-        super(false, null);
-        patterns = new ArrayList<Pattern>();
-        texts = new ArrayList<String>();
-        rlist = new JReplaceList();
+  public JRegExpReplace() {
+    super(false, null);
+    patterns = new ArrayList<Pattern>();
+    texts = new ArrayList<String>();
+    rlist = new JReplaceList();
+  }
+
+  @Override
+  protected void affect(SubEntry sub) {
+    String res = sub.getText();
+    for (int i = 0; i < patterns.size(); i++) {
+      Matcher m = patterns.get(i).matcher(res);
+      res = m.replaceAll(texts.get(i));
     }
+    sub.setText(res);
+  }
 
-    @Override
-    protected void affect(SubEntry sub) {
-        String res = sub.getText();
-        for (int i = 0; i < patterns.size(); i++) {
-            Matcher m = patterns.get(i).matcher(res);
-            res = m.replaceAll(texts.get(i));
-        }
-        sub.setText(res);
-    }
+  protected String getToolTitle() {
+    return __("Regular Expression replace");
+  }
 
-    protected String getToolTitle() {
-        return __("Regular Expression replace");
-    }
+  @Override
+  protected void storeSelections() {
+    ReplaceModel model = rlist.getModel();
+    patterns.clear();
+    texts.clear();
+    for (int i = 0; i < model.size(); i++)
+      if (model.elementAt(i).usable) {
+        patterns.add(Pattern.compile(model.elementAt(i).fromS));
+        texts.add(model.elementAt(i).toS);
+      }
+  }
 
-    @Override
-    protected void storeSelections() {
-        ReplaceModel model = rlist.getModel();
-        patterns.clear();
-        texts.clear();
-        for (int i = 0; i < model.size(); i++)
-            if (model.elementAt(i).usable) {
-                patterns.add(Pattern.compile(model.elementAt(i).fromS));
-                texts.add(model.elementAt(i).toS);
-            }
-    }
+  @Override
+  protected JComponent constructToolVisuals() {
+    return new JRegExpReplaceGUI(this);
+  }
 
-    @Override
-    protected JComponent constructToolVisuals() {
-        return new JRegExpReplaceGUI(this);
-    }
-
-    JReplaceList getRlist() {
-        return rlist;
-    }
-
+  JReplaceList getRlist() {
+    return rlist;
+  }
 }

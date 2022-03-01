@@ -28,92 +28,89 @@ import com.panayotis.jubler.plugins.Plugin;
 import com.panayotis.jubler.plugins.PluginItem;
 import java.util.ArrayList;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class VLC extends AbstractPlayer implements Plugin, PluginItem {
 
-    public VLC() {
-        super(family);
-    }
+  public VLC() {
+    super(family);
+  }
 
-    public String getDefaultArguments() {
-        String OS = System.getProperty("os.name").toLowerCase();
-        String fake_tty = "";
-        if (OS.indexOf("windows") == 0)
-            fake_tty = "--rc-fake-tty ";
-        return "%p --video-on-top --no-save-config --extraintf=rc " + fake_tty + "--rc-host=127.0.0.1:%i";
-    }
+  public String getDefaultArguments() {
+    String OS = System.getProperty("os.name").toLowerCase();
+    String fake_tty = "";
+    if (OS.indexOf("windows") == 0) fake_tty = "--rc-fake-tty ";
+    return "%p --video-on-top --no-save-config --extraintf=rc "
+        + fake_tty
+        + "--rc-host=127.0.0.1:%i";
+  }
 
-    public String[] getTestParameters() {
-        return null;
-    }
+  public String[] getTestParameters() {
+    return null;
+  }
 
-    public String getTestSignature() {
-        return null;
-    }
+  public String getTestSignature() {
+    return null;
+  }
 
-    public boolean supportPause() {
-        return true;
-    }
+  public boolean supportPause() {
+    return true;
+  }
 
-    public boolean supportSubDisplace() {
-        return true;
-    }
+  public boolean supportSubDisplace() {
+    return true;
+  }
 
-    public boolean supportSkip() {
-        return true;
-    }
+  public boolean supportSkip() {
+    return true;
+  }
 
-    public boolean supportSeek() {
-        return true;
-    }
+  public boolean supportSeek() {
+    return true;
+  }
 
-    public boolean supportSpeed() {
-        return true;
-    }
+  public boolean supportSpeed() {
+    return true;
+  }
 
-    public boolean supportAudio() {
-        return true;
-    }
+  public boolean supportAudio() {
+    return true;
+  }
 
-    public boolean supportChangeSubs() {
-        return true;
-    }
+  public boolean supportChangeSubs() {
+    return true;
+  }
 
-    public Viewport getViewport() {
-        return new VLCViewport(this);
-    }
+  public Viewport getViewport() {
+    return new VLCViewport(this);
+  }
 
-    public String getName() {
-        return "VLC";
-    }
+  public String getName() {
+    return "VLC";
+  }
 
-    public PluginItem[] getPluginItems() {
-        return new PluginItem[]{this};
-    }
+  public PluginItem[] getPluginItems() {
+    return new PluginItem[] {this};
+  }
 
-    public String getPluginName() {
-        return __("VLC media player");
-    }
+  public String getPluginName() {
+    return __("VLC media player");
+  }
 
-    public boolean canDisablePlugin() {
-        return true;
-    }
+  public boolean canDisablePlugin() {
+    return true;
+  }
 
-    @Override
-    public ArrayList<String> getSearchNames() {
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("vlc");
-        list.add("vlc.exe");
-        return list;
-    }
+  @Override
+  public ArrayList<String> getSearchNames() {
+    ArrayList<String> list = new ArrayList<String>();
+    list.add("vlc");
+    list.add("vlc.exe");
+    return list;
+  }
 
-    public ClassLoader getClassLoader() {
-        return null;
-    }
+  public ClassLoader getClassLoader() {
+    return null;
+  }
 
-    public void setClassLoader(ClassLoader cl) {
-    }
+  public void setClassLoader(ClassLoader cl) {}
 }

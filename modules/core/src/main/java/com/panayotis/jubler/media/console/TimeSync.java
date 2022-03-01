@@ -23,32 +23,27 @@
 
 package com.panayotis.jubler.media.console;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class TimeSync {
 
-    public double timepos;
-    public double timediff;
+  public double timepos;
+  public double timediff;
 
-    /**
-     * Creates a new instance of TimeSync
-     */
-    public TimeSync(double pos, double diff) {
-        timepos = pos;
-        timediff = diff;
-    }
+  /** Creates a new instance of TimeSync */
+  public TimeSync(double pos, double diff) {
+    timepos = pos;
+    timediff = diff;
+  }
 
-    public String toString() {
-        return "[Position=" + timepos + ", Difference=" + timediff + "]";
-    }
+  public String toString() {
+    return "[Position=" + timepos + ", Difference=" + timediff + "]";
+  }
 
-    public boolean smallerThan(TimeSync t) {
-        return timepos < t.timepos;
-    }
+  public boolean smallerThan(TimeSync t) {
+    return timepos < t.timepos;
+  }
 
-    public boolean isEqualDiff(TimeSync t) {
-        return Math.abs(timediff - t.timediff) < 0.001;
-    }
+  public boolean isEqualDiff(TimeSync t) {
+    return Math.abs(timediff - t.timediff) < 0.001;
+  }
 }

@@ -22,11 +22,8 @@ package com.panayotis.jubler.rmi;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface JublerRMI extends Remote {
 
-    void addFile(String URL) throws RemoteException;
+  void addFile(String URL) throws RemoteException;
 }

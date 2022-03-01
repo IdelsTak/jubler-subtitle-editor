@@ -20,25 +20,22 @@
 
 package com.panayotis.jubler.tools.translate;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class Language {
 
-    private String name;
-    private String id;
+  private String name;
+  private String id;
 
-    public Language(String id, String name) {
-        this.name = name;
-        this.id = id;
-    }
+  public Language(String id, String name) {
+    this.name = name;
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getID() {
-        return id;
-    }
+  public String getID() {
+    return id;
+  }
 }

@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options.gui;
 
 import java.awt.BorderLayout;
@@ -57,14 +56,16 @@ public class JOptionTabs extends JPanel {
         selector.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         selector.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         Dimension d = selector.getPreferredSize();
-        if (d.width < 100)
+        if (d.width < 100) {
             d.width = 70;
+        }
         selector.setPreferredSize(d);
         selector.setMinimumSize(d);
         selector.setMaximumSize(d);
 
-        if (first == null)
+        if (first == null) {
             first = selector;
+        }
         TabsBG.add(selector);
         tabs.add(page);
 

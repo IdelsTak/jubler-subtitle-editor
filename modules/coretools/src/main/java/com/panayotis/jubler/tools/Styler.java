@@ -28,50 +28,44 @@ import com.panayotis.jubler.subs.style.SubStyle;
 import com.panayotis.jubler.tools.ToolMenu.Location;
 import javax.swing.JComponent;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class Styler extends OneByOneTool {
 
-    private SubStyle style;
+  private SubStyle style;
 
-    public Styler() {
-        super(true, new ToolMenu(__("By selection"), "ESS", Location.STYLE, 0, 0));
-    }
+  public Styler() {
+    super(true, new ToolMenu(__("By selection"), "ESS", Location.STYLE, 0, 0));
+  }
 
-    @Override
-    public void updateData(JubFrame jub) {
-        super.updateData(jub);
-        StylerGUI vis = (StylerGUI) getToolVisuals();
+  @Override
+  public void updateData(JubFrame jub) {
+    super.updateData(jub);
+    StylerGUI vis = (StylerGUI) getToolVisuals();
 
-        int selvalue = vis.StyleSel.getSelectedIndex();
-        vis.StyleSel.removeAllItems();
-        for (SubStyle sstyle : subtitles.getStyleList())
-            vis.StyleSel.addItem(sstyle);
-        if (selvalue < 0)
-            selvalue = 0;
-        if (selvalue < subtitles.getStyleList().size())
-            vis.StyleSel.setSelectedIndex(selvalue);
-    }
+    int selvalue = vis.StyleSel.getSelectedIndex();
+    vis.StyleSel.removeAllItems();
+    for (SubStyle sstyle : subtitles.getStyleList()) vis.StyleSel.addItem(sstyle);
+    if (selvalue < 0) selvalue = 0;
+    if (selvalue < subtitles.getStyleList().size()) vis.StyleSel.setSelectedIndex(selvalue);
+  }
 
-    @Override
-    protected String getToolTitle() {
-        return __("Set region style");
-    }
+  @Override
+  protected String getToolTitle() {
+    return __("Set region style");
+  }
 
-    @Override
-    protected void storeSelections() {
-        style = (SubStyle) ((StylerGUI) getToolVisuals()).StyleSel.getSelectedItem();
-    }
+  @Override
+  protected void storeSelections() {
+    style = (SubStyle) ((StylerGUI) getToolVisuals()).StyleSel.getSelectedItem();
+  }
 
-    @Override
-    protected void affect(SubEntry sub) {
-        sub.setStyle(style);
-    }
+  @Override
+  protected void affect(SubEntry sub) {
+    sub.setStyle(style);
+  }
 
-    @Override
-    protected JComponent constructToolVisuals() {
-        return new StylerGUI();
-    }
+  @Override
+  protected JComponent constructToolVisuals() {
+    return new StylerGUI();
+  }
 }

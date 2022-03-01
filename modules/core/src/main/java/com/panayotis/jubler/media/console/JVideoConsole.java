@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.media.console;
 
 import com.panayotis.jubler.os.JIDialog;
@@ -64,42 +63,64 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
     private static final String GenericTitle = __("Video Console");
     private static final String InitialTitle = __("Please wait ... launching player");
     private boolean initial_launch = true;
-    /* */
+    /*
+     *
+     */
     private Viewport view;
     private VideoPlayer player;
     private Timer timer;
     private JubFrame parent;
     private JSubSimpleGraph diagram;
-    private TimeSync sync1, sync2;  /* Use these variables to perform time sync */
+    private TimeSync sync1, sync2;
+    /*
+     * Use these variables to perform time sync
+     */
 
     private int submark_state;
     private boolean ignore_slider_changes = false;
     private boolean ignore_volume_changes = false;
-    /* This stores the state of the four marking icons */
+    /*
+     * This stores the state of the four marking icons
+     */
     private int penstatus = -1; // none selected
-    /* When adding subtitles on the fly, remember what was the last selected marker */
+    /*
+     * When adding subtitles on the fly, remember what was the last selected
+     * marker
+     */
     private int last_selected_marker = 0;
-    /* Remember the state if a new subtitle is added */
+    /*
+     * Remember the state if a new subtitle is added
+     */
     private boolean subadd_status = false;
 
-    /* mute/unmute the player */
+    /*
+     * mute/unmute the player
+     */
     int last_volume_value = 5;
 
-    /* While sync-ing, remember which sync button was pressed */
+    /*
+     * While sync-ing, remember which sync button was pressed
+     */
     boolean sync1_status = false;
     boolean sync2_status = false;
     private double start_mark_sub, finish_mark_sub;
-    private double subsdelay; /* Keep the difference of the subtitles */
+    private double subsdelay;
+    /*
+     * Keep the difference of the subtitles
+     */
 
-    /* Use this flag to quit the console with thread safe methods */
+ /*
+     * Use this flag to quit the console with thread safe methods
+     */
     private boolean request_quit;
 
     /**
      * Creates new form JVideoConsole
      */
     public static JVideoConsole initialize(JubFrame jubler, VideoPlayer videoPlayer) {
-        if (videoPlayer == null)
+        if (videoPlayer == null) {
             return null;
+        }
         return new JVideoConsole(jubler, videoPlayer);
     }
 
@@ -112,19 +133,23 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
         initButtonIcons();
         resetSubsDelay();
 
-        if (!player.supportPause())
+        if (!player.supportPause()) {
             PauseB.setEnabled(false);
-        if (!player.supportSubDisplace())
+        }
+        if (!player.supportSubDisplace()) {
             SubMover.setEnabled(false);
-        if (!player.supportSeek())
+        }
+        if (!player.supportSeek()) {
             TimeS.setEnabled(false);
-        if (!player.supportSkip())
+        }
+        if (!player.supportSkip()) {
             if (!player.supportSkip()) {
                 BBMovieB.setEnabled(false);
                 BMovieB.setEnabled(false);
                 FMovieB.setEnabled(false);
                 FFMovieB.setEnabled(false);
             }
+        }
         if (!player.supportSpeed()) {
             SpeedS.setEnabled(false);
             ResetSpeedB.setEnabled(false);
@@ -133,8 +158,9 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
             AudioS.setEnabled(false);
             AudioB.setEnabled(false);
         }
-        if (!player.supportChangeSubs())
+        if (!player.supportChangeSubs()) {
             LoadSubsB.setEnabled(false);
+        }
 
         diagram = new JSubSimpleGraph(parent.getSubtitles());
         SliderP.add(diagram, BorderLayout.SOUTH);
@@ -147,14 +173,15 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
             }
         });
 
-
         this.player = player;
         this.parent = parent;
         view = player.getViewport();
 
     }
 
-    /* Where to put this dialog */
+    /*
+     * Where to put this dialog
+     */
     private void positionConsole() {
         Rectangle bounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         String res = Options.getOption("VideoConsole.DefaultPosition", "(" + ((bounds.width + bounds.x - getRootPane().getWidth()) / 2) + "," + bounds.y + ")");
@@ -176,18 +203,18 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
 
         while (true)
             try {
-                view.start();
-                break;
-            } catch (ExtProgramException ex) {
-                if (!(ex.getCause() instanceof IOException)) {
-                    JIDialog.error(this, __("Abnormal player exit") + "\n" + ex.getMessage(), __("Movie Player Error"));
-                    stop();
-                    return;
-                } else if (!player.getOptionsPanel().requestExecutable()) {
-                    stop();
-                    return;
-                }
+            view.start();
+            break;
+        } catch (ExtProgramException ex) {
+            if (!(ex.getCause() instanceof IOException)) {
+                JIDialog.error(this, __("Abnormal player exit") + "\n" + ex.getMessage(), __("Movie Player Error"));
+                stop();
+                return;
+            } else if (!player.getOptionsPanel().requestExecutable()) {
+                stop();
+                return;
             }
+        }
 
         int length = (int) Math.ceil(mfile.getVideoFile().getLength());
         diagram.setLength(length);
@@ -196,7 +223,9 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
         request_quit = false;
         timer.start();
 
-        /* Everything OK - go on */
+        /*
+         * Everything OK - go on
+         */
         setVisible(true);
         SubShow.requestFocusInWindow(); // Make sure that SubShow has the focus, in order to grab the key events
     }
@@ -208,7 +237,9 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
         view = null;
         player.cleanUp();
 
-        /* Save window position */
+        /*
+         * Save window position
+         */
         Options.setOption("VideoConsole.DefaultPosition", "(" + getX() + "," + getY() + ")");
         Options.saveOptions();
     }
@@ -217,15 +248,21 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
         request_quit = true;
     }
 
-    /* this is the code the timer executes, in a different thread */
+    /*
+     * this is the code the timer executes, in a different thread
+     */
     private void informTimePos() {
-        /* Player should exit */
-        if (request_quit)
+        /*
+         * Player should exit
+         */
+        if (request_quit) {
             checkValid(false);
+        }
 
         if (view != null) {
-            if (initial_launch)
+            if (initial_launch) {
                 setTitle(GenericTitle);
+            }
             ignore_slider_changes = true;
             double time = view.getTime();
             TimeS.setValue((int) time);
@@ -235,8 +272,9 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
                 if (sub != null) {
                     String newsubtext = sub.getText().replace('\n', '|');   // Replace the newline with the viewable "|" character
                     String oldsubtext = SubShow.getText();
-                    if (!newsubtext.equals(oldsubtext))
+                    if (!newsubtext.equals(oldsubtext)) {
                         SubShow.setText(newsubtext);
+                    }
                     setMarker(sub.getMark());
                 } else {
                     SubShow.setText("");
@@ -251,31 +289,42 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
         ignore_volume_changes = true;
         int value = Math.round(vol * 10);
         AudioS.setValue(value);
-        if (value > 0)
+        if (value > 0) {
             last_volume_value = value;
+        }
         ignore_volume_changes = false;
     }
 
     private void setMarker(int newstatus) {
-        if (newstatus < 0)
+        if (newstatus < 0) {
             newstatus = -1;
-        if (newstatus > 3)
+        }
+        if (newstatus > 3) {
             newstatus = 3;
-        if (newstatus == penstatus)
+        }
+        if (newstatus == penstatus) {
             return;
-        if (penstatus >= 0)   // something was selected
+        }
+        if (penstatus >= 0) // something was selected
+        {
             setPenIcon(penstatus, false);   // Unselect it
+        }
         penstatus = newstatus;
-        if (penstatus >= 0)
+        if (penstatus >= 0) {
             setPenIcon(penstatus, true);
+        }
     }
-    /* These variables are used to define the state of the Subtitle Recorder */
+    /*
+     * These variables are used to define the state of the Subtitle Recorder
+     */
     private final static int SUBREC_BEGIN = 0;
     private final static int SUBREC_TYPING = 1;
     private final static int SUBREC_FINALIZE = 2;
     private final static int SUBREC_ABORT = 3;
 
-    /* The procedure of subtitle recording. */
+    /*
+     * The procedure of subtitle recording.
+     */
     private void setSubRecStatus(int status) {
         switch (status) {
             case SUBREC_BEGIN:
@@ -712,29 +761,37 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
 
     private void SubShowKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SubShowKeyReleased
         int keycode = evt.getKeyCode();
-        if (keycode == KeyEvent.VK_ENTER || keycode == KeyEvent.VK_ESCAPE)  // Ignore all other key events
-            if (SubShow.isEditable())
-                if (keycode == KeyEvent.VK_ESCAPE)
+        if (keycode == KeyEvent.VK_ENTER || keycode == KeyEvent.VK_ESCAPE) // Ignore all other key events
+        {
+            if (SubShow.isEditable()) {
+                if (keycode == KeyEvent.VK_ESCAPE) {
                     setSubRecStatus(SUBREC_ABORT);
-                else
+                } else {
                     setSubRecStatus(SUBREC_FINALIZE);
-            else if (keycode == KeyEvent.VK_ENTER) {
+                }
+            } else if (keycode == KeyEvent.VK_ENTER) {
                 subadd_status = !subadd_status;
-                if (subadd_status)
+                if (subadd_status) {
                     setSubRecStatus(SUBREC_BEGIN);
-                else
+                } else {
                     setSubRecStatus(SUBREC_TYPING);
+                }
             }
+        }
     }//GEN-LAST:event_SubShowKeyReleased
-    /* Use this variable to store last subtitle difference position, while dragging the bar */
+    /*
+     * Use this variable to store last subtitle difference position, while
+     * dragging the bar
+     */
     private float last = 0;
 
     private void SubMoverStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SubMoverStateChanged
         if (SubMover.getValueIsAdjusting()) {
             float value = (SubMover.getValue() - 50) / 5.0f;
             String label = value + " sec";
-            if (value >= 0)
+            if (value >= 0) {
                 label = "+" + label;
+            }
             SmoverL.setText(label);
 
             float diff = value - last;
@@ -766,16 +823,18 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
             setSyncButton(2, status);
         }
 
-        if (status)
+        if (status) {
             createNewSyncMark(is_first);
-        else
+        } else {
             destroySyncMark(is_first);
+        }
     }//GEN-LAST:event_SyncBActionPerformed
 
     private void selectMark(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectMark
         SubEntry sub = parent.matchSubtitle(view.getTime());
-        if (sub != null)
+        if (sub != null) {
             sub.setMark(evt.getActionCommand().charAt(0) - '0');
+        }
     }//GEN-LAST:event_selectMark
 
     private void ResetSpeedBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetSpeedBActionPerformed
@@ -789,38 +848,45 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
     }//GEN-LAST:event_LoadSubsBActionPerformed
 
     private void AudioSStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_AudioSStateChanged
-        if (ignore_volume_changes)
+        if (ignore_volume_changes) {
             return;
-        if (AudioS.getValueIsAdjusting())
+        }
+        if (AudioS.getValueIsAdjusting()) {
             return;
+        }
 
         int value = AudioS.getValue();
-        if (value > 0)
+        if (value > 0) {
             last_volume_value = value;
+        }
         setAudioIcon(value == 0);
         checkValid(view.setVolume(VideoPlayer.SoundLevel.values()[value]));
     }//GEN-LAST:event_AudioSStateChanged
 
     private void MarkBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MarkBActionPerformed
         subadd_status = !subadd_status;
-        if (subadd_status)
+        if (subadd_status) {
             setSubRecStatus(SUBREC_BEGIN);
-        else
+        } else {
             setSubRecStatus(SUBREC_TYPING);
+        }
     }//GEN-LAST:event_MarkBActionPerformed
 
     private void SpeedSStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpeedSStateChanged
-        if (SpeedS.getValueIsAdjusting())
+        if (SpeedS.getValueIsAdjusting()) {
             return;
+        }
         checkValid(view.setSpeed(VideoPlayer.SpeedLevel.values()[SpeedS.getValue()]));
     }//GEN-LAST:event_SpeedSStateChanged
 
     private void TimeSStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TimeSStateChanged
-        if (ignore_slider_changes || TimeS.getValueIsAdjusting())
+        if (ignore_slider_changes || TimeS.getValueIsAdjusting()) {
             return;
+        }
         checkValid(view.seek(TimeS.getValue()));
-        if (!timer.isRunning() && view != null)
+        if (!timer.isRunning() && view != null) {
             timer.start();
+        }
     }//GEN-LAST:event_TimeSStateChanged
 
     private void TimeSMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TimeSMousePressed
@@ -844,14 +910,18 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
     }//GEN-LAST:event_BBMovieBActionPerformed
 
     private void QuitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitBActionPerformed
-        checkValid(false); /* Always think that the user wants to exit here */
+        checkValid(false);
+        /*
+         * Always think that the user wants to exit here
+         */
     }//GEN-LAST:event_QuitBActionPerformed
 
     private void PauseBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PauseBActionPerformed
         checkValid(view.pause(!view.isPaused()));
         setPauseIcon();
-        if ((!view.isPaused()) && (!GrabSub.isEnabled()))
+        if ((!view.isPaused()) && (!GrabSub.isEnabled())) {
             GrabSub.setEnabled(true);
+        }
 }//GEN-LAST:event_PauseBActionPerformed
 
     private void AudioBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AudioBActionPerformed
@@ -865,21 +935,27 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
             boolean paused = view.isPaused();
             setPauseIcon();
             //if (SubShow.isEditable()) setSubRecStatus(SUBREC_FINALIZE); // Stop subtitle recording
-            if (paused)
+            if (paused) {
                 timer.stop();
-            else
+            } else {
                 timer.start();
+            }
             return;
         }
-        if (view != null)
+        if (view != null) {
             view.quit();
+        }
         stop();
     }
 
-    /* This function is called when a subtitle is selected from the main window */
+    /*
+     * This function is called when a subtitle is selected from the main window
+     */
     public void setTime(double newtime) {
         if (!GrabSub.isEnabled()) {
-            /* This is after a grab subtitle time */
+            /*
+             * This is after a grab subtitle time
+             */
             float diff = (float) (newtime - view.getTime() - subsdelay);
             addSubsDelay(diff);
             GrabSub.setEnabled(true);
@@ -894,10 +970,12 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
                 setSyncButton(2, true);
                 createNewSyncMark(false);
             }
-        } else
-            /* This is after a normal click */
-            //   if (view.isPaused()) return;
+        } else /*
+         * This is after a normal click
+         */ //   if (view.isPaused()) return;
+        {
             checkValid(view.seek((int) (newtime + subsdelay)));
+        }
     }
 
     private void destroySyncMark(boolean is_first) {
@@ -912,56 +990,69 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
 
     private void createNewSyncMark(boolean is_first) {
         TimeSync sync = new TimeSync(view.getTime() + subsdelay, -subsdelay);
-        if (is_first)
+        if (is_first) {
             sync1 = sync;
-        else
+        } else {
             sync2 = sync;
+        }
 
-        /* We are able to sync - automatically do the syncing !!! */
+        /*
+         * We are able to sync - automatically do the syncing !!!
+         */
         if (sync1 != null && sync2 != null) {
             RealTimeTool tool;
 
-            if (sync1.isEqualDiff(sync2))
+            if (sync1.isEqualDiff(sync2)) {
                 tool = ToolsManager.getShifter();
-            else
+            } else {
                 tool = ToolsManager.getRecoder();
+            }
             if (tool == null) {
                 DEBUG.beep();
                 return;
             }
 
             if (tool.setValues(sync1, sync2)) {
-                /* Parameters are OK */
+                /*
+                 * Parameters are OK
+                 */
                 timer.stop();
                 checkValid(view.setActive(false, null));
                 tool.updateData(parent);
                 if (tool.execute(parent)) {             // execute tool
-                    /* Execution successful */
+                    /*
+                     * Execution successful
+                     */
                     destroySyncMark(true);
                     destroySyncMark(false);
                     resetSubsDelay();
                     diagram.setSubtitles(parent.getSubtitles());
-                } else
-                    /* Error in tool execution */
+                } else /*
+                 * Error in tool execution
+                 */ {
                     destroySyncMark(is_first);
+                }
                 Point pos = parent.getSubPreview().getFrameLocation();
                 player.setCentralLocation(pos.x, pos.y);
 
                 checkValid(view.setActive(true, parent.getSubtitles()));
                 checkValid(view.delaySubs((float) subsdelay));  // Make sure we have the same subtitle delay
-            } else
-                /* Error in parameters */
+            } else /*
+             * Error in parameters
+             */ {
                 destroySyncMark(is_first);
+            }
         }
     }
 
     private void addSubsDelay(double value) {
         subsdelay += value;
         String label = "Sub delay: ";
-        if (subsdelay < 0)
+        if (subsdelay < 0) {
             label += "-" + new Time(-subsdelay).getSeconds();
-        else
+        } else {
             label += "+" + new Time(subsdelay).getSeconds();
+        }
         dtL.setText(label);
     }
 
@@ -1017,7 +1108,9 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
     private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables
 
-    /* Pre rendered icons */
+    /*
+     * Pre rendered icons
+     */
     private ImageIcon[] PenIcons;
     private JButton[] Pens;
     private ImageIcon[] SubRecIcons;
@@ -1071,8 +1164,9 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
 
     private void setPauseIcon() {
         boolean status = false;
-        if (view != null)
+        if (view != null) {
             status = view.isPaused();
+        }
         setButtonIcon(PauseB, status ? "pause" : "play");
     }
 
@@ -1081,10 +1175,11 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
     }
 
     private void setMarkStatus(int status) {
-        if (status == SUBREC_TYPING)
+        if (status == SUBREC_TYPING) {
             MarkB.setEnabled(false);
-        else
+        } else {
             MarkB.setEnabled(true);
+        }
         setButtonIcon(MarkB, SubRecIcons[status]);
     }
 
@@ -1094,10 +1189,11 @@ public class JVideoConsole extends JDialog implements PlayerFeedback {
 
     private void setSyncButton(int number, boolean status) {
         JButton b = (number == 1) ? Sync1B : Sync2B;
-        if (number == 1)
+        if (number == 1) {
             sync1_status = status;
-        else
+        } else {
             sync2_status = status;
+        }
         setButtonIcon(b, SyncIcons[(status ? 1 : 0) + ((number - 1) * 2)]);
     }
 

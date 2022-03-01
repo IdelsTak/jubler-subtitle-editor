@@ -23,15 +23,12 @@
 
 package com.panayotis.jubler.subs.style;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface NameList {
 
-    public String getNameAt(int i);
+  public String getNameAt(int i);
 
-    public Object getElementAt(int i);
+  public Object getElementAt(int i);
 
-    public int size();
+  public int size();
 }

@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.subs.loader.gui;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -62,11 +61,15 @@ public abstract class JFileOptions extends JPanel implements ActionListener, Mou
 
     protected abstract void setPreEncoding(String enc);
 
-    /* Use this method to load options and use them on visual components */
+    /*
+     * Use this method to load options and use them on visual components
+     */
     public abstract void updateVisuals(Subtitles subs, MediaFile mfile);
 
 
-    /* Use this method to apply default options from various controls */
+    /*
+     * Use this method to apply default options from various controls
+     */
     protected void applyOptions(SubFile sfile) {
         SubFile.saveDefaultOptions();
     }
@@ -77,8 +80,9 @@ public abstract class JFileOptions extends JPanel implements ActionListener, Mou
 
     protected void setListItem(JComboBox comp, String value) {
         comp.setSelectedItem(value);
-        if (!comp.getSelectedItem().toString().equals(value))
+        if (!comp.getSelectedItem().toString().equals(value)) {
             comp.setSelectedItem("US-ASCII");
+        }
     }
 
     protected void setUnicodeVisible(boolean status) {
@@ -87,8 +91,9 @@ public abstract class JFileOptions extends JPanel implements ActionListener, Mou
     }
 
     protected JButton getPresetsButton() {
-        if (Presets.getParent() != null)
+        if (Presets.getParent() != null) {
             Presets.getParent().remove(Presets);
+        }
         return Presets;
     }
 
@@ -871,16 +876,18 @@ public abstract class JFileOptions extends JPanel implements ActionListener, Mou
     }// </editor-fold>//GEN-END:initComponents
 
     private void PresetsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PresetsMousePressed
-        if (Presets.isEnabled())
+        if (Presets.isEnabled()) {
             PreEnc.show(Presets, Presets.getBorder().getBorderInsets(Presets).left / 2, Presets.getHeight() - Presets.getBorder().getBorderInsets(Presets).bottom + 1);
+        }
     }//GEN-LAST:event_PresetsMousePressed
 
     private void selectPreEncodings(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectPreEncodings
         String enc = evt.getActionCommand();
         if (enc.startsWith("Mac")
                 || enc.equals("Johab")
-                || enc.endsWith("874"))
+                || enc.endsWith("874")) {
             enc = "x-" + enc;
+        }
         setPreEncoding(enc);
     }//GEN-LAST:event_selectPreEncodings
     // Variables declaration - do not modify//GEN-BEGIN:variables

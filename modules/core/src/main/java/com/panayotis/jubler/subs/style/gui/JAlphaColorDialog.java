@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.subs.style.gui;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -64,8 +63,9 @@ public class JAlphaColorDialog extends JDialog implements ActionListener, Change
     }
 
     public void setAlphaColor(AlphaColor c) {
-        if (c == null)
+        if (c == null) {
             return;
+        }
         chooser.setColor(c);
         AlphaS.setValue(c.getAlpha());
         apanel.setAlphaColor(c);

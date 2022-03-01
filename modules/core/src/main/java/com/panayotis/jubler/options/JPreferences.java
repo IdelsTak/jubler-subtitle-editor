@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -39,11 +38,14 @@ import javax.swing.JMenuBar;
  */
 public class JPreferences extends javax.swing.JDialog {
 
-    /* GUI element to hold various preferences
+    /*
+     * GUI element to hold various preferences
      * it is "friendly", since it is needed in Options
      */
     JOptionTabs Tabs;
-    /* Shortcuts to panels */
+    /*
+     * Shortcuts to panels
+     */
     private JExternalOptions jplay;
     private JExternalOptions jspell;
     private JShortcutsOptions jcut;
@@ -86,10 +88,11 @@ public class JPreferences extends javax.swing.JDialog {
         Options.loadSystemPreferences(this);
         Tabs.initTabs();
         setVisible(true);
-        if (dialog_status)
+        if (dialog_status) {
             Options.saveSystemPreferences(this);
-        else
+        } else {
             Options.loadSystemPreferences(this); // Make sure options are returned to their saved state
+        }
     }
 
     /**

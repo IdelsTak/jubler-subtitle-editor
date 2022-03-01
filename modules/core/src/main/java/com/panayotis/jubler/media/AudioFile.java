@@ -25,28 +25,25 @@ package com.panayotis.jubler.media;
 
 import java.io.File;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class AudioFile extends File {
 
-    private boolean same_as_video = false;
+  private boolean same_as_video = false;
 
-    ;
+  ;
 
-    /** Creates a new instance of AudioFile */
-    public AudioFile(File af, File vfile) {
-        super(af.getPath());
-        same_as_video = getPath().equals(vfile.getPath());
-    }
+  /** Creates a new instance of AudioFile */
+  public AudioFile(File af, File vfile) {
+    super(af.getPath());
+    same_as_video = getPath().equals(vfile.getPath());
+  }
 
-    public AudioFile(String parent, String audiofname, VideoFile vfile) {
-        super(parent, audiofname);
-        same_as_video = getPath().equals(vfile.getPath());
-    }
+  public AudioFile(String parent, String audiofname, VideoFile vfile) {
+    super(parent, audiofname);
+    same_as_video = getPath().equals(vfile.getPath());
+  }
 
-    public boolean isSameAsVideo() {
-        return same_as_video;
-    }
+  public boolean isSameAsVideo() {
+    return same_as_video;
+  }
 }

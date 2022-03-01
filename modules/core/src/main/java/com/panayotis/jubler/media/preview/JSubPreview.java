@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.media.preview;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -63,7 +62,9 @@ public class JSubPreview extends javax.swing.JPanel {
     private JubFrame parent;
     private boolean ignore_slider_changes = false;
     private boolean ignore_zoomfactor_changes = false;
-    /* Here we store the start/end/videoduration values of the window*/
+    /*
+     * Here we store the start/end/videoduration values of the window
+     */
     private ViewWindow view;
     private MediaFile last_media_file = null;
 
@@ -105,8 +106,9 @@ public class JSubPreview extends javax.swing.JPanel {
 
         timeline.windowHasChanged(subid);
         wave.setTime(view.getStart(), view.getStart() + view.getDuration());
-        if (subid != null && subid.length > 0)
+        if (subid != null && subid.length > 0) {
             frame.setSubEntry(parent.getSubtitles().elementAt(subid[0]));
+        }
         timecaption.repaint();
 
         ignore_slider_changes = false;
@@ -118,35 +120,48 @@ public class JSubPreview extends javax.swing.JPanel {
         double val;
         Subtitles subs = parent.getSubtitles();
 
-        /* First find total subtitle duration (since other values depend on it) */
+        /*
+         * First find total subtitle duration (since other values depend on it)
+         */
         double endtime;
         double videoduration = 0;
         for (int i = 0; i < subs.size(); i++) {
             endtime = subs.elementAt(i).getFinishTime().toSeconds();
-            if (videoduration < endtime)
+            if (videoduration < endtime) {
                 videoduration = endtime;
+            }
         }
         view.setVideoDuration(videoduration + 10);
 
-        /* Then find minimum & maximum time for this subtitle selection */
+        /*
+         * Then find minimum & maximum time for this subtitle selection
+         */
         if (subid.length == 0) {
             min = 0d;
             max = 0d;
-        } else
+        } else {
             for (int i = 0; i < subid.length; i++) {
                 entry = subs.elementAt(subid[i]);
                 val = entry.getStartTime().toSeconds();
-                if (min > val)
+                if (min > val) {
                     min = val;
+                }
                 val = entry.getFinishTime().toSeconds();
-                if (max < val)
+                if (max < val) {
                     max = val;
+                }
             }
-        /* Although we have a minimum duration in ViewWindow, this is too small.
-         * When displaying subtitles for the first time make sure we display a generous amount of time */
+        }
+        /*
+         * Although we have a minimum duration in ViewWindow, this is too small.
+         * When displaying subtitles for the first time make sure we display a
+         * generous amount of time
+         */
         view.setWindow(min, max, true);
 
-        /* Update visual data */
+        /*
+         * Update visual data
+         */
         windowHasChanged(subid);
 
         updateSelectedTime();
@@ -157,8 +172,9 @@ public class JSubPreview extends javax.swing.JPanel {
     }
 
     public void updateMediaFile(MediaFile mfile) {
-        if (mfile.equals(last_media_file))
+        if (mfile.equals(last_media_file)) {
             return;
+        }
         last_media_file = mfile;
 
         wave.updateMediaFile(mfile);
@@ -186,10 +202,11 @@ public class JSubPreview extends javax.swing.JPanel {
 
     private void setOrientation(boolean horizontal) {
         MainPanel.remove(frame);
-        if (horizontal)
+        if (horizontal) {
             MainPanel.add(frame, BorderLayout.WEST);
-        else
+        } else {
             MainPanel.add(frame, BorderLayout.NORTH);
+        }
         parent.setPreviewOrientation(horizontal);
         parent.resetPreviewPanels();
         AutoSaveOptions.setPreviewOrientation(horizontal);
@@ -488,12 +505,15 @@ public class JSubPreview extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ZoomSStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ZoomSStateChanged
-        if (ignore_slider_changes)
+        if (ignore_slider_changes) {
             return;
+        }
         ignore_zoomfactor_changes = true;
 
         double center = timeline.getCenterOfSelection();
-        /* minimum diration is 2 seconds */
+        /*
+         * minimum diration is 2 seconds
+         */
         double half_duration = Math.pow(view.getVideoDuration() / 2d, ((double) ZoomS.getValue()) / ZoomS.getMaximum());
         view.setWindow(center - half_duration, center + half_duration, false);
         windowHasChanged(null);
@@ -518,8 +538,9 @@ public class JSubPreview extends javax.swing.JPanel {
     }//GEN-LAST:event_cursorSelector
 
     private void sliderAdjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {//GEN-FIRST:event_sliderAdjustmentValueChanged
-        if (ignore_slider_changes || evt.getValueIsAdjusting())
+        if (ignore_slider_changes || evt.getValueIsAdjusting()) {
             return;
+        }
         view.setWindow(evt.getValue() / 10d, evt.getValue() / 10d + view.getDuration(), false);
         windowHasChanged(null);
     }//GEN-LAST:event_sliderAdjustmentValueChanged

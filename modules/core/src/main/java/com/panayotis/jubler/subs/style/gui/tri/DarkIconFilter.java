@@ -29,30 +29,26 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class DarkIconFilter extends RGBImageFilter {
 
-    public DarkIconFilter() {
-    }
+  public DarkIconFilter() {}
 
-    public int filterRGB(int x, int y, int rgb) {
-        int r = (rgb >> 16) & 255;
-        int g = (rgb >> 8) & 255;
-        int b = rgb & 255;
-        int medhalf = (r + g + b) / 7;
+  public int filterRGB(int x, int y, int rgb) {
+    int r = (rgb >> 16) & 255;
+    int g = (rgb >> 8) & 255;
+    int b = rgb & 255;
+    int medhalf = (r + g + b) / 7;
 
-        r = (int) (r * 0.3) + medhalf;
-        g = (int) (g * 0.3) + medhalf;
-        b = (int) (b * 0.3) + medhalf;
-        return (rgb & 0xff000000) | (r << 16) | (g << 8) | b;
-    }
+    r = (int) (r * 0.3) + medhalf;
+    g = (int) (g * 0.3) + medhalf;
+    b = (int) (b * 0.3) + medhalf;
+    return (rgb & 0xff000000) | (r << 16) | (g << 8) | b;
+  }
 
-    public static ImageIcon getDisabledIcon(ImageIcon from) {
-        DarkIconFilter filter = new DarkIconFilter();
-        ImageProducer prod = new FilteredImageSource(from.getImage().getSource(), filter);
-        return new ImageIcon(Toolkit.getDefaultToolkit().createImage(prod));
-    }
+  public static ImageIcon getDisabledIcon(ImageIcon from) {
+    DarkIconFilter filter = new DarkIconFilter();
+    ImageProducer prod = new FilteredImageSource(from.getImage().getSource(), filter);
+    return new ImageIcon(Toolkit.getDefaultToolkit().createImage(prod));
+  }
 }

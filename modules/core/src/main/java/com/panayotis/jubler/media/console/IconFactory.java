@@ -29,33 +29,30 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class IconFactory {
 
-    private static RolloverIconFilter roll = new RolloverIconFilter();
-    private static PressedIconFilter press = new PressedIconFilter();
+  private static RolloverIconFilter roll = new RolloverIconFilter();
+  private static PressedIconFilter press = new PressedIconFilter();
 
-    public static ImageIcon getColoredIcon(ImageIcon from, Color c) {
-        return getIcon(from, new ColorIconFilter(c));
-    }
+  public static ImageIcon getColoredIcon(ImageIcon from, Color c) {
+    return getIcon(from, new ColorIconFilter(c));
+  }
 
-    public static ImageIcon getRolloverIcon(ImageIcon from) {
-        return getIcon(from, roll);
-    }
+  public static ImageIcon getRolloverIcon(ImageIcon from) {
+    return getIcon(from, roll);
+  }
 
-    public static ImageIcon getPressedIcon(ImageIcon from) {
-        return getIcon(from, press);
-    }
+  public static ImageIcon getPressedIcon(ImageIcon from) {
+    return getIcon(from, press);
+  }
 
-    public static ImageIcon getSelectedPenIcon(ImageIcon from) {
-        return getIcon(from, new SelectedPenIconFilter());
-    }
+  public static ImageIcon getSelectedPenIcon(ImageIcon from) {
+    return getIcon(from, new SelectedPenIconFilter());
+  }
 
-    private static ImageIcon getIcon(ImageIcon from, RGBImageFilter filter) {
-        ImageProducer prod = new FilteredImageSource(from.getImage().getSource(), filter);
-        return new ImageIcon(Toolkit.getDefaultToolkit().createImage(prod));
-    }
+  private static ImageIcon getIcon(ImageIcon from, RGBImageFilter filter) {
+    ImageProducer prod = new FilteredImageSource(from.getImage().getSource(), filter);
+    return new ImageIcon(Toolkit.getDefaultToolkit().createImage(prod));
+  }
 }

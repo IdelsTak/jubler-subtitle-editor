@@ -32,70 +32,67 @@ import com.panayotis.jubler.undo.UndoEntry;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class SubJoin extends Tool {
 
-    private ArrayList<JubFrame> privlist = new ArrayList<JubFrame>();
+  private ArrayList<JubFrame> privlist = new ArrayList<JubFrame>();
 
-    public SubJoin() {
-        super(new ToolMenu("Join files", "TJO", Location.FILETOOL, 0, 0));
-    }
+  public SubJoin() {
+    super(new ToolMenu("Join files", "TJO", Location.FILETOOL, 0, 0));
+  }
 
-    public boolean isPrepend() {
-        return ((SubJoinGUI) getVisuals()).RPrepend.isSelected();
-    }
+  public boolean isPrepend() {
+    return ((SubJoinGUI) getVisuals()).RPrepend.isSelected();
+  }
 
-    public JubFrame getOtherSubs() {
-        return privlist.get(((SubJoinGUI) getVisuals()).SubWindow.getSelectedIndex());
-    }
+  public JubFrame getOtherSubs() {
+    return privlist.get(((SubJoinGUI) getVisuals()).SubWindow.getSelectedIndex());
+  }
 
-    public Time getGap() {
-        return (Time) (((SubJoinGUI) getVisuals()).joinpos.getModel().getValue());
-    }
+  public Time getGap() {
+    return (Time) (((SubJoinGUI) getVisuals()).joinpos.getModel().getValue());
+  }
 
-    @Override
-    public void updateData(JubFrame current) {
-        SubJoinGUI vis = (SubJoinGUI) getVisuals();
-        privlist.clear();
-        vis.SubWindow.removeAllItems();
-        for (JubFrame item : JubFrame.windows)
-            if (item != current) {
-                vis.SubWindow.addItem(item.getSubtitles().getSubFile().getStrippedFile().getName());
-                privlist.add(item);
-            }
-    }
+  @Override
+  public void updateData(JubFrame current) {
+    SubJoinGUI vis = (SubJoinGUI) getVisuals();
+    privlist.clear();
+    vis.SubWindow.removeAllItems();
+    for (JubFrame item : JubFrame.windows)
+      if (item != current) {
+        vis.SubWindow.addItem(item.getSubtitles().getSubFile().getStrippedFile().getName());
+        privlist.add(item);
+      }
+  }
 
-    @Override
-    public boolean execute(JubFrame current) {
-        SubJoinGUI vis = (SubJoinGUI) getVisuals();
-        if (JIDialog.action(current, vis, __("Join two subtitles"))) {
-            Subtitles newsubs;
-            JubFrame other;
-            double dt;
+  @Override
+  public boolean execute(JubFrame current) {
+    SubJoinGUI vis = (SubJoinGUI) getVisuals();
+    if (JIDialog.action(current, vis, __("Join two subtitles"))) {
+      Subtitles newsubs;
+      JubFrame other;
+      double dt;
 
-            current.getUndoList().addUndo(new UndoEntry(current.getSubtitles(), __("Join subtitles")));
+      current.getUndoList().addUndo(new UndoEntry(current.getSubtitles(), __("Join subtitles")));
 
-            newsubs = new Subtitles(current.getSubtitles().getSubFile());
-            other = getOtherSubs();
-            dt = getGap().toSeconds();
+      newsubs = new Subtitles(current.getSubtitles().getSubFile());
+      other = getOtherSubs();
+      dt = getGap().toSeconds();
 
-            SubEntry selected = isPrepend()
-                ? newsubs.joinSubs(other.getSubtitles(), current.getSubtitles(), dt)
-                    :newsubs.joinSubs(current.getSubtitles(), other.getSubtitles(), dt);
+      SubEntry selected =
+          isPrepend()
+              ? newsubs.joinSubs(other.getSubtitles(), current.getSubtitles(), dt)
+              : newsubs.joinSubs(current.getSubtitles(), other.getSubtitles(), dt);
 
-            current.setSubs(newsubs);
-            current.tableHasChanged(selected);
-            other.closeWindow(false, true);
-            return true;
-        } else
-            return false;
-    }
+      current.setSubs(newsubs);
+      current.tableHasChanged(selected);
+      other.closeWindow(false, true);
+      return true;
+    } else return false;
+  }
 
-    @Override
-    protected JComponent constructVisuals() {
-        return new SubJoinGUI();
-    }
+  @Override
+  protected JComponent constructVisuals() {
+    return new SubJoinGUI();
+  }
 }

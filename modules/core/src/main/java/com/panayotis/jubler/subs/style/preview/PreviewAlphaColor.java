@@ -27,17 +27,14 @@ import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import com.panayotis.jubler.subs.style.gui.AlphaColor;
 import java.text.AttributedString;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewAlphaColor extends PreviewColor {
 
-    public PreviewAlphaColor(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  public PreviewAlphaColor(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 
-    public void addAttribute(AttributedString str, Object value, int from, int to) {
-        super.addAttribute(str, ((AlphaColor) value).getAColor(), from, to);
-    }
+  public void addAttribute(AttributedString str, Object value, int from, int to) {
+    super.addAttribute(str, ((AlphaColor) value).getAColor(), from, to);
+  }
 }

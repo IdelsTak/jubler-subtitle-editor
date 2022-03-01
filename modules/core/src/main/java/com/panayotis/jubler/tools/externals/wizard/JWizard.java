@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.tools.externals.wizard;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -311,8 +310,9 @@ public class JWizard extends JDialog {
 
     private void BrowseBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrowseBActionPerformed
         BrowseStatusL.setVisible(false);
-        if (fdialog.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)
+        if (fdialog.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
             return;
+        }
         File newexe = TreeWalker.searchExecutable(fdialog.getSelectedFile(), searchnames, testparameters, test_signature, SystemDependent.getBundleOrFileID());
         if (newexe != null) {
             FilenameT.setText(newexe.getPath());
@@ -334,10 +334,11 @@ public class JWizard extends JDialog {
     }//GEN-LAST:event_CancelBActionPerformed
 
     public String getExecFilename() {
-        if (FilenameT.getText().equals(""))
+        if (FilenameT.getText().equals("")) {
             return null;
-        else
+        } else {
             return FilenameT.getText();
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton AutoB;

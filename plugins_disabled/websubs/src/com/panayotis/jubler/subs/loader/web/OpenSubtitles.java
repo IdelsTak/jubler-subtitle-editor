@@ -29,37 +29,32 @@ import java.net.URL;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class OpenSubtitles {
 
-    /**
-     * Creates a new instance of OpenSubtitles
-     */
-    public OpenSubtitles() {
+  /** Creates a new instance of OpenSubtitles */
+  public OpenSubtitles() {}
+
+  public void printStream(String movie, String lang) {
+    if (lang == null || lang.equals("")) lang = "eng";
+
+    String url =
+        "http://www.opensubtitles.org/en/search/sublanguageid-"
+            + lang
+            + "/moviename-"
+            + movie.replace(" ", "%20").toLowerCase()
+            + "/simplexml";
+    try {
+      BufferedReader in =
+          new BufferedReader(new InputStreamReader(new URL(url).openConnection().getInputStream()));
+      String dat;
+      while ((dat = in.readLine()) != null) System.out.println(dat);
+
+      SAXParserFactory factory = SAXParserFactory.newInstance();
+      SAXParser saxParser = factory.newSAXParser();
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-    public void printStream(String movie, String lang) {
-        if (lang == null || lang.equals(""))
-            lang = "eng";
-
-        String url = "http://www.opensubtitles.org/en/search/sublanguageid-" + lang + "/moviename-" + movie.replace(" ", "%20").toLowerCase() + "/simplexml";
-        try {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                    new URL(url).openConnection().getInputStream()));
-            String dat;
-            while ((dat = in.readLine()) != null)
-                System.out.println(dat);
-
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+  }
 }

@@ -2,7 +2,7 @@
  * JDuration.java
  *
  * Created on 5 Ιούλιος 2005, 1:29 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.time.gui;
 
 import java.text.DecimalFormat;
@@ -43,8 +42,9 @@ public class JDuration extends javax.swing.JPanel {
     }
 
     public double getAbsTime() {
-        if (!AbsoluteT.isSelected())
+        if (!AbsoluteT.isSelected()) {
             return -1;
+        }
         try {
             return Double.parseDouble(AbsBox.getText()) / 1000;
         } catch (NumberFormatException e) {
@@ -53,8 +53,9 @@ public class JDuration extends javax.swing.JPanel {
     }
 
     public double getCPSTime() {
-        if (!CPSecT.isSelected())
+        if (!CPSecT.isSelected()) {
             return -1;
+        }
         try {
             return Double.parseDouble(CPSBox.getText()) / 1000;
         } catch (NumberFormatException e) {

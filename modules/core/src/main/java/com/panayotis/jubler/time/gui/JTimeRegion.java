@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.time.gui;
 
 import com.panayotis.jubler.subs.SubEntry;
@@ -65,7 +64,9 @@ public class JTimeRegion extends JTimeArea {
     }
 
     public ArrayList<SubEntry> getAffectedSubs() {
-        /* Select affected subtitles by time region */
+        /*
+         * Select affected subtitles by time region
+         */
         double tstart, tfinish;
         double tcurrent;
 
@@ -80,8 +81,9 @@ public class JTimeRegion extends JTimeArea {
         for (i = 0; i < subs.size(); i++) {
             csub = subs.elementAt(i);
             tcurrent = csub.getStartTime().toSeconds();
-            if (tcurrent >= tstart && tcurrent <= tfinish)
+            if (tcurrent >= tstart && tcurrent <= tfinish) {
                 affected.add(csub);
+            }
         }
         return affected;
     }

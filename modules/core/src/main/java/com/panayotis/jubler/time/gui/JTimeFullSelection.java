@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.time.gui;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -61,20 +60,24 @@ public class JTimeFullSelection extends JTimeArea {
         // Update styles
         int selvalue = StyleSel.getSelectedIndex();
         StyleSel.removeAllItems();
-        for (SubStyle style : subs.getStyleList())
+        for (SubStyle style : subs.getStyleList()) {
             StyleSel.addItem(style);
+        }
         if (subs.getStyleList().size() < 2) {
-            if (byStyle.isSelected())
+            if (byStyle.isSelected()) {
                 bySelection.setSelected(true);
+            }
             byStyle.setEnabled(false);
             StyleSel.setEnabled(false);
         } else {
             byStyle.setEnabled(true);
             StyleSel.setEnabled(true);
-            if (selvalue < 0)
+            if (selvalue < 0) {
                 selvalue = 0;
-            if (selvalue < subs.getStyleList().size())
+            }
+            if (selvalue < subs.getStyleList().size()) {
                 StyleSel.setSelectedIndex(selvalue);
+            }
         }
 
         // Select wanted widget
@@ -101,30 +104,39 @@ public class JTimeFullSelection extends JTimeArea {
 
         affected = new ArrayList<SubEntry>();
 
-        if (bySelection.isSelected())
-            /* Select affected subtitles by user selection */
-            for (i = 0; i < selected.length; i++)
+        if (bySelection.isSelected()) /*
+         * Select affected subtitles by user selection
+         */ {
+            for (i = 0; i < selected.length; i++) {
                 affected.add(subs.elementAt(selected[i]));
-        else if (byColor.isSelected()) {
-            /* Select affected subtitles by marking */
+            }
+        } else if (byColor.isSelected()) {
+            /*
+             * Select affected subtitles by marking
+             */
             int selmark = ColorSel.getSelectedIndex();
 
             for (i = 0; i < subs.size(); i++) {
                 csub = subs.elementAt(i);
-                if (selmark == csub.getMark())
+                if (selmark == csub.getMark()) {
                     affected.add(csub);
+                }
             }
         } else if (byStyle.isSelected()) {
-            /* Select affected subtitles by marking */
+            /*
+             * Select affected subtitles by marking
+             */
             SubStyle style = (SubStyle) StyleSel.getSelectedItem();
 
             for (i = 0; i < subs.size(); i++) {
                 csub = subs.elementAt(i);
-                if (style == csub.getStyle())
+                if (style == csub.getStyle()) {
                     affected.add(csub);
+                }
             }
-        } else
+        } else {
             affected = tregion.getAffectedSubs();
+        }
         return affected;
     }
 

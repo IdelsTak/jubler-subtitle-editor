@@ -1,8 +1,8 @@
 /*
  * FramesFormatter
- * 
+ *
  * Created on 26 November 2007, 1:20 am
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -27,20 +27,17 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import javax.swing.text.NumberFormatter;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class FramesFormatter extends NumberFormatter {
 
-    private final static NumberFormat format;
+  private static final NumberFormat format;
 
-    static {
-        format = NumberFormat.getIntegerInstance();
-        format.setMaximumIntegerDigits(7);
-    }
+  static {
+    format = NumberFormat.getIntegerInstance();
+    format.setMaximumIntegerDigits(7);
+  }
 
-    public FramesFormatter() throws ParseException {
-        super(format);
-    }
+  public FramesFormatter() throws ParseException {
+    super(format);
+  }
 }

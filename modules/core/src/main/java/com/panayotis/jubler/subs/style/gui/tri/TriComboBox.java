@@ -31,50 +31,42 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class TriComboBox extends JComboBox implements TriObject {
 
-    /**
-     * Creates a new instance of TriComboBox
-     */
-    public TriComboBox(Object[] values) {
-        super();
-        for (Object data : values)
-            addItem(data);
-        addItem(__("Unspecified"));
-        addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (ignore_element_changes)
-                    return;
-                Object val = getSelectedItem();
-                if (val.equals(__("Unspecified")))
-                    return;
-                if (listener != null)
-                    listener.changeStyle(styletype, getSelectedItem());
-            }
+  /** Creates a new instance of TriComboBox */
+  public TriComboBox(Object[] values) {
+    super();
+    for (Object data : values) addItem(data);
+    addItem(__("Unspecified"));
+    addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent evt) {
+            if (ignore_element_changes) return;
+            Object val = getSelectedItem();
+            if (val.equals(__("Unspecified"))) return;
+            if (listener != null) listener.changeStyle(styletype, getSelectedItem());
+          }
         });
-    }
-    private boolean ignore_element_changes = false;
+  }
 
-    public void setData(Object data) {
-        ignore_element_changes = true;
-        if (data == null)
-            setSelectedItem(__("Unspecified"));
-        else
-            setSelectedItem(data);
-        ignore_element_changes = false;
-    }
-    protected StyleType styletype;
-    protected StyleChangeListener listener;
+  private boolean ignore_element_changes = false;
 
-    public void setStyle(StyleType style) {
-        styletype = style;
-    }
+  public void setData(Object data) {
+    ignore_element_changes = true;
+    if (data == null) setSelectedItem(__("Unspecified"));
+    else setSelectedItem(data);
+    ignore_element_changes = false;
+  }
 
-    public void setListener(StyleChangeListener listener) {
-        this.listener = listener;
-    }
+  protected StyleType styletype;
+  protected StyleChangeListener listener;
+
+  public void setStyle(StyleType style) {
+    styletype = style;
+  }
+
+  public void setListener(StyleChangeListener listener) {
+    this.listener = listener;
+  }
 }

@@ -24,40 +24,35 @@ import com.panayotis.jubler.JubFrame;
 import com.panayotis.jubler.plugins.PluginItem;
 import javax.swing.JComponent;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public abstract class Tool implements PluginItem {
 
-    public final ToolMenu menu;
-    private JComponent visuals;
+  public final ToolMenu menu;
+  private JComponent visuals;
 
-    public Tool(ToolMenu toolmenu) {
-        this.menu = toolmenu;
-    }
+  public Tool(ToolMenu toolmenu) {
+    this.menu = toolmenu;
+  }
 
-    public abstract void updateData(JubFrame current);
+  public abstract void updateData(JubFrame current);
 
-    public abstract boolean execute(JubFrame current);
+  public abstract boolean execute(JubFrame current);
 
-    public final JComponent getVisuals() {
-        if (visuals == null)
-            visuals = constructVisuals();
-        return visuals;
-    }
+  public final JComponent getVisuals() {
+    if (visuals == null) visuals = constructVisuals();
+    return visuals;
+  }
 
-    protected abstract JComponent constructVisuals();
+  protected abstract JComponent constructVisuals();
 
-    @Override
-    public Class[] getPluginAffections() {
-        return new Class[]{ToolsManager.class};
-    }
+  @Override
+  public Class[] getPluginAffections() {
+    return new Class[] {ToolsManager.class};
+  }
 
-    @Override
-    public void execPlugin(Object caller, Object param) {
-        if (!ToolsManager.class.equals(caller))
-            return;
-        ToolsManager.add(this);
-    }
+  @Override
+  public void execPlugin(Object caller, Object param) {
+    if (!ToolsManager.class.equals(caller)) return;
+    ToolsManager.add(this);
+  }
 }

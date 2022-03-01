@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options;
 
 import com.panayotis.jubler.os.SystemDependent;
@@ -124,11 +123,15 @@ public class JExtBasicOptions extends JPanel {
         return this;
     }
 
-    /* Use this method every time an update to the panel is needed */
+    /*
+     * Use this method every time an update to the panel is needed
+     */
     protected void updateOptionsPanel() {
     }
 
-    /* Use this method when we want to search for the executable path */
+    /*
+     * Use this method when we want to search for the executable path
+     */
     private boolean searchForExecutable() {
         JWizard wiz = new JWizard(name, searchname, testparameters, test_signature, FilenameT.getText());
         wiz.setVisible(true);

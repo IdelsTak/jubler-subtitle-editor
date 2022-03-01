@@ -2,7 +2,7 @@
  * JSubEditor.java
  *
  * Created on 13 Ιούλιος 2005, 1:28 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.subs;
 
 import static com.panayotis.jubler.i18n.I18N.__;

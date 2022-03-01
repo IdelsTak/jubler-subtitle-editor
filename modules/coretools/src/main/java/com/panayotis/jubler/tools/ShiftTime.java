@@ -27,63 +27,57 @@ import com.panayotis.jubler.time.Time;
 import javax.swing.JComponent;
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class ShiftTime extends RealTimeTool {
 
-    private double shift;
+  private double shift;
 
-    @SuppressWarnings("LeakingThisInConstructor")
-    public ShiftTime() {
-        super(true, new ToolMenu(__("Shift time"), "TSH", Location.TIMETOOL, 0, 0));
-    }
+  @SuppressWarnings("LeakingThisInConstructor")
+  public ShiftTime() {
+    super(true, new ToolMenu(__("Shift time"), "TSH", Location.TIMETOOL, 0, 0));
+  }
 
-    @Override
-    public void execPlugin(Object caller, Object param) {
-        super.execPlugin(caller, param);
-        ToolsManager.setShifter(this);
-    }
+  @Override
+  public void execPlugin(Object caller, Object param) {
+    super.execPlugin(caller, param);
+    ToolsManager.setShifter(this);
+  }
 
-    @Override
-    protected JComponent constructToolVisuals() {
-        return new ShiftTimeGUI();
-    }
+  @Override
+  protected JComponent constructToolVisuals() {
+    return new ShiftTimeGUI();
+  }
 
-    @Override
-    public boolean setValues(TimeSync first, TimeSync second) {
-        super.setValues(first, second);
-        ShiftTimeGUI vis = (ShiftTimeGUI) getToolVisuals();
-        double time = first.timediff;
-        if (Math.abs(time) < 0.001)
-            return false;
+  @Override
+  public boolean setValues(TimeSync first, TimeSync second) {
+    super.setValues(first, second);
+    ShiftTimeGUI vis = (ShiftTimeGUI) getToolVisuals();
+    double time = first.timediff;
+    if (Math.abs(time) < 0.001) return false;
 
-        if (time < 0) {
-            vis.CSign.setSelectedIndex(1);
-            time = -time;
-        } else
-            vis.CSign.setSelectedIndex(0);
-        vis.dt.setTimeValue(new Time(time));
-        return true;
-    }
+    if (time < 0) {
+      vis.CSign.setSelectedIndex(1);
+      time = -time;
+    } else vis.CSign.setSelectedIndex(0);
+    vis.dt.setTimeValue(new Time(time));
+    return true;
+  }
 
-    @Override
-    public void storeSelections() {
-        ShiftTimeGUI vis = (ShiftTimeGUI) getToolVisuals();
-        shift = ((Time) (vis.dt.getModel().getValue())).toSeconds();
-        if (vis.CSign.getSelectedIndex() == 1)
-            shift = -shift;
-    }
+  @Override
+  public void storeSelections() {
+    ShiftTimeGUI vis = (ShiftTimeGUI) getToolVisuals();
+    shift = ((Time) (vis.dt.getModel().getValue())).toSeconds();
+    if (vis.CSign.getSelectedIndex() == 1) shift = -shift;
+  }
 
-    @Override
-    protected void affect(SubEntry sub) {
-        sub.getStartTime().addTime(shift);
-        sub.getFinishTime().addTime(shift);
-    }
+  @Override
+  protected void affect(SubEntry sub) {
+    sub.getStartTime().addTime(shift);
+    sub.getFinishTime().addTime(shift);
+  }
 
-    @Override
-    protected String getToolTitle() {
-        return __("Shift time by absolute value");
-    }
+  @Override
+  protected String getToolTitle() {
+    return __("Shift time by absolute value");
+  }
 }

@@ -23,11 +23,8 @@
 
 package com.panayotis.jubler.subs.style;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface StyleChangeListener {
 
-    public void changeStyle(StyleType type, Object value);
+  public void changeStyle(StyleType type, Object value);
 }

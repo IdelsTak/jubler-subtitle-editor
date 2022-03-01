@@ -31,71 +31,65 @@ import com.panayotis.jubler.tools.ToolMenu.Location;
 import com.panayotis.jubler.undo.UndoEntry;
 import javax.swing.JComponent;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class SubSplit extends Tool {
 
-    public SubSplit() {
-        super(new ToolMenu(__("Split file"), "TSP", Location.FILETOOL, 0, 0));
-    }
+  public SubSplit() {
+    super(new ToolMenu(__("Split file"), "TSP", Location.FILETOOL, 0, 0));
+  }
 
-    @Override
-    protected JComponent constructVisuals() {
-        return new SubSplitGUI();
-    }
+  @Override
+  protected JComponent constructVisuals() {
+    return new SubSplitGUI();
+  }
 
-    @Override
-    public void updateData(JubFrame current) {
-        SubSplitGUI vis = (SubSplitGUI) getVisuals();
-        int row;
-        row = current.getSelectedRowIdx();
-        if (row < 0)
-            row = 0;
-        vis.setSubtitle(current.getSubtitles(), row);
-    }
+  @Override
+  public void updateData(JubFrame current) {
+    SubSplitGUI vis = (SubSplitGUI) getVisuals();
+    int row;
+    row = current.getSelectedRowIdx();
+    if (row < 0) row = 0;
+    vis.setSubtitle(current.getSubtitles(), row);
+  }
 
-    @Override
-    public boolean execute(JubFrame current) {
-        SubSplitGUI vis = (SubSplitGUI) getVisuals();
-        if (JIDialog.action(current, vis, __("Split subtitles in two"))) {
-            Subtitles subs1, subs2;
-            SubEntry csub;
-            double stime;
+  @Override
+  public boolean execute(JubFrame current) {
+    SubSplitGUI vis = (SubSplitGUI) getVisuals();
+    if (JIDialog.action(current, vis, __("Split subtitles in two"))) {
+      Subtitles subs1, subs2;
+      SubEntry csub;
+      double stime;
 
-            current.getUndoList().addUndo(new UndoEntry(current.getSubtitles(), __("Split subtitles")));
+      current.getUndoList().addUndo(new UndoEntry(current.getSubtitles(), __("Split subtitles")));
 
-            stime = vis.getTime().toSeconds();
-            subs1 = new Subtitles(new SubFile(current.getSubtitles().getSubFile()));
-            subs1.getSubFile().appendToFilename("_1");
-            subs2 = new Subtitles(new SubFile(current.getSubtitles().getSubFile()));
-            subs2.getSubFile().appendToFilename("_2");
+      stime = vis.getTime().toSeconds();
+      subs1 = new Subtitles(new SubFile(current.getSubtitles().getSubFile()));
+      subs1.getSubFile().appendToFilename("_1");
+      subs2 = new Subtitles(new SubFile(current.getSubtitles().getSubFile()));
+      subs2.getSubFile().appendToFilename("_2");
 
-            for (int i = 0; i < current.getSubtitles().size(); i++) {
-                csub = current.getSubtitles().elementAt(i);
-                if (csub.getStartTime().toSeconds() < stime)
-                    subs1.add(csub);
-                else {
-                    csub.getStartTime().addTime(-stime);
-                    csub.getFinishTime().addTime(-stime);
-                    subs2.add(csub);
-                }
-            }
+      for (int i = 0; i < current.getSubtitles().size(); i++) {
+        csub = current.getSubtitles().elementAt(i);
+        if (csub.getStartTime().toSeconds() < stime) subs1.add(csub);
+        else {
+          csub.getStartTime().addTime(-stime);
+          csub.getFinishTime().addTime(-stime);
+          subs2.add(csub);
+        }
+      }
 
-            current.setSubs(subs1);
-            JubFrame newwindow = new JubFrame(subs2);
+      current.setSubs(subs1);
+      JubFrame newwindow = new JubFrame(subs2);
 
-            current.getUndoList().invalidateSaveMark();
-            newwindow.getUndoList().invalidateSaveMark();
+      current.getUndoList().invalidateSaveMark();
+      newwindow.getUndoList().invalidateSaveMark();
 
-            current.enableWindowControls(false);
-            newwindow.enableWindowControls(true);
-            current.showInfo();
-            newwindow.showInfo();
-            StaticJubler.updateRecents();
-            return true;
-        } else
-            return false;
-    }
+      current.enableWindowControls(false);
+      newwindow.enableWindowControls(true);
+      current.showInfo();
+      newwindow.showInfo();
+      StaticJubler.updateRecents();
+      return true;
+    } else return false;
+  }
 }

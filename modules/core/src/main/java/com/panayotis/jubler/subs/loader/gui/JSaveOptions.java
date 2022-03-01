@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.subs.loader.gui;
 
 import com.panayotis.jubler.options.gui.JRateChooser;
@@ -68,7 +67,10 @@ public class JSaveOptions extends JFileOptions {
     }
 
 
-    /* Execute this method whenever the output format is changed (or this panel is displayed */
+    /*
+     * Execute this method whenever the output format is changed (or this panel
+     * is displayed
+     */
     private void updateVisualFPS(String format_desc) {
         boolean supports_fps = Availabilities.formats.findFromDescription(format_desc).supportsFPS();
         FPSPanelL.setVisible(supports_fps);

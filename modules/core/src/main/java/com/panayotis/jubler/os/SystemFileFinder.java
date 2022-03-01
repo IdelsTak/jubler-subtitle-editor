@@ -28,51 +28,50 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-/**
- * @author teras
- */
+/** @author teras */
 public class SystemFileFinder {
 
-    private static final boolean isJarBased;
-    public static final File AppPath;
+  private static final boolean isJarBased;
+  public static final File AppPath;
 
-
-    static {
-        boolean jarBased;
-        File aPath;
-        try {
-            File classpath = new File(JubFrame.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-            jarBased = classpath.isFile();
-            aPath = jarBased ? classpath.getParentFile() : classpath;
-        } catch (URISyntaxException e) {
-            jarBased = false;
-            aPath = new File("");
-        }
-        isJarBased = jarBased;
-        AppPath = aPath;
+  static {
+    boolean jarBased;
+    File aPath;
+    try {
+      File classpath =
+          new File(
+              JubFrame.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+      jarBased = classpath.isFile();
+      aPath = jarBased ? classpath.getParentFile() : classpath;
+    } catch (URISyntaxException e) {
+      jarBased = false;
+      aPath = new File("");
     }
+    isJarBased = jarBased;
+    AppPath = aPath;
+  }
 
-    private static File findFile(String name) {
-        File current = new File(AppPath, name);
-        return current.exists() ? current : null;
-    }
+  private static File findFile(String name) {
+    File current = new File(AppPath, name);
+    return current.exists() ? current : null;
+  }
 
-    public static boolean loadLibrary(String name) {
-        if (loadLibraryImpl(name) || loadLibraryImpl(name + "_32") || loadLibraryImpl(name + "_64"))
-            return true;
-        DEBUG.debug("Unable to locate library " + name);
-        return false;
-    }
+  public static boolean loadLibrary(String name) {
+    if (loadLibraryImpl(name) || loadLibraryImpl(name + "_32") || loadLibraryImpl(name + "_64"))
+      return true;
+    DEBUG.debug("Unable to locate library " + name);
+    return false;
+  }
 
-    private static boolean loadLibraryImpl(String name) {
-        File libfile = findFile("lib" + File.separator + SystemDependent.mapLibraryName(name));
-        if (libfile != null)
-            try {
-                System.load(libfile.getAbsolutePath());
-                return true;
-            } catch (UnsatisfiedLinkError e) {
-                System.err.println(e.toString());
-            }
-        return false;
-    }
+  private static boolean loadLibraryImpl(String name) {
+    File libfile = findFile("lib" + File.separator + SystemDependent.mapLibraryName(name));
+    if (libfile != null)
+      try {
+        System.load(libfile.getAbsolutePath());
+        return true;
+      } catch (UnsatisfiedLinkError e) {
+        System.err.println(e.toString());
+      }
+    return false;
+  }
 }

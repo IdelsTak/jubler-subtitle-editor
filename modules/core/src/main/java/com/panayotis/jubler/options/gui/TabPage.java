@@ -26,20 +26,17 @@ package com.panayotis.jubler.options.gui;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface TabPage {
 
-    public abstract JPanel getTabPanel();
+  public abstract JPanel getTabPanel();
 
-    public abstract String getTabName();
+  public abstract String getTabName();
 
-    public abstract String getTabTooltip();
+  public abstract String getTabTooltip();
 
-    public abstract Icon getTabIcon();
+  public abstract Icon getTabIcon();
 
-    /* Fire this method if the tab should be updated */
-    public abstract void changeProgram();
+  /* Fire this method if the tab should be updated */
+  public abstract void changeProgram();
 }

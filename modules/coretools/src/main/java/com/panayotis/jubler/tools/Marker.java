@@ -25,35 +25,32 @@ import com.panayotis.jubler.tools.ToolMenu.Location;
 import javax.swing.JComponent;
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class Marker extends OneByOneTool {
 
-    private int mark;
+  private int mark;
 
-    public Marker() {
-        super(true, new ToolMenu(__("By Selection"), "EMS", Location.MARK, 0, 0));
-    }
+  public Marker() {
+    super(true, new ToolMenu(__("By Selection"), "EMS", Location.MARK, 0, 0));
+  }
 
-    @Override
-    protected JComponent constructToolVisuals() {
-        return new MarkerGUI();
-    }
+  @Override
+  protected JComponent constructToolVisuals() {
+    return new MarkerGUI();
+  }
 
-    @Override
-    protected void storeSelections() {
-        mark = ((MarkerGUI) getToolVisuals()).ColSel.getSelectedIndex();
-    }
+  @Override
+  protected void storeSelections() {
+    mark = ((MarkerGUI) getToolVisuals()).ColSel.getSelectedIndex();
+  }
 
-    @Override
-    protected void affect(SubEntry entry) {
-        entry.setMark(mark);
-    }
+  @Override
+  protected void affect(SubEntry entry) {
+    entry.setMark(mark);
+  }
 
-    @Override
-    protected String getToolTitle() {
-        return __("Mark region");
-    }
+  @Override
+  protected String getToolTitle() {
+    return __("Mark region");
+  }
 }

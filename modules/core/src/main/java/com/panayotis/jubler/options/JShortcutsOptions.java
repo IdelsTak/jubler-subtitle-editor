@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options;
 
 import com.panayotis.jubler.os.SystemDependent;
@@ -52,11 +51,13 @@ public class JShortcutsOptions extends JPanel implements OptionsHolder {
         ShortT.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 //Ignore extra messages.
-                if (e.getValueIsAdjusting())
+                if (e.getValueIsAdjusting()) {
                     return;
+                }
                 ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.isSelectionEmpty())
+                if (lsm.isSelectionEmpty()) {
                     return;
+                }
                 smodel.setSelection(ShortT.getSelectedRow());
             }
         });

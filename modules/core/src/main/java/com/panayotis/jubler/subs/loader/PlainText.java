@@ -2,7 +2,7 @@
  * PlainText.java
  *
  * Created on 26 Αύγουστος 2005, 11:08 πμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -30,55 +30,52 @@ import java.util.regex.Pattern;
 
 import static com.panayotis.jubler.i18n.I18N.__;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PlainText extends AbstractTextSubFormat {
 
-    private static final Pattern pat;
-    private double current_time = 0;
+  private static final Pattern pat;
+  private double current_time = 0;
 
-    static {
-        pat = Pattern.compile("(.*?)" + nl);
-    }
+  static {
+    pat = Pattern.compile("(.*?)" + nl);
+  }
 
-    protected Pattern getPattern() {
-        return pat;
-    }
+  protected Pattern getPattern() {
+    return pat;
+  }
 
-    protected SubEntry getSubEntry(Matcher m) {
-        Time start = new Time(current_time);
-        current_time += 2;
-        Time finish = new Time(current_time);
-        current_time += 1;
-        return new SubEntry(start, finish, m.group(1));
-    }
+  protected SubEntry getSubEntry(Matcher m) {
+    Time start = new Time(current_time);
+    current_time += 2;
+    Time finish = new Time(current_time);
+    current_time += 1;
+    return new SubEntry(start, finish, m.group(1));
+  }
 
-    public String getExtension() {
-        return "txt";
-    }
+  public String getExtension() {
+    return "txt";
+  }
 
-    public String getName() {
-        return "PlainText";
-    }
+  public String getName() {
+    return "PlainText";
+  }
 
-    @Override
-    public String getExtendedName() {
-        return "Plain text";
-    }
+  @Override
+  public String getExtendedName() {
+    return "Plain text";
+  }
 
-    protected void appendSubEntry(SubEntry sub, StringBuilder str) {
-        str.append(sub.getText()).append('\n');
-    }
+  protected void appendSubEntry(SubEntry sub, StringBuilder str) {
+    str.append(sub.getText()).append('\n');
+  }
 
-    @Override
-    protected String initLoader(String input) {
-        current_time = 0;
-        return super.initLoader(input);
-    }
+  @Override
+  protected String initLoader(String input) {
+    current_time = 0;
+    return super.initLoader(input);
+  }
 
-    public boolean supportsFPS() {
-        return false;
-    }
+  public boolean supportsFPS() {
+    return false;
+  }
 }

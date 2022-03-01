@@ -23,36 +23,32 @@
 
 package com.panayotis.jubler.subs.style.event;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class StyleoverFull extends AbstractStyleover {
 
-    public StyleoverFull(Object style) {
-        super(style);
-    }
+  public StyleoverFull(Object style) {
+    super(style);
+  }
 
-    protected int findPrevEdge(int start, String txt) {
-        return 0;
-    }
+  protected int findPrevEdge(int start, String txt) {
+    return 0;
+  }
 
-    protected int findNextEdge(int end, String txt) {
-        return txt.length();
-    }
+  protected int findNextEdge(int end, String txt) {
+    return txt.length();
+  }
 
-    protected int offsetByParagraph() {
-        return 0;
-    }
+  protected int offsetByParagraph() {
+    return 0;
+  }
 
-    protected boolean deleteDependingOnStyle(AbstractStyleover.Entry entry, String subtext) {
-        if (entry.prev.position == 0)
-            return false;
-        return true;
-    }
+  protected boolean deleteDependingOnStyle(AbstractStyleover.Entry entry, String subtext) {
+    if (entry.prev.position == 0) return false;
+    return true;
+  }
 
-    public void addEvent(Object event, int start, int end, Object basic, String txt) {
-        super.addEvent(event, 0, txt.length() - 1, basic, txt);
-        cleanupEvents(basic, txt);
-    }
+  public void addEvent(Object event, int start, int end, Object basic, String txt) {
+    super.addEvent(event, 0, txt.length() - 1, basic, txt);
+    cleanupEvents(basic, txt);
+  }
 }

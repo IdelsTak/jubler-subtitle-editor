@@ -99,7 +99,9 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
     private SubStyleList styles;
     private final JStyleEditor sedit;
     private SubEntry entry;
-    /* Remember where this is attached to */
+    /*
+     * Remember where this is attached to
+     */
     private boolean is_attached = false;
 
     /**
@@ -118,7 +120,9 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
         SubFinish.addPropertyChangeListener(this);
         SubDur.addPropertyChangeListener(this);
 
-        /* Make subs area center justified */
+        /*
+         * Make subs area center justified
+         */
         SimpleAttributeSet set = new SimpleAttributeSet();
         set.addAttribute(StyleConstants.ParagraphConstants.Alignment, StyleConstants.ParagraphConstants.ALIGN_CENTER);
         //set.addAttribute(StyleConstants.StrikeThrough, new Boolean(true));
@@ -281,7 +285,9 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
         SubDur.setToolTipText("<html>" + __("Duration of the subtitle") + "<br/><br/>" + TOOLTIP + "</html>");
     }
 
-    /* Lock/unlock time spinners */
+    /*
+     * Lock/unlock time spinners
+     */
     private void lockTimeSpinners(boolean enabled) {
         SubStart.setEnabled(enabled);
         SubFinish.setEnabled(enabled);
@@ -332,7 +338,9 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
         NewlineL.setEnabled(enabled);
         LineCharsL.setEnabled(enabled);
 
-        /* Fix the attributes of the sub text area */
+        /*
+         * Fix the attributes of the sub text area
+         */
         if (entry == null || (!enabled)) {
             SubText.setBackground(javax.swing.UIManager.getDefaults().getColor("TextArea.background"));
             SubText.setForeground(javax.swing.UIManager.getDefaults().getColor("TextArea.foreground"));
@@ -416,7 +424,9 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
     }
 
     public void updateMetrics(SubEntry entry) {
-        /* Update information label */
+        /*
+         * Update information label
+         */
         SubMetrics m = entry.getMetrics();
 
         NewlineL.setText(String.valueOf(m.lines));
@@ -995,16 +1005,22 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
         UndoEntry undo = new UndoEntry(parent.getSubtitles(), __("Edit style"));
 
         sedit.setVisible(cstyle);
-        /* pause here */
+        /*
+         * pause here
+         */
         SubStyle result = sedit.getStyle();
 
-        /* Cancel was selected */
+        /*
+         * Cancel was selected
+         */
         if (result == null) {
             cstyle.setValues(backup);
             return;
         }
 
-        /* A clone was returned */
+        /*
+         * A clone was returned
+         */
         if (cstyle != result) {
             cstyle.setValues(backup);
             cstyle = result;
@@ -1012,7 +1028,9 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
 
         entry.setStyle(cstyle);
 
-        /* Delete was selected */
+        /*
+         * Delete was selected
+         */
         if (sedit.closedByDelete()) {
             styles.remove(cstyle);
             parent.getSubtitles().revalidateStyles();
@@ -1060,7 +1078,8 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
         focusOnText();
     }
 
-    /* Document listener methods to get feedback from the change of the SubText
+    /*
+     * Document listener methods to get feedback from the change of the SubText
      * The style update SHOULD be done asynchronusly
      */
     public void insertUpdate(DocumentEvent e) {
@@ -1072,7 +1091,8 @@ public final class JSubEditor extends JPanel implements StyleChangeListener, Doc
         SwingUtilities.invokeLater(stylethread);
     }
 
-    /* Document listener methods to get feedback from the change of the SubText
+    /*
+     * Document listener methods to get feedback from the change of the SubText
      * The style update SHOULD be done asynchronusly
      */
     public void removeUpdate(DocumentEvent e) {

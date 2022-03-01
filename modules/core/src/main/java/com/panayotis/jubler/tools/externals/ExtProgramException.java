@@ -23,20 +23,15 @@
 
 package com.panayotis.jubler.tools.externals;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class ExtProgramException extends Exception {
 
-    /**
-     * Creates a new instance of ExtProgramException
-     */
-    public ExtProgramException(Throwable cause) {
-        super(cause);
-    }
+  /** Creates a new instance of ExtProgramException */
+  public ExtProgramException(Throwable cause) {
+    super(cause);
+  }
 
-    public ExtProgramException(String message) {
-        super(message);
-    }
+  public ExtProgramException(String message) {
+    super(message);
+  }
 }

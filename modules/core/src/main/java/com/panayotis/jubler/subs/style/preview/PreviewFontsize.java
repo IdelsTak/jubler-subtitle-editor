@@ -28,24 +28,21 @@ import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewFontsize extends PreviewElement {
 
-    private AbstractStyleover over;
-    private Object deflt;
+  private AbstractStyleover over;
+  private Object deflt;
 
-    protected Attribute getStyle() {
-        return TextAttribute.SIZE;
-    }
+  protected Attribute getStyle() {
+    return TextAttribute.SIZE;
+  }
 
-    public PreviewFontsize(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  public PreviewFontsize(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 
-    public void addAttribute(AttributedString str, Object value, int from, int to) {
-        super.addAttribute(str, new Float((Integer) value), from, to);
-    }
+  public void addAttribute(AttributedString str, Object value, int from, int to) {
+    super.addAttribute(str, new Float((Integer) value), from, to);
+  }
 }

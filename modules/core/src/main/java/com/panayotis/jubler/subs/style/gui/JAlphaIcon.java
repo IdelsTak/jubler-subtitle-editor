@@ -28,69 +28,62 @@ import java.awt.Component;
 import java.awt.Graphics;
 import javax.swing.Icon;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class JAlphaIcon implements Icon {
 
-    private AlphaColor color;
+  private AlphaColor color;
 
-    /**
-     * Creates a new instance of ColorIcon
-     */
-    public JAlphaIcon(AlphaColor color) {
-        this.color = color;
+  /** Creates a new instance of ColorIcon */
+  public JAlphaIcon(AlphaColor color) {
+    this.color = color;
+  }
+
+  public void setAlphaColor(AlphaColor c) {
+    color = c;
+  }
+
+  public AlphaColor getAlphaColor() {
+    return color;
+  }
+
+  public int getIconHeight() {
+    return 14;
+  }
+
+  public int getIconWidth() {
+    return 26;
+  }
+
+  public void paintIcon(Component c, Graphics g, int x, int y) {
+    int cwidth = getIconWidth() - 2;
+    int cheight = getIconHeight() - 2;
+
+    if (color == null) {
+      g.setColor(Color.BLACK);
+      g.fillRect(x, y, cwidth + 2, cheight + 2);
+      return;
     }
 
-    public void setAlphaColor(AlphaColor c) {
-        color = c;
-    }
+    Color c1 = color.getMixed(Color.GRAY);
+    Color c2 = color.getMixed(Color.DARK_GRAY);
 
-    public AlphaColor getAlphaColor() {
-        return color;
-    }
+    g.setColor(Color.BLACK);
+    g.fillRect(x, y, getIconWidth(), getIconHeight());
 
-    public int getIconHeight() {
-        return 14;
-    }
+    x++;
+    y++;
+    g.setColor(color);
+    g.fillRect(x, y, cwidth / 2, cheight);
 
-    public int getIconWidth() {
-        return 26;
-    }
+    x += cwidth / 2;
+    g.setColor(c1);
+    g.fillRect(x, y, cwidth / 2, cheight);
 
-    public void paintIcon(Component c, Graphics g, int x, int y) {
-        int cwidth = getIconWidth() - 2;
-        int cheight = getIconHeight() - 2;
-
-        if (color == null) {
-            g.setColor(Color.BLACK);
-            g.fillRect(x, y, cwidth + 2, cheight + 2);
-            return;
-        }
-
-
-        Color c1 = color.getMixed(Color.GRAY);
-        Color c2 = color.getMixed(Color.DARK_GRAY);
-
-        g.setColor(Color.BLACK);
-        g.fillRect(x, y, getIconWidth(), getIconHeight());
-
-        x++;
-        y++;
-        g.setColor(color);
-        g.fillRect(x, y, cwidth / 2, cheight);
-
-        x += cwidth / 2;
-        g.setColor(c1);
-        g.fillRect(x, y, cwidth / 2, cheight);
-
-        g.setColor(c2);
-        int xbox = cwidth / 6;
-        int ybox = cheight / 3;
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                if (((i + j) % 2) == 1)
-                    g.fillRect(x + i * xbox, y + j * ybox, xbox, ybox);
-    }
+    g.setColor(c2);
+    int xbox = cwidth / 6;
+    int ybox = cheight / 3;
+    for (int i = 0; i < 3; i++)
+      for (int j = 0; j < 3; j++)
+        if (((i + j) % 2) == 1) g.fillRect(x + i * xbox, y + j * ybox, xbox, ybox);
+  }
 }

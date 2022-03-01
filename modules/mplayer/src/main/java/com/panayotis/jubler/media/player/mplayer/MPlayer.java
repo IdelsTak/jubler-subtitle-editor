@@ -1,4 +1,3 @@
-
 package com.panayotis.jubler.media.player.mplayer;
 
 /*
@@ -31,104 +30,100 @@ import com.panayotis.jubler.plugins.Plugin;
 import com.panayotis.jubler.plugins.PluginItem;
 import java.util.ArrayList;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class MPlayer extends AbstractPlayer implements Plugin {
 
-    static {
-        MPlayerSystemDependent.updateParameters();
-    }
+  static {
+    MPlayerSystemDependent.updateParameters();
+  }
 
-    public MPlayer() {
-        super(family);
-    }
+  public MPlayer() {
+    super(family);
+  }
 
-    public String getName() {
-        return "MPlayer";
-    }
+  public String getName() {
+    return "MPlayer";
+  }
 
-    @Override
-    public String getDescriptiveName() {
-        return MPlayerSystemDependent.getMPlayerName();
-    }
+  @Override
+  public String getDescriptiveName() {
+    return MPlayerSystemDependent.getMPlayerName();
+  }
 
-    public String getDefaultArguments() {
-        return MPlayerSystemDependent.getDefaultMPlayerArgs();
-    }
+  public String getDefaultArguments() {
+    return MPlayerSystemDependent.getDefaultMPlayerArgs();
+  }
 
-    public boolean supportPause() {
-        return true;
-    }
+  public boolean supportPause() {
+    return true;
+  }
 
-    public boolean supportSubDisplace() {
-        return true;
-    }
+  public boolean supportSubDisplace() {
+    return true;
+  }
 
-    public boolean supportSeek() {
-        return true;
-    }
+  public boolean supportSeek() {
+    return true;
+  }
 
-    public boolean supportSkip() {
-        return true;
-    }
+  public boolean supportSkip() {
+    return true;
+  }
 
-    public boolean supportSpeed() {
-        return true;
-    }
+  public boolean supportSpeed() {
+    return true;
+  }
 
-    public boolean supportAudio() {
-        return true;
-    }
+  public boolean supportAudio() {
+    return true;
+  }
 
-    public boolean supportChangeSubs() {
-        return true;
-    }
+  public boolean supportChangeSubs() {
+    return true;
+  }
 
-    public Viewport getViewport() {
-        return new MPlayerViewport(this);
-    }
+  public Viewport getViewport() {
+    return new MPlayerViewport(this);
+  }
 
-    public String[] getTestParameters() {
-        return new String[]{"-list-options"};
-    }
+  public String[] getTestParameters() {
+    return new String[] {"-list-options"};
+  }
 
-    public String getTestSignature() {
-        return " ass ";
-    }
+  public String getTestSignature() {
+    return " ass ";
+  }
 
-    @Override
-    public String[] getEnvironment() {
-        return MPlayerSystemDependent.getMPlayerEnvironment(this);
-    }
+  @Override
+  public String[] getEnvironment() {
+    return MPlayerSystemDependent.getMPlayerEnvironment(this);
+  }
 
-    public PluginItem[] getPluginItems() {
-        return new PluginItem[]{this};
-    }
+  public PluginItem[] getPluginItems() {
+    return new PluginItem[] {this};
+  }
 
-    public String getPluginName() {
-        return "MPlayer media player";
-    }
+  public String getPluginName() {
+    return "MPlayer media player";
+  }
 
-    public boolean canDisablePlugin() {
-        return true;
-    }
+  public boolean canDisablePlugin() {
+    return true;
+  }
 
-    @Override
-    public ArrayList<String> getSearchNames() {
-        ArrayList<String> names = new ArrayList<String>();
-        names.add("MPlayer OSX Extended");
-        names.add("mplayer");
-        names.add("mplayer-mt");
-        names.add("mplayer.exe");
-        return names;
-    }
+  @Override
+  public ArrayList<String> getSearchNames() {
+    ArrayList<String> names = new ArrayList<String>();
+    names.add("MPlayer OSX Extended");
+    names.add("mplayer");
+    names.add("mplayer-mt");
+    names.add("mplayer.exe");
+    return names;
+  }
 
-    public ClassLoader getClassLoader() {
-        return null;
-    }
+  public ClassLoader getClassLoader() {
+    return null;
+  }
 
-    public void setClassLoader(ClassLoader cl) {
-    }
+  public void setClassLoader(ClassLoader cl) {}
 }

@@ -25,16 +25,11 @@ package com.panayotis.jubler.media;
 
 import java.io.File;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class CacheFile extends File {
 
-    /**
-     * Creates a new instance of CacheFile
-     */
-    public CacheFile(String cfile) {
-        super(cfile);
-    }
+  /** Creates a new instance of CacheFile */
+  public CacheFile(String cfile) {
+    super(cfile);
+  }
 }

@@ -27,17 +27,14 @@ import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator.Attribute;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewColor extends PreviewElement {
 
-    public PreviewColor(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  public PreviewColor(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 
-    protected Attribute getStyle() {
-        return TextAttribute.FOREGROUND;
-    }
+  protected Attribute getStyle() {
+    return TextAttribute.FOREGROUND;
+  }
 }

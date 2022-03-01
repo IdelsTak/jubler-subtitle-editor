@@ -22,11 +22,8 @@ package com.panayotis.jubler.plugins;
 
 import com.panayotis.jubler.subs.loader.AvailSubFormats;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class Availabilities {
 
-    public final static AvailSubFormats formats = new AvailSubFormats();
+  public static final AvailSubFormats formats = new AvailSubFormats();
 }

@@ -3,7 +3,6 @@
  *
  * Created on March 12, 2008, 3:46 PM
  */
-
 package com.panayotis.jubler.time.gui;
 
 import com.panayotis.jubler.os.SystemDependent;
@@ -23,7 +22,9 @@ public class JTimeSelector extends JPanel {
     private boolean is_start_position;
     private Time selected_time;
 
-    /* static variable to store the last used selection model */
+    /*
+     * static variable to store the last used selection model
+     */
     protected final static boolean REGION_EDGE = false;
     protected final static boolean REGION_SELECTION = true;
     protected static boolean region_from_model = REGION_SELECTION;
@@ -61,22 +62,25 @@ public class JTimeSelector extends JPanel {
         selected_time = t;
 
         boolean region_model;
-        if (is_start_position)
+        if (is_start_position) {
             region_model = region_from_model;
-        else
+        } else {
             region_model = region_to_model;
+        }
 
-        if (region_model == REGION_SELECTION)
+        if (region_model == REGION_SELECTION) {
             SelectM.doClick();
-        else
+        } else {
             EdgeM.doClick();
+        }
     }
 
     void setTimeToEdge() {
-        if (is_start_position)
+        if (is_start_position) {
             spinner.setTimeValue(new Time(0));
-        else
+        } else {
             spinner.setTimeValue(new Time(Time.MAX_TIME));
+        }
     }
 
     double getTime() {
@@ -128,24 +132,27 @@ public class JTimeSelector extends JPanel {
         add(EdgeB, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
     private void EdgeBMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EdgeBMousePressed
-        if (EdgeB.isEnabled())
+        if (EdgeB.isEnabled()) {
             PredefM.show(EdgeB, EdgeB.getBorder().getBorderInsets(EdgeB).left / 2, EdgeB.getHeight() - EdgeB.getBorder().getBorderInsets(EdgeB).bottom + 1);
+        }
     }//GEN-LAST:event_EdgeBMousePressed
 
     private void EdgeMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EdgeMActionPerformed
         setTimeToEdge();
-        if (is_start_position)
+        if (is_start_position) {
             region_from_model = REGION_EDGE;
-        else
+        } else {
             region_to_model = REGION_EDGE;
+        }
 }//GEN-LAST:event_EdgeMActionPerformed
 
     private void SelectMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectMActionPerformed
         spinner.setTimeValue(selected_time);
-        if (is_start_position)
+        if (is_start_position) {
             region_from_model = REGION_SELECTION;
-        else
+        } else {
             region_to_model = REGION_SELECTION;
+        }
     }//GEN-LAST:event_SelectMActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EdgeB;

@@ -27,28 +27,22 @@ import com.panayotis.jubler.subs.style.StyleChangeListener;
 import com.panayotis.jubler.subs.style.StyleType;
 import javax.swing.JPanel;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class TriDummy extends JPanel implements TriObject {
 
-    /**
-     * Creates a new instance of TriDummy
-     */
-    public TriDummy() {
-    }
-    private StyleType styletype;
-    private StyleChangeListener listener;
+  /** Creates a new instance of TriDummy */
+  public TriDummy() {}
 
-    public void setStyle(StyleType style) {
-        styletype = style;
-    }
+  private StyleType styletype;
+  private StyleChangeListener listener;
 
-    public void setListener(StyleChangeListener listener) {
-        this.listener = listener;
-    }
+  public void setStyle(StyleType style) {
+    styletype = style;
+  }
 
-    public void setData(Object data) {
-    }
+  public void setListener(StyleChangeListener listener) {
+    this.listener = listener;
+  }
+
+  public void setData(Object data) {}
 }

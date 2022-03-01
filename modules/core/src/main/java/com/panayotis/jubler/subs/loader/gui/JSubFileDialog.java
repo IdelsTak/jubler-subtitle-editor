@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.subs.loader.gui;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -61,8 +60,9 @@ public class JSubFileDialog extends javax.swing.JDialog {
     }
 
     private SubFile showDialog(Frame parent, Subtitles subs, MediaFile mfile, JFileOptions jopt) {
-        if (subs != null)
+        if (subs != null) {
             chooser.setFileFilter(findFileFiler(subs.getSubFile().getFormat()));
+        }
         jopt.updateVisuals(subs, mfile);
         String default_dir = FileCommunicator.getDefaultDirPath();
         File default_dir_file = new File(default_dir);
@@ -81,16 +81,18 @@ public class JSubFileDialog extends javax.swing.JDialog {
         setLocationRelativeTo(parent);
         setVisible(true);
 
-        if (!isAccepted)
+        if (!isAccepted) {
             return null;
+        }
 
         SubFile sfile;
         try {
             File selected_file = chooser.getSelectedFile();
 
             if (subs == null) // Load
+            {
                 sfile = new SubFile(selected_file, SubFile.EXTENSION_GIVEN);
-            else {   // Save
+            } else {   // Save
                 sfile = new SubFile(subs.getSubFile());
                 sfile.setFile(selected_file);
             }
@@ -100,13 +102,16 @@ public class JSubFileDialog extends javax.swing.JDialog {
                 SubFormat format_handler = flt.getFormatHandler();
                 if (format_handler != null) {
                     format_handler = format_handler.newInstance();
-                    if (format_handler != null)
+                    if (format_handler != null) {
                         sfile.setFormat(format_handler);
+                    }
                 }
             }
             jopt.applyOptions(sfile);
             if (subs != null) // Only in Save
+            {
                 sfile.updateFileByType();
+            }
             FileCommunicator.setDefaultDir(chooser.getCurrentDirectory());
         } catch (Exception ex) {
             sfile = new SubFile();
@@ -166,10 +171,11 @@ public class JSubFileDialog extends javax.swing.JDialog {
             for (int i = 0; i < list.length; i++) {
                 FileFilter fl = list[i];
                 boolean is_first_item = (i == 0);
-                if (is_first_item)
+                if (is_first_item) {
                     chooser.setFileFilter(fl);
-                else
+                } else {
                     chooser.addChoosableFileFilter(fl);//end if
+                }
             }//end for(int i=0; i < list.length; i++)
         } catch (Exception ex) {
             DEBUG.logger.log(Level.WARNING, ex.toString());
@@ -254,8 +260,9 @@ public class JSubFileDialog extends javax.swing.JDialog {
                 boolean is_found = ((format == fmt)
                         || (format.getDescription() + format.getExtension()).equals(
                                 (fmt.getDescription() + fmt.getExtension())));
-                if (is_found)
+                if (is_found) {
                     break;//end if (is_found)
+                }
             }//end for (FileFilter flt : filter_list)
         } catch (Exception ex) {
         }

@@ -27,24 +27,18 @@ import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewSingle extends PreviewElement {
 
-    /**
-     * Creates a new instance of PreviewSingle
-     */
-    public PreviewSingle(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  /** Creates a new instance of PreviewSingle */
+  public PreviewSingle(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 
-    /* Ignore these methods, we don't need them, since this attribute is not character based */
-    protected Attribute getStyle() {
-        return null;
-    }
+  /* Ignore these methods, we don't need them, since this attribute is not character based */
+  protected Attribute getStyle() {
+    return null;
+  }
 
-    public void addAttribute(AttributedString str, Object value, int from, int to) {
-    }
+  public void addAttribute(AttributedString str, Object value, int from, int to) {}
 }

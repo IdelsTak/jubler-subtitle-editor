@@ -25,33 +25,30 @@ import com.panayotis.jubler.media.player.TerminalViewport;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public abstract class AbstractTerminal implements PlayerTerminal {
 
-    protected BufferedWriter cmd;
-    protected BufferedReader out;
-    protected BufferedReader error;
+  protected BufferedWriter cmd;
+  protected BufferedReader out;
+  protected BufferedReader error;
 
-    public BufferedWriter getCmdPipe() {
-        return cmd;
-    }
+  public BufferedWriter getCmdPipe() {
+    return cmd;
+  }
 
-    public BufferedReader getOutPipe() {
-        return out;
-    }
+  public BufferedReader getOutPipe() {
+    return out;
+  }
 
-    public BufferedReader getErrorPipe() {
-        return error;
-    }
+  public BufferedReader getErrorPipe() {
+    return error;
+  }
 
-    public String parseOutStream(String info, PlayerFeedback feedback, TerminalViewport viewport) {
-        return info;
-    }
+  public String parseOutStream(String info, PlayerFeedback feedback, TerminalViewport viewport) {
+    return info;
+  }
 
-    public String parseErrorStream(String info, PlayerFeedback feedback, TerminalViewport viewport) {
-        return info;
-    }
+  public String parseErrorStream(String info, PlayerFeedback feedback, TerminalViewport viewport) {
+    return info;
+  }
 }

@@ -2,7 +2,7 @@
  * JublerList.java
  *
  * Created on 24 Ιούνιος 2005, 9:24 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -26,9 +26,5 @@ package com.panayotis.jubler.subs;
 import com.panayotis.jubler.JubFrame;
 import java.util.ArrayList;
 
-/**
- *
- * @author teras
- */
-public class JublerList extends ArrayList<JubFrame> {
-}
+/** @author teras */
+public class JublerList extends ArrayList<JubFrame> {}

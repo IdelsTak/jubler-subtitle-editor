@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.tools.replace;
 
 import javax.swing.ListSelectionModel;
@@ -101,20 +100,23 @@ public class JReplaceList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void InverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InverseActionPerformed
-        for (int i = 0; i < (model.size() - 1); i++)
+        for (int i = 0; i < (model.size() - 1); i++) {
             model.elementAt(i).usable = !model.elementAt(i).usable;
+        }
         model.fireTableDataChanged();
     }//GEN-LAST:event_InverseActionPerformed
 
     private void ClearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearAllActionPerformed
-        for (int i = 0; i < (model.size() - 1); i++)
+        for (int i = 0; i < (model.size() - 1); i++) {
             model.elementAt(i).usable = false;
+        }
         model.fireTableDataChanged();
     }//GEN-LAST:event_ClearAllActionPerformed
 
     private void MarkAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MarkAllActionPerformed
-        for (int i = 0; i < (model.size() - 1); i++)
+        for (int i = 0; i < (model.size() - 1); i++) {
             model.elementAt(i).usable = true;
+        }
         model.fireTableDataChanged();
     }//GEN-LAST:event_MarkAllActionPerformed
 

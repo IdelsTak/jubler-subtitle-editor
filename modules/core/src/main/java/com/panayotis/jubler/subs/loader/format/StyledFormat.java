@@ -25,36 +25,33 @@ package com.panayotis.jubler.subs.loader.format;
 
 import com.panayotis.jubler.subs.style.StyleType;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class StyledFormat {
 
-    public final static byte COLOR_NORMAL = 0;
-    public final static byte COLOR_REVERSE = 1;
-    public final static byte COLOR_ALPHA_NORMAL = 2;
-    public final static byte COLOR_ALPHA_REVERSE = 3;
-    public final static byte FORMAT_UNDEFINED = 0;
-    public final static byte FORMAT_STRING = 1;
-    public final static byte FORMAT_INTEGRAL = 2;
-    public final static byte FORMAT_REAL = 3;
-    public final static byte FORMAT_FLAG = 4;
-    public final static byte FORMAT_COLOR = 5;
-    public final static byte FORMAT_DIRECTION = 6;
-    public StyleType style;
-    public String tag;
-    public Object value;
-    public boolean storable;
+  public static final byte COLOR_NORMAL = 0;
+  public static final byte COLOR_REVERSE = 1;
+  public static final byte COLOR_ALPHA_NORMAL = 2;
+  public static final byte COLOR_ALPHA_REVERSE = 3;
+  public static final byte FORMAT_UNDEFINED = 0;
+  public static final byte FORMAT_STRING = 1;
+  public static final byte FORMAT_INTEGRAL = 2;
+  public static final byte FORMAT_REAL = 3;
+  public static final byte FORMAT_FLAG = 4;
+  public static final byte FORMAT_COLOR = 5;
+  public static final byte FORMAT_DIRECTION = 6;
+  public StyleType style;
+  public String tag;
+  public Object value;
+  public boolean storable;
 
-    public StyledFormat(StyleType style, String tag, Object value) {
-        this(style, tag, value, true);
-    }
+  public StyledFormat(StyleType style, String tag, Object value) {
+    this(style, tag, value, true);
+  }
 
-    public StyledFormat(StyleType style, String tag, Object value, boolean storable) {
-        this.style = style;
-        this.tag = tag;
-        this.value = value;
-        this.storable = storable;
-    }
+  public StyledFormat(StyleType style, String tag, Object value, boolean storable) {
+    this.style = style;
+    this.tag = tag;
+    this.value = value;
+    this.storable = storable;
+  }
 }

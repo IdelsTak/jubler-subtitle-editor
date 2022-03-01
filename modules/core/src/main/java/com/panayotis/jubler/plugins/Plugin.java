@@ -20,19 +20,16 @@
 
 package com.panayotis.jubler.plugins;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface Plugin {
 
-    public PluginItem[] getPluginItems();
+  public PluginItem[] getPluginItems();
 
-    public String getPluginName();
+  public String getPluginName();
 
-    public boolean canDisablePlugin();
+  public boolean canDisablePlugin();
 
-    public ClassLoader getClassLoader();
+  public ClassLoader getClassLoader();
 
-    public void setClassLoader(ClassLoader cl);
+  public void setClassLoader(ClassLoader cl);
 }

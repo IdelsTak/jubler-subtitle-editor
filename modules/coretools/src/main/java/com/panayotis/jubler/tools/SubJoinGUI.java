@@ -2,7 +2,7 @@
  * JSubJoin.java
  *
  * Created on 25 Ιούνιος 2005, 3:31 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.tools;
 
 import com.panayotis.jubler.os.SystemDependent;

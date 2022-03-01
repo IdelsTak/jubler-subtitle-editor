@@ -2,7 +2,7 @@
  * ProgressBar.java
  *
  * Created on 22 November 2008, 17:11
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options.gui;
 
 import java.awt.Dimension;

@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.options;
 
 import com.panayotis.jubler.tools.externals.AvailExternals;
@@ -50,14 +49,16 @@ public class JExternalOptions extends JPanel implements OptionsHolder {
 
         for (int i = 0; i < list.size(); i++) {
             PList.addItem(list.nameDescriptiveAt(i));
-            if (list.nameAt(i).toLowerCase().equals(def))
+            if (list.nameAt(i).toLowerCase().equals(def)) {
                 selected = i;
+            }
             JExtBasicOptions opts = list.programAt(i).getOptionsPanel();
             ParamsP.add((opts == null ? new JPanel() : opts), Integer.toString(i));
         }
         SelectorL.setText(__("Select a {0} from the following list", __(list.getType()).toLowerCase()));
-        if (PList.getModel().getSize() > 0)
+        if (PList.getModel().getSize() > 0) {
             PList.setSelectedIndex(selected);
+        }
     }
 
     public Object getObject() {
@@ -110,8 +111,9 @@ public class JExternalOptions extends JPanel implements OptionsHolder {
         JExtBasicOptions opts;
         for (int i = 0; i < list.size(); i++) {
             opts = list.programAt(i).getOptionsPanel();
-            if (opts != null)
+            if (opts != null) {
                 opts.loadPreferences();
+            }
         }
     }
 
@@ -119,8 +121,9 @@ public class JExternalOptions extends JPanel implements OptionsHolder {
         JExtBasicOptions opts;
         for (int i = 0; i < list.size(); i++) {
             opts = list.programAt(i).getOptionsPanel();
-            if (opts != null)
+            if (opts != null) {
                 opts.savePreferences();
+            }
         }
     }
 
@@ -132,8 +135,9 @@ public class JExternalOptions extends JPanel implements OptionsHolder {
         JExtBasicOptions opts;
         for (int i = 0; i < list.size(); i++) {
             opts = list.programAt(i).getOptionsPanel();
-            if (opts != null)
+            if (opts != null) {
                 opts.updateOptionsPanel();
+            }
         }
     }
 

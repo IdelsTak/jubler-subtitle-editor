@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.media.preview;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -85,8 +84,9 @@ public class JAudioLoader extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AssignInterruptBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignInterruptBActionPerformed
-        if (mfile != null)
+        if (mfile != null) {
             mfile.interruptCacheCreation(true);
+        }
     }//GEN-LAST:event_AssignInterruptBActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AssignInterruptB;

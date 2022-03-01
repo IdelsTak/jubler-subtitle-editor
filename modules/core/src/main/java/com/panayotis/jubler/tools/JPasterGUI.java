@@ -2,7 +2,7 @@
  * JPaster.java
  *
  * Created on 6 Ιούλιος 2005, 4:05 μμ
- * 
+ *
  * This file is part of Jubler.
  *
  * Jubler is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.tools;
 
 import com.panayotis.jubler.subs.SubEntry;
@@ -44,8 +43,9 @@ public class JPasterGUI extends javax.swing.JPanel {
     public JPasterGUI(Time t) {
 
         initComponents();
-        for (int i = 0; i < SubEntry.MarkNames.length; i++)
+        for (int i = 0; i < SubEntry.MarkNames.length; i++) {
             ColSel.addItem(SubEntry.MarkNames[i]);
+        }
 
         pastepos = new JTimeSpinner();
         pastepos.setValue(t);
@@ -53,8 +53,9 @@ public class JPasterGUI extends javax.swing.JPanel {
     }
 
     public int getMark() {
-        if (!ChColor.isSelected())
+        if (!ChColor.isSelected()) {
             return -1;
+        }
         return ColSel.getSelectedIndex();
     }
 

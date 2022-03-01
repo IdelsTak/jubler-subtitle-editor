@@ -23,23 +23,18 @@ package com.panayotis.jubler.tools.translate;
 import com.panayotis.jubler.plugins.PluginManager;
 import java.util.ArrayList;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class AvailTranslators extends ArrayList<Translator> {
 
-    @SuppressWarnings("LeakingThisInConstructor")
-    public AvailTranslators() {
-        PluginManager.manager.callPluginListeners(this);
-    }
+  @SuppressWarnings("LeakingThisInConstructor")
+  public AvailTranslators() {
+    PluginManager.manager.callPluginListeners(this);
+  }
 
-    public String[] getNamesList() {
-        if (size() < 1)
-            return null;
-        String[] ret = new String[size()];
-        for (int i = 0; i < ret.length; i++)
-            ret[i] = get(i).getDefinition();
-        return ret;
-    }
+  public String[] getNamesList() {
+    if (size() < 1) return null;
+    String[] ret = new String[size()];
+    for (int i = 0; i < ret.length; i++) ret[i] = get(i).getDefinition();
+    return ret;
+  }
 }

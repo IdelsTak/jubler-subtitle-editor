@@ -46,105 +46,102 @@ import java.lang.reflect.Method;
 
 public class ZemberekSpellChecker extends SpellChecker implements Plugin, PluginItem {
 
-    private Method kelimeDenetle, oner;
-    private Object zemberek;
+  private Method kelimeDenetle, oner;
+  private Object zemberek;
 
-    public ArrayList<SpellError> checkSpelling(String text) {
-        HashMap<String, Integer> lastPositions = new HashMap<String, Integer>();
-        ArrayList<SpellError> ret = new ArrayList<SpellError>();
-        StringTokenizer tok = new StringTokenizer(text, "!'#%&/()=?-_:.,;\"\r\n\t ");
-        while (tok.hasMoreTokens()) {
-            String word = tok.nextToken();
-            int pos;
-            if (lastPositions.containsKey(word))
-                pos = text.indexOf(word, lastPositions.get(word) + word.length());
-            else
-                pos = text.indexOf(word);
-            lastPositions.put(word, pos);
-            try {
-                boolean status = (Boolean) kelimeDenetle.invoke(zemberek, new Object[]{word});
-                if (!status) {
-                    @SuppressWarnings("UseOfObsoleteCollectionType")
-                    java.util.Vector<String> sug = new java.util.Vector<String>();
-                    String sugs[] = (String[]) oner.invoke(zemberek, new Object[]{word});
-                    sug.addAll(Arrays.asList(sugs));
-                    ret.add(new SpellError(pos, word, sug));
-                }
-            } catch (IllegalAccessException e) {
-            } catch (InvocationTargetException e) {
-            }
-            lastPositions.put(word, pos);
+  public ArrayList<SpellError> checkSpelling(String text) {
+    HashMap<String, Integer> lastPositions = new HashMap<String, Integer>();
+    ArrayList<SpellError> ret = new ArrayList<SpellError>();
+    StringTokenizer tok = new StringTokenizer(text, "!'#%&/()=?-_:.,;\"\r\n\t ");
+    while (tok.hasMoreTokens()) {
+      String word = tok.nextToken();
+      int pos;
+      if (lastPositions.containsKey(word))
+        pos = text.indexOf(word, lastPositions.get(word) + word.length());
+      else pos = text.indexOf(word);
+      lastPositions.put(word, pos);
+      try {
+        boolean status = (Boolean) kelimeDenetle.invoke(zemberek, new Object[] {word});
+        if (!status) {
+          @SuppressWarnings("UseOfObsoleteCollectionType")
+          java.util.Vector<String> sug = new java.util.Vector<String>();
+          String sugs[] = (String[]) oner.invoke(zemberek, new Object[] {word});
+          sug.addAll(Arrays.asList(sugs));
+          ret.add(new SpellError(pos, word, sug));
         }
-        return ret;
+      } catch (IllegalAccessException e) {
+      } catch (InvocationTargetException e) {
+      }
+      lastPositions.put(word, pos);
     }
+    return ret;
+  }
 
-    @SuppressWarnings("unchecked")
-    public void start() throws ExtProgramException {
-        try {
-            Class zemberekClass = Class.forName("net.zemberek.erisim.Zemberek");
-            Class dilAyarlariClass = Class.forName("net.zemberek.yapi.DilAyarlari");
-            Class turkiyeTurkcesiClass = Class.forName("net.zemberek.tr.yapi.TurkiyeTurkcesi");
-            kelimeDenetle = zemberekClass.getDeclaredMethod("kelimeDenetle", String.class);
-            oner = zemberekClass.getDeclaredMethod("oner", String.class);
-            Constructor zemberekConstructor = zemberekClass.getDeclaredConstructor(dilAyarlariClass);
-            Object turkiyeTurkcesi = turkiyeTurkcesiClass.newInstance();
-            zemberek = zemberekConstructor.newInstance(turkiyeTurkcesi);
-            return;
-        } catch (Throwable t) {
-            throw new ExtProgramException(t);
-        }
+  @SuppressWarnings("unchecked")
+  public void start() throws ExtProgramException {
+    try {
+      Class zemberekClass = Class.forName("net.zemberek.erisim.Zemberek");
+      Class dilAyarlariClass = Class.forName("net.zemberek.yapi.DilAyarlari");
+      Class turkiyeTurkcesiClass = Class.forName("net.zemberek.tr.yapi.TurkiyeTurkcesi");
+      kelimeDenetle = zemberekClass.getDeclaredMethod("kelimeDenetle", String.class);
+      oner = zemberekClass.getDeclaredMethod("oner", String.class);
+      Constructor zemberekConstructor = zemberekClass.getDeclaredConstructor(dilAyarlariClass);
+      Object turkiyeTurkcesi = turkiyeTurkcesiClass.newInstance();
+      zemberek = zemberekConstructor.newInstance(turkiyeTurkcesi);
+      return;
+    } catch (Throwable t) {
+      throw new ExtProgramException(t);
     }
+  }
 
-    public boolean insertWord(String word) {
-        return false;
-    }
+  public boolean insertWord(String word) {
+    return false;
+  }
 
-    public void stop() {
-        zemberek = null;
-        kelimeDenetle = null;
-        oner = null;
-    }
+  public void stop() {
+    zemberek = null;
+    kelimeDenetle = null;
+    oner = null;
+  }
 
-    public boolean supportsInsert() {
-        return false;
-    }
+  public boolean supportsInsert() {
+    return false;
+  }
 
-    public JExtBasicOptions getOptionsPanel() {
-        return null;
-    }
+  public JExtBasicOptions getOptionsPanel() {
+    return null;
+  }
 
-    public String getName() {
-        return "Zemberek";
-    }
+  public String getName() {
+    return "Zemberek";
+  }
 
-    public Class[] getPluginAffections() {
-        return new Class[]{AvailExternals.class};
-    }
+  public Class[] getPluginAffections() {
+    return new Class[] {AvailExternals.class};
+  }
 
-    public void execPlugin(Object caller, Object param) {
-        if (caller instanceof AvailExternals) {
-            AvailExternals l = (AvailExternals) caller;
-            if (l.getType().equals(family))
-                l.add(this);
-        }
+  public void execPlugin(Object caller, Object param) {
+    if (caller instanceof AvailExternals) {
+      AvailExternals l = (AvailExternals) caller;
+      if (l.getType().equals(family)) l.add(this);
     }
+  }
 
-    public PluginItem[] getPluginItems() {
-        return new PluginItem[]{this};
-    }
+  public PluginItem[] getPluginItems() {
+    return new PluginItem[] {this};
+  }
 
-    public String getPluginName() {
-        return "Zemberek spell checker";
-    }
+  public String getPluginName() {
+    return "Zemberek spell checker";
+  }
 
-    public boolean canDisablePlugin() {
-        return true;
-    }
+  public boolean canDisablePlugin() {
+    return true;
+  }
 
-    public ClassLoader getClassLoader() {
-        return null;
-    }
+  public ClassLoader getClassLoader() {
+    return null;
+  }
 
-    public void setClassLoader(ClassLoader loader) {
-    }
+  public void setClassLoader(ClassLoader loader) {}
 }

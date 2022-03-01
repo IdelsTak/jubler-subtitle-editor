@@ -23,18 +23,15 @@
 
 package com.panayotis.jubler.media.preview.decoders;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public interface DecoderListener {
 
-    /* Start creation of cache file */
-    public void startCacheCreation();
+  /* Start creation of cache file */
+  public void startCacheCreation();
 
-    /* Finish creation of cache file */
-    public void stopCacheCreation();
+  /* Finish creation of cache file */
+  public void stopCacheCreation();
 
-    /* Update the status of cache */
-    public void updateCacheCreation(float position);
+  /* Update the status of cache */
+  public void updateCacheCreation(float position);
 }

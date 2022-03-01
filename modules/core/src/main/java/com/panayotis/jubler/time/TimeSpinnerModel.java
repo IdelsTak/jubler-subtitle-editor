@@ -25,51 +25,49 @@ package com.panayotis.jubler.time;
 
 import javax.swing.AbstractSpinnerModel;
 
-/**
- * @author teras
- */
+/** @author teras */
 public class TimeSpinnerModel extends AbstractSpinnerModel {
 
-    private Time time;
-    private double speed = 1;
+  private Time time;
+  private double speed = 1;
 
-    public TimeSpinnerModel() {
-        time = new Time(0d);
-    }
+  public TimeSpinnerModel() {
+    time = new Time(0d);
+  }
 
-    @Override
-    public Object getPreviousValue() {
-        Time nvalue = new Time(time);
-        nvalue.addTime(-speed);
-        return nvalue;
-    }
+  @Override
+  public Object getPreviousValue() {
+    Time nvalue = new Time(time);
+    nvalue.addTime(-speed);
+    return nvalue;
+  }
 
-    @Override
-    public Object getNextValue() {
-        Time nvalue = new Time(time);
-        nvalue.addTime(speed);
-        return nvalue;
-    }
+  @Override
+  public Object getNextValue() {
+    Time nvalue = new Time(time);
+    nvalue.addTime(speed);
+    return nvalue;
+  }
 
-    @Override
-    public Object getValue() {
-        return time;
-    }
+  @Override
+  public Object getValue() {
+    return time;
+  }
 
-    @Override
-    public void setValue(Object newtime) {
-        if (newtime instanceof Time) {
-            time.setTime((Time) newtime);
-            fireStateChanged();
-        }
+  @Override
+  public void setValue(Object newtime) {
+    if (newtime instanceof Time) {
+      time.setTime((Time) newtime);
+      fireStateChanged();
     }
+  }
 
-    public void increaseValue(int value) {
-        time.addTime(value * speed);
-        fireStateChanged();
-    }
+  public void increaseValue(int value) {
+    time.addTime(value * speed);
+    fireStateChanged();
+  }
 
-    public void setSpeed(double newspeed) {
-        speed = newspeed;
-    }
+  public void setSpeed(double newspeed) {
+    speed = newspeed;
+  }
 }

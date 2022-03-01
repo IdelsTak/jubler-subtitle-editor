@@ -22,15 +22,12 @@
 
 package com.panayotis.jubler.media.console;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class RolloverIconFilter extends ColorIconFilter {
 
-    private static float inc = 1.65f;
+  private static float inc = 1.65f;
 
-    public RolloverIconFilter() {
-        super(inc, inc, inc);
-    }
+  public RolloverIconFilter() {
+    super(inc, inc, inc);
+  }
 }

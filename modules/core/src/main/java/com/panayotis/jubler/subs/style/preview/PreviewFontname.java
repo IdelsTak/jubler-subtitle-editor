@@ -27,20 +27,17 @@ import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator.Attribute;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewFontname extends PreviewElement {
 
-    private AbstractStyleover over;
-    private Object deflt;
+  private AbstractStyleover over;
+  private Object deflt;
 
-    protected Attribute getStyle() {
-        return TextAttribute.FAMILY;
-    }
+  protected Attribute getStyle() {
+    return TextAttribute.FAMILY;
+  }
 
-    public PreviewFontname(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  public PreviewFontname(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 }

@@ -28,36 +28,31 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public abstract class AbstractTextSubFormat extends AbstractGenericTextSubFormat {
 
-    /* Loading functions */
-    protected abstract SubEntry getSubEntry(Matcher m);
+  /* Loading functions */
+  protected abstract SubEntry getSubEntry(Matcher m);
 
-    protected abstract Pattern getPattern();
+  protected abstract Pattern getPattern();
 
-    protected Pattern getTestPattern() {
-        return getPattern();
+  protected Pattern getTestPattern() {
+    return getPattern();
+  }
+
+  @Override
+  protected boolean isSubtitleCompatible(String input) {
+    return getTestPattern().matcher(input).find();
+  }
+
+  @Override
+  protected Collection<SubEntry> loadSubtitles(String input) {
+    Collection<SubEntry> entries = new ArrayList<SubEntry>();
+    Matcher m = getPattern().matcher(input);
+    while (m.find()) {
+      SubEntry entry = getSubEntry(m);
+      if (entry != null) entries.add(entry);
     }
-
-    @Override
-    protected boolean isSubtitleCompatible(String input) {
-        return getTestPattern().matcher(input).find();
-    }
-
-    @Override
-    protected Collection<SubEntry> loadSubtitles(String input) {
-        Collection<SubEntry> entries = new ArrayList<SubEntry>();
-        Matcher m = getPattern().matcher(input);
-        while (m.find()) {
-            SubEntry entry = getSubEntry(m);
-            if (entry != null)
-                entries.add(entry);
-        }
-        return entries;
-    }
-
+    return entries;
+  }
 }

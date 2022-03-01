@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.panayotis.jubler.subs.style;
 
 import static com.panayotis.jubler.i18n.I18N.__;
@@ -49,7 +48,9 @@ import javax.swing.JComponent;
 public class JOverStyles extends javax.swing.JPanel {
 
     private JubFrame parent;
-    /* live button icons */
+    /*
+     * live button icons
+     */
     private JAlphaIcon PrimaryI, SecondaryI, OutlineI, ShadowI;
     private TriObject[] visuals;
 
@@ -82,7 +83,6 @@ public class JOverStyles extends javax.swing.JPanel {
         SystemDependent.setCommandButtonStyle((AbstractButton) visuals[5], "last");
         ((AbstractButton) visuals[5]).setToolTipText(__("Strikethrough"));
 
-
         ColorP.add((JComponent) (visuals[6] = new TriColorButton(new AlphaColor(Color.WHITE, 180), parent)));
         ColorP.add((JComponent) (visuals[7] = new TriColorButton(new AlphaColor(Color.WHITE, 180), parent)));
         ColorP.add((JComponent) (visuals[8] = new TriColorButton(new AlphaColor(Color.WHITE, 180), parent)));
@@ -92,16 +92,17 @@ public class JOverStyles extends javax.swing.JPanel {
             ((AbstractButton) visuals[i]).setToolTipText(__(TriColorButton.tooltips[i - 6]));
         }
 
-
-        for (int i = 10; i < visuals.length; i++)
+        for (int i = 10; i < visuals.length; i++) {
             visuals[i] = new TriDummy();
+        }
 
         TextAttP.add((JComponent) (visuals[DIRECTION.ordinal()] = new TriDirectionButton(parent)));
         SystemDependent.setToolBarButtonStyle((AbstractButton) visuals[DIRECTION.ordinal()], "only");
         ((AbstractButton) visuals[DIRECTION.ordinal()]).setToolTipText(__("Alignment"));
 
-        for (int i = 0; i < visuals.length; i++)
+        for (int i = 0; i < visuals.length; i++) {
             ((TriObject) visuals[i]).setStyle(StyleType.values()[i]);
+        }
 
         FontP.setVisible(false);
         ColorP.setVisible(false);
@@ -110,15 +111,18 @@ public class JOverStyles extends javax.swing.JPanel {
     }
 
     public void setStyleChangeListener(StyleChangeListener listener) {
-        for (int i = 0; i < visuals.length; i++)
+        for (int i = 0; i < visuals.length; i++) {
             ((TriObject) visuals[i]).setListener(listener);
+        }
     }
 
     public void setPanelVisible(String what, boolean isVisible) {
-        if (what.endsWith("font"))
+        if (what.endsWith("font")) {
             FontP.setVisible(isVisible);
-        if (what.endsWith("color"))
+        }
+        if (what.endsWith("color")) {
             ColorP.setVisible(isVisible);
+        }
         validate();
     }
 
@@ -126,10 +130,11 @@ public class JOverStyles extends javax.swing.JPanel {
         for (int i = 0; i < visuals.length; i++) {
             Object basic = style.get(i);
             Object data;
-            if (over == null || over[i] == null)
+            if (over == null || over[i] == null) {
                 data = basic;
-            else
+            } else {
                 data = over[i].getValue(start, end, basic, subtext);
+            }
             visuals[i].setData(data);
         }
     }

@@ -27,24 +27,19 @@ import com.panayotis.jubler.subs.style.event.AbstractStyleover;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator.Attribute;
 
-/**
- *
- * @author teras
- */
+/** @author teras */
 public class PreviewUnderline extends PreviewBoolean {
 
-    protected Object getEnabledValue() {
-        return TextAttribute.UNDERLINE_ON;
-    }
+  protected Object getEnabledValue() {
+    return TextAttribute.UNDERLINE_ON;
+  }
 
-    protected Attribute getStyle() {
-        return TextAttribute.UNDERLINE;
-    }
+  protected Attribute getStyle() {
+    return TextAttribute.UNDERLINE;
+  }
 
-    /**
-     * Creates a new instance of PreviewBoolean
-     */
-    public PreviewUnderline(Object deflt, AbstractStyleover over) {
-        super(deflt, over);
-    }
+  /** Creates a new instance of PreviewBoolean */
+  public PreviewUnderline(Object deflt, AbstractStyleover over) {
+    super(deflt, over);
+  }
 }
