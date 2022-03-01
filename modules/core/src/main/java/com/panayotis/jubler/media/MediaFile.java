@@ -36,15 +36,16 @@ import com.panayotis.jubler.subs.Subtitles;
 import java.awt.Frame;
 import java.awt.Image;
 import java.io.File;
+import java.util.Objects;
 
 /** @author teras */
 public class MediaFile {
 
-  private VideoFile vfile; /* Video file */
+  private VideoFile videoFile; /* Video file */
 
-  private AudioFile afile; /* Audio file - prossibly same as video file */
+  private AudioFile audioFile; /* Audio file - possibly same as video file */
 
-  private CacheFile cfile; /* Cache file */
+  private CacheFile cacheFile; /* Cache file */
 
   /* Decoder framework to display frames, audio clips etc. */
   private DecoderInterface decoder;
@@ -56,24 +57,25 @@ public class MediaFile {
     this(null, null, null);
   }
 
-  public MediaFile(MediaFile m) {
-    this(m.vfile, m.afile, m.cfile);
+  public MediaFile(MediaFile mediaFile) {
+    this(mediaFile.videoFile, mediaFile.audioFile, mediaFile.cacheFile);
   }
 
-  public MediaFile(VideoFile vf, AudioFile af, CacheFile cf) {
-    vfile = vf;
-    afile = af;
-    cfile = cf;
+  public MediaFile(VideoFile videoFile, AudioFile audioFile, CacheFile cacheFile) {
+    this.videoFile = videoFile;
+    this.audioFile = audioFile;
+    this.cacheFile = cacheFile;
+    
     decoder = new FFMPEG();
     videoselector = new JVideofileSelector();
   }
 
   public boolean validateMediaFile(Subtitles subs, boolean force_new, Frame frame) {
-    if ((!force_new) && isValid(vfile)) return true;
+    if ((!force_new) && isValid(videoFile)) return true;
 
-    VideoFile old_v = vfile;
-    AudioFile old_a = afile;
-    CacheFile old_c = cfile;
+    VideoFile old_v = videoFile;
+    AudioFile old_a = audioFile;
+    CacheFile old_c = cacheFile;
 
     /* Guess files from subtitle file - only for initialization */
     guessMediaFiles(subs);
@@ -82,12 +84,12 @@ public class MediaFile {
     boolean isok;
     do {
       if (!JIDialog.action(frame, videoselector, __("Select video"))) {
-        vfile = old_v;
-        afile = old_a;
-        cfile = old_c;
+        videoFile = old_v;
+        audioFile = old_a;
+        cacheFile = old_c;
         return false;
       }
-      isok = isValid(vfile);
+      isok = isValid(videoFile);
       if (!isok)
         JIDialog.warning(
             null,
@@ -103,43 +105,51 @@ public class MediaFile {
   }
 
   public void guessMediaFiles(Subtitles subs) {
-    if (!isValid(vfile)) {
-      vfile = VideoFile.guessFile(subs, new VideoFileFilter(), decoder);
-      if (!isValid(afile)) setAudioFileUnused();
-      if (!isValid(cfile)) updateCacheFile(afile);
+    if (!isValid(videoFile)) {
+      videoFile = VideoFile.guessFile(subs, new VideoFileFilter(), decoder);
+      if (!isValid(audioFile)) setAudioFileUnused();
+      if (!isValid(cacheFile)) updateCacheFile(audioFile);
     }
     videoselector.setMediaFile(this);
   }
 
+  @Override
   public boolean equals(Object o) {
     if (o instanceof MediaFile) {
       MediaFile m = (MediaFile) o;
 
       /* We have to do all these tests to prevent null pointer exceptions */
-      if (vfile == null && m.vfile != null) return false;
-      if (!(vfile == m.vfile || vfile.equals(m.vfile))) return false;
+      if (videoFile == null && m.videoFile != null) return false;
+      if (!(videoFile == m.videoFile || videoFile.equals(m.videoFile))) return false;
 
-      if (afile == null && m.afile != null) return false;
-      if (!(afile == m.afile || afile.equals(m.afile))) return false;
+      if (audioFile == null && m.audioFile != null) return false;
+      if (!(audioFile == m.audioFile || audioFile.equals(m.audioFile))) return false;
 
-      if (cfile == null && m.cfile != null) return false;
-      if (!(cfile == m.cfile || cfile.equals(m.cfile))) return false;
-
-      return true;
+      if (cacheFile == null && m.cacheFile != null) return false;
+      return cacheFile == m.cacheFile || cacheFile.equals(m.cacheFile);
     }
     return super.equals(o);
   }
 
+  @Override
+  public int hashCode() {
+    int hash = 5;
+    hash = 41 * hash + Objects.hashCode(this.videoFile);
+    hash = 41 * hash + Objects.hashCode(this.audioFile);
+    hash = 41 * hash + Objects.hashCode(this.cacheFile);
+    return hash;
+  }
+
   public VideoFile getVideoFile() {
-    return vfile;
+    return videoFile;
   }
 
   public AudioFile getAudioFile() {
-    return afile;
+    return audioFile;
   }
 
   public CacheFile getCacheFile() {
-    return cfile;
+    return cacheFile;
   }
 
   public DecoderInterface getDecoder() {
@@ -149,16 +159,16 @@ public class MediaFile {
   public void setVideoFile(File vf) {
     if (vf == null || (!vf.exists())) return;
 
-    vfile = new VideoFile(vf, decoder);
+    videoFile = new VideoFile(vf, decoder);
 
-    if (afile.isSameAsVideo()) setAudioFile(vfile);
+    if (audioFile.isSameAsVideo()) setAudioFile(videoFile);
   }
 
   public void setAudioFile(File af) {
     if (af == null || (!af.exists())) return;
 
-    afile = new AudioFile(af, vfile);
-    updateCacheFile(afile);
+    audioFile = new AudioFile(af, videoFile);
+    updateCacheFile(audioFile);
   }
 
   public void setCacheFile(File cf) {
@@ -168,8 +178,8 @@ public class MediaFile {
     /* Set audio file, from the cache file */
     String audioname = AudioPreview.getNameFromCache(cf);
     if (audioname != null) {
-      AudioFile newafile = new AudioFile(cf.getParent(), audioname, vfile);
-      if (newafile.exists()) afile = newafile;
+      AudioFile newafile = new AudioFile(cf.getParent(), audioname, videoFile);
+      if (newafile.exists()) audioFile = newafile;
     }
   }
 
@@ -193,37 +203,37 @@ public class MediaFile {
       if (point < 0) point = cf.getPath().length();
       cf = new File(cf.getPath().substring(0, point) + AudioPreview.getExtension());
     }
-    if (cfile != null && cfile.getPath().equals(cf.getPath())) return; // Same cache
+    if (cacheFile != null && cacheFile.getPath().equals(cf.getPath())) return; // Same cache
 
     closeAudioCache(); // Close old cache file, if exists
-    cfile = new CacheFile(cf.getPath());
+    cacheFile = new CacheFile(cf.getPath());
   }
 
   public void setAudioFileUnused() {
-    afile = new AudioFile(vfile, vfile);
-    updateCacheFile(vfile);
+    audioFile = new AudioFile(videoFile, videoFile);
+    updateCacheFile(videoFile);
   }
 
   /* Decoder actions */
   public boolean initAudioCache(DecoderListener listener) {
-    return decoder.initAudioCache(afile, cfile, listener);
+    return decoder.initAudioCache(audioFile, cacheFile, listener);
   }
 
   public AudioPreview getAudioPreview(double from, double to) {
-    return decoder.getAudioPreview(cfile, from, to);
+    return decoder.getAudioPreview(cacheFile, from, to);
   }
 
   public void closeAudioCache() {
-    if (cfile != null) decoder.closeAudioCache(cfile);
+    if (cacheFile != null) decoder.closeAudioCache(cacheFile);
   }
 
   public Image getFrame(double time, float resize) {
-    if (vfile == null) return null;
-    return decoder.getFrame(vfile, time, resize);
+    if (videoFile == null) return null;
+    return decoder.getFrame(videoFile, time, resize);
   }
 
   public void playAudioClip(double from, double to) {
-    if (afile != null) decoder.playAudioClip(afile, from, to);
+    if (audioFile != null) decoder.playAudioClip(audioFile, from, to);
   }
 
   public void interruptCacheCreation(boolean status) {
