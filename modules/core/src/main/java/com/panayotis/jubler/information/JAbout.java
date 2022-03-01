@@ -37,8 +37,8 @@ import static com.panayotis.jubler.i18n.I18N.__;
  */
 public class JAbout extends javax.swing.JPanel {
 
-    private final static String icon_theme = "Nuvola (David Vignoni - http://www.icon-king.com)";
-    private final static String[] transl = {
+    private final static String ICON_THEME = "Nuvola (David Vignoni - http://www.icon-king.com)";
+    private final static String[] TRANSL = {
         "Tom\u00e1\u0161 Bambas " + parseMail("seznam.cz", "conyx"),
         "Rene " + parseMail("hotmail.com", "bmom43"),
         "Julien Escoffier " + parseMail("jcpdt7j.com", "jubler"),
@@ -50,7 +50,7 @@ public class JAbout extends javax.swing.JPanel {
         "Alfredo Quesada S\u00E1nchez " + parseMail("yahoo.com", "freddy2_es"),
         "As\u0131m Sinan Y\u00FCksel " + parseMail("gmail.com", "yuksel.asim.sinan")
     };
-    private final static String[] langs = {
+    private final static String[] LANGS = {
         __("Czech"),
         __("Dutch"),
         __("French"),
@@ -62,10 +62,10 @@ public class JAbout extends javax.swing.JPanel {
         __("Spanish"),
         __("Turkish")
     };
-    private final static String version;
-    private final static String longversion;
-    private final static String release;
-    private final static boolean distributionbased;
+    private final static String VERSION;
+    private final static String LONG_VERSION;
+    private final static String RELEASE;
+    private final static boolean DISTRIBUTION_BASED;
 
     static {
         String v = "0.0.0.0";
@@ -82,10 +82,10 @@ public class JAbout extends javax.swing.JPanel {
         } catch (IOException ex) {
             DEBUG.debug(ex);
         }
-        version = v;
-        release = r;
-        longversion = l;
-        distributionbased = "true".startsWith(d) || "yes".startsWith(d) || d.equals("1");
+        VERSION = v;
+        RELEASE = r;
+        LONG_VERSION = l;
+        DISTRIBUTION_BASED = "true".startsWith(d) || "yes".startsWith(d) || d.equals("1");
     }
 
     /**
@@ -94,7 +94,7 @@ public class JAbout extends javax.swing.JPanel {
     public JAbout() {
         super();
         initComponents();
-        LicenceT.setText(licence);
+        LicenceT.setText(LICENCE);
         LicenceT.setSelectionStart(0);
         LicenceT.setSelectionEnd(0);
         String abouttext
@@ -123,8 +123,8 @@ public class JAbout extends javax.swing.JPanel {
         thanks.append("\n");
         thanks.append(__("Translators"));
         thanks.append(":\n");
-        for (int i = 0; i < transl.length; i++) {
-            thanks.append(langs[i]).append(" : ").append(transl[i]).append('\n');
+        for (int i = 0; i < TRANSL.length; i++) {
+            thanks.append(LANGS[i]).append(" : ").append(TRANSL[i]).append('\n');
         }
 
         thanks.append("\n");
@@ -133,7 +133,7 @@ public class JAbout extends javax.swing.JPanel {
         thanks.append("Gentoo: Serkan Kaba ").append(parseMail("gentoo.org", "serkan")).append("\n");
         thanks.append("Slackware: Thanos Kyritsis ").append(parseMail("linux.gr", "djart")).append("\n");
 
-        thanks.append("\n").append(__("Icon theme")).append(":\n").append(icon_theme);
+        thanks.append("\n").append(__("Icon theme")).append(":\n").append(ICON_THEME);
 
         ThanksT.setText(thanks.toString());
         ThanksT.setSelectionStart(0);
@@ -145,19 +145,19 @@ public class JAbout extends javax.swing.JPanel {
     }
 
     public static String getCurrentVersion() {
-        return version;
+        return VERSION;
     }
 
     public static String getCurrentLongversion() {
-        return longversion;
+        return LONG_VERSION;
     }
 
     public static String getCurrentRelease() {
-        return release;
+        return RELEASE;
     }
 
     public static boolean isDistributionBased() {
-        return distributionbased;
+        return DISTRIBUTION_BASED;
     }
 
     /**
@@ -216,7 +216,7 @@ public class JAbout extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
-    private final static String licence = "\n(c) 2005-2009, Panayotis Katsaloulis\n"
+    private final static String LICENCE = "\n(c) 2005-2009, Panayotis Katsaloulis\n"
             + "\n"
             + "This program is distributed under the terms of the GPL v2.\n"
             + "\n"
