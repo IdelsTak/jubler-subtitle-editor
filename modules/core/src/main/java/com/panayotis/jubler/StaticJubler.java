@@ -36,8 +36,6 @@ import com.panayotis.jubler.subs.SubFile;
 import com.panayotis.jubler.subs.Subtitles;
 
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Stack;
@@ -53,33 +51,33 @@ public class StaticJubler {
   private static final int SCREEN_DELTAX = 24;
   private static final int SCREEN_DELTAY = 24;
   /* */
-  private static Stack<SubFile> recent_files;
-  private static int screen_x, screen_y, screen_width, screen_height, screen_state;
+  private static Stack<SubFile> recentFiles;
+  private static int screenX, screenY, screenWidth, screenHeight, screenState;
 
   static {
     loadWindowPosition();
-    recent_files = Options.loadFileList();
+    recentFiles = Options.loadFileList();
   }
 
   public static void setWindowPosition(JubFrame current_window, boolean save) {
     if (current_window == null) return;
-    screen_x = current_window.getX();
-    screen_y = current_window.getY();
-    screen_width = current_window.getWidth();
-    screen_height = current_window.getHeight();
-    screen_state = current_window.getExtendedState();
-    if (save && screen_width > 0) {
+    screenX = current_window.getX();
+    screenY = current_window.getY();
+    screenWidth = current_window.getWidth();
+    screenHeight = current_window.getHeight();
+    screenState = current_window.getExtendedState();
+    if (save && screenWidth > 0) {
       String vals =
           "(("
-              + screen_x
+              + screenX
               + ","
-              + screen_y
+              + screenY
               + "),("
-              + screen_width
+              + screenWidth
               + ","
-              + screen_height
+              + screenHeight
               + "),"
-              + screen_state
+              + screenState
               + ")";
       Options.setOption("System.WindowState", vals);
       Options.saveOptions();
@@ -88,21 +86,21 @@ public class StaticJubler {
   }
 
   public static void putWindowPosition(JubFrame new_window) {
-    if (screen_width <= 0) return;
+    if (screenWidth <= 0) return;
 
     new_window.setLocationByPlatform(false);
-    new_window.setBounds(screen_x, screen_y, screen_width, screen_height);
-    new_window.setExtendedState(screen_state);
+    new_window.setBounds(screenX, screenY, screenWidth, screenHeight);
+    new_window.setExtendedState(screenState);
     jumpWindowPosition(true);
   }
 
   public static void jumpWindowPosition(boolean forth) {
     if (forth) {
-      screen_x += SCREEN_DELTAX;
-      screen_y += SCREEN_DELTAY;
+      screenX += SCREEN_DELTAX;
+      screenY += SCREEN_DELTAY;
     } else {
-      screen_x -= SCREEN_DELTAX;
-      screen_y -= SCREEN_DELTAY;
+      screenX -= SCREEN_DELTAX;
+      screenY -= SCREEN_DELTAY;
     }
   }
 
@@ -117,13 +115,13 @@ public class StaticJubler {
       StringTokenizer st = new StringTokenizer(props, "(),");
       while (st.hasMoreTokens() && pos < 5) values[pos++] = Integer.parseInt(st.nextToken());
     }
-    screen_x = values[0];
-    screen_y = values[1];
-    screen_width = values[2];
-    screen_height = values[3];
-    screen_state = values[4];
-    if (screen_width < 800) screen_width = 800;
-    if (screen_height < 600) screen_height = 600;
+    screenX = values[0];
+    screenY = values[1];
+    screenWidth = values[2];
+    screenHeight = values[3];
+    screenState = values[4];
+    if (screenWidth < 800) screenWidth = 800;
+    if (screenHeight < 600) screenHeight = 600;
   }
 
   public static void showAbout() {
@@ -132,15 +130,15 @@ public class StaticJubler {
 
   public static boolean requestQuit(JubFrame request) {
     @SuppressWarnings("UseOfObsoleteCollectionType")
-    java.util.Vector<String> unsaved = new java.util.Vector<String>();
+    java.util.Vector<String> unsaved = new java.util.Vector<>();
     for (JubFrame j : JubFrame.windows)
       if (j.isUnsaved()) unsaved.add(j.getSubtitles().getSubFile().getStrippedFile().getName());
-    if (unsaved.size() > 0)
+    if (!unsaved.isEmpty())
       if (!JIDialog.question(null, new JUnsaved(unsaved), __("Quit Jubler"))) return false;
 
     JublerServer.stopServer();
 
-    if (request == null && JubFrame.windows.size() > 0)
+    if (request == null && !JubFrame.windows.isEmpty())
       request = JubFrame.windows.get(JubFrame.windows.size() - 1);
     if (request != null) setWindowPosition(request, true);
 
@@ -164,19 +162,19 @@ public class StaticJubler {
       if (subs != null) {
         SubFile sfile = subs.getSubFile();
         if (sfile.exists()) {
-          int which = recent_files.indexOf(subs.getSubFile());
+          int which = recentFiles.indexOf(subs.getSubFile());
           if (which >= 0) {
-            recent_files.remove(which);
-            recent_files.push(subs.getSubFile());
-          } else recent_files.add(subs.getSubFile());
+            recentFiles.remove(which);
+            recentFiles.push(subs.getSubFile());
+          } else recentFiles.add(subs.getSubFile());
         }
       }
     }
-    Options.saveFileList(recent_files);
+    Options.saveFileList(recentFiles);
 
     /* Get filenames of closed files */
-    Stack<SubFile> menulist = new Stack<SubFile>();
-    menulist.addAll(recent_files);
+    Stack<SubFile> menulist = new Stack<>();
+    menulist.addAll(recentFiles);
     for (JubFrame j : JubFrame.windows) {
       subs = j.getSubtitles();
       if (subs != null) menulist.remove(subs.getSubFile());
@@ -193,7 +191,7 @@ public class StaticJubler {
         recent_menu.add(addNewMenu(__("Clone current"), true, true, j, -1));
         recent_menu.add(new JSeparator());
       }
-      if (menulist.size() == 0)
+      if (menulist.isEmpty())
         recent_menu.add(addNewMenu(__("-Not any recent items-"), false, false, j, -1));
       else {
         int counter = 1;
@@ -215,17 +213,15 @@ public class StaticJubler {
 
     final boolean isclone_f = isclone;
     final String text_f = text;
-    final JubFrame jub_f = jub;
+    final JubFrame jubFrame = jub;
     item.addActionListener(
-        new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            if (isclone_f) jub_f.recentMenuCallback(null);
-            else {
-              SubFile prototype = new SubFile(new File(text_f), SubFile.EXTENSION_GIVEN);
-              int where = recent_files.indexOf(prototype);
-              if (where >= 0) jub_f.recentMenuCallback(recent_files.get(where));
-              else JIDialog.error(jub_f, "Unable to load recent item", "Error");
-            }
+        ae -> {
+          if (isclone_f) jubFrame.recentMenuCallback(null);
+          else {
+            SubFile prototype = new SubFile(new File(text_f), SubFile.EXTENSION_GIVEN);
+            int where = recentFiles.indexOf(prototype);
+            if (where >= 0) jubFrame.recentMenuCallback(recentFiles.get(where));
+            else JIDialog.error(jubFrame, "Unable to load recent item", "Error");
           }
         });
     return item;
