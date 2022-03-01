@@ -9,7 +9,11 @@ import com.panayotis.jubler.plugins.Theme;
 import com.panayotis.jubler.tools.ToolsManager;
 import com.panayotis.jubler.tools.externals.ExternalTool;
 
-import javax.swing.*;
+import javax.swing.AbstractListModel;
+import javax.swing.Icon;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.io.File;
