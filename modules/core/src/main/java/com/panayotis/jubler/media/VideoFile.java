@@ -160,7 +160,7 @@ public class VideoFile extends File {
     // List of video files in the same directory as the subtitle
     File files[];
     // best match so far
-    int matchcount;
+    int matchCount;
     // best file match so far
     File match;
     // Subtitles filename (in lowercase) & file in the same director
@@ -168,20 +168,20 @@ public class VideoFile extends File {
     int size;
     int i, j;
 
-    File subfile;
+    File subFile;
     if (subs == null || subs.getSubFile().getStrippedFile() == null)
-      subfile = new File(FileCommunicator.getDefaultDirPath() + __("Untitled"));
-    else subfile = subs.getSubFile().getStrippedFile();
+      subFile = new File(FileCommunicator.getDefaultDirPath() + __("Untitled"));
+    else subFile = subs.getSubFile().getStrippedFile();
 
-    dir = subfile.getParentFile();
+    dir = subFile.getParentFile();
     if (dir == null)
-      return new VideoFile(subfile.getPath() + "." + filter.getExtensions()[0], decoder);
+      return new VideoFile(subFile.getPath() + "." + filter.getExtensions()[0], decoder);
 
-    subFilename = subfile.getPath().toLowerCase();
+    subFilename = subFile.getPath().toLowerCase();
 
     // From a list of possible filenames,
     // get the one with the best match
-    matchcount = 0;
+    matchCount = 0;
     match = null;
     files = dir.listFiles(filter);
     if (files != null) {
@@ -194,13 +194,13 @@ public class VideoFile extends File {
                   ? curFilename.length()
                   : subFilename.length();
           while (j < size && subFilename.charAt(j) == curFilename.charAt(j)) j++;
-          if (matchcount < j) {
-            matchcount = j;
+          if (matchCount < j) {
+            matchCount = j;
             match = files[i];
           }
         }
       if (match != null) return new VideoFile(match.getPath(), decoder);
     }
-    return new VideoFile(subfile.getPath() + filter.getExtensions()[0], decoder);
+    return new VideoFile(subFile.getPath() + filter.getExtensions()[0], decoder);
   }
 }
