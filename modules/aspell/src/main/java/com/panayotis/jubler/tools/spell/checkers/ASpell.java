@@ -23,7 +23,6 @@
 
 package com.panayotis.jubler.tools.spell.checkers;
 
-import static com.panayotis.jubler.i18n.I18N.__;
 
 import com.panayotis.jubler.os.DEBUG;
 import com.panayotis.jubler.options.ASpellOptions;
@@ -58,9 +57,10 @@ public class ASpell extends SpellChecker implements Plugin, PluginItem {
     opts = new ASpellOptions(family, getName());
   }
 
+  @Override
   public void start() throws ExtProgramException {
     try {
-      ArrayList<String> cmd = new ArrayList<String>();
+      ArrayList<String> cmd = new ArrayList<>();
       cmd.add(opts.getExecFileName());
       if (forceutf8) cmd.add("--encoding=utf-8");
 
@@ -92,11 +92,13 @@ public class ASpell extends SpellChecker implements Plugin, PluginItem {
     }
   }
 
+  @Override
   public void stop() {
     if (proc != null) proc.destroy();
     proc = null;
   }
 
+  @Override
   public boolean insertWord(String word) {
     if (proc != null)
       try {
@@ -108,13 +110,15 @@ public class ASpell extends SpellChecker implements Plugin, PluginItem {
     return false;
   }
 
+  @Override
   public boolean supportsInsert() {
     return true;
   }
 
   @SuppressWarnings("UseOfObsoleteCollectionType")
+  @Override
   public ArrayList<SpellError> checkSpelling(String text) {
-    ArrayList<SpellError> ret = new ArrayList<SpellError>();
+    ArrayList<SpellError> ret = new ArrayList<>();
     String input;
 
     String orig;
@@ -129,14 +133,14 @@ public class ASpell extends SpellChecker implements Plugin, PluginItem {
         StringTokenizer token = new StringTokenizer(input, " \t\r\n:,");
         String part = token.nextToken();
         if (part.equals("&")) {
-          sug = new java.util.Vector<String>();
+          sug = new java.util.Vector<>();
           orig = token.nextToken();
           token.nextToken();
           pos = Integer.parseInt(token.nextToken()) - 1;
           while (token.hasMoreTokens()) sug.add(token.nextToken());
           ret.add(new SpellError(pos, orig, sug));
         } else if (part.equals("#")) {
-          sug = new java.util.Vector<String>();
+          sug = new java.util.Vector<>();
           orig = token.nextToken();
           pos = Integer.parseInt(token.nextToken()) - 1;
           ret.add(new SpellError(pos, orig, sug));
@@ -148,18 +152,22 @@ public class ASpell extends SpellChecker implements Plugin, PluginItem {
     return ret;
   }
 
+  @Override
   public JExtBasicOptions getOptionsPanel() {
     return opts;
   }
 
+  @Override
   public final String getName() {
     return "ASpell";
   }
 
+  @Override
   public Class[] getPluginAffections() {
     return new Class[] {AvailExternals.class};
   }
 
+  @Override
   public void execPlugin(Object caller, Object param) {
     if (caller instanceof AvailExternals) {
       AvailExternals l = (AvailExternals) caller;
@@ -167,22 +175,27 @@ public class ASpell extends SpellChecker implements Plugin, PluginItem {
     }
   }
 
+  @Override
   public PluginItem[] getPluginItems() {
     return new PluginItem[] {this};
   }
 
+  @Override
   public boolean canDisablePlugin() {
     return true;
   }
 
+  @Override
   public String getPluginName() {
     return "ASpell checker";
   }
 
+  @Override
   public ClassLoader getClassLoader() {
     return null;
   }
 
+  @Override
   public void setClassLoader(ClassLoader loader) {}
 
   static class ASpellSystemDependent extends SystemDependent {
