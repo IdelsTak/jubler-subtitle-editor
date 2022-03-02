@@ -39,24 +39,27 @@ import java.util.ArrayList;
 @SuppressWarnings("UseOfObsoleteCollectionType")
 public class ASpellOptions extends JExtBasicOptions {
 
-    private static final ArrayList<String> progname;
+    private static final ArrayList<String> PROG_NAME;
 
     static {
-        progname = new ArrayList<String>();
-        progname.add("aspell");
-        progname.add("aspell.exe");
+        PROG_NAME = new ArrayList<>();
+        PROG_NAME.add("aspell");
+        PROG_NAME.add("aspell.exe");
     }
-    private java.util.Vector<ASpellDict> dictionaries;
-    private static final String default_language = "en";
+    private final java.util.Vector<ASpellDict> dictionaries;
+    private static final String DEFAULT_LANGUAGE = "en";
 
     /**
      * Creates new form ASpellOptions
+     *
+     * @param family
+     * @param name
      */
     public ASpellOptions(String family, String name) {
-        super(family, name, name, progname, new String[]{"-?"}, null);
+        super(family, name, name, PROG_NAME, new String[]{"-?"}, null);
         initComponents();
 
-        dictionaries = new java.util.Vector<ASpellDict>();
+        dictionaries = new java.util.Vector<>();
         updateOptionsPanel();
 
         add(BrowserP, BorderLayout.NORTH);
@@ -103,9 +106,9 @@ public class ASpellOptions extends JExtBasicOptions {
         if (cocoaspell.exists() && cocoaspell.isDirectory()) {
             getDictsFromPath(cocoaspell);
             File[] childs = cocoaspell.listFiles();
-            for (int i = 0; i < childs.length; i++) {
-                if (childs[i].isDirectory()) {
-                    getDictsFromPath(childs[i]);
+            for (File child : childs) {
+                if (child.isDirectory()) {
+                  getDictsFromPath(child);
                 }
             }
         }
@@ -141,7 +144,7 @@ public class ASpellOptions extends JExtBasicOptions {
     }
 
     private void getDictsFromPath(File path) {
-        ArrayList<String> cmd = new ArrayList<String>();
+        ArrayList<String> cmd = new ArrayList<>();
         cmd.add(getExecFileName());
         cmd.add("dicts");
         if (path != null && path.exists()) {
@@ -169,7 +172,7 @@ public class ASpellOptions extends JExtBasicOptions {
     public void loadPreferences() {
         super.loadPreferences();
         updateOptionsPanel();
-        setSelectedLanguage(Options.getOption(family + "." + name + ".Language", default_language));
+        setSelectedLanguage(Options.getOption(family + "." + name + ".Language", DEFAULT_LANGUAGE));
     }
 
     public ASpellDict getLanguage() {
@@ -183,7 +186,7 @@ public class ASpellOptions extends JExtBasicOptions {
     public String getLanguageName() {
         ASpellDict language = getLanguage();
         if (language == null) {
-            return default_language;
+            return DEFAULT_LANGUAGE;
         }
         return language.lang;
     }
